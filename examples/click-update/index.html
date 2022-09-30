@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>click update</title>
+</head>
+<body>
+<magic-button label="click me!"></magic-button>
+<script type="module">
+    import {component} from '../../src/component.js';
+    import {magicButton} from "./components.js";
+
+    customElements.define('magic-button', component(magicButton));
+</script>
+</body>
+</html>

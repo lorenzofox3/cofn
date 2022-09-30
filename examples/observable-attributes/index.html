@@ -16,28 +16,21 @@
     <input type="number" id="op-b" value="0">
 </label>
 <script type="module">
-    import {component} from '../src/component.js';
+    import {component} from '../../src/component.js';
+    import {sumSpan} from './components.js';
 
-    customElements.define('sum-span', component(function* () {
-        const span = document.createElement('span');
-
-        while (true) {
-            const {attributes} = yield span;
-            const {a, b} = attributes
-            span.textContent = `${a} + ${b} = ${Number(a) + Number(b)}`;
-        }
-    }, {
+    customElements.define('sum-span', component(sumSpan, {
         observedAttributes: ['a', 'b']
     }));
 
-    const sumSpan = document.querySelector('sum-span');
+    const comp = document.querySelector('sum-span');
 
     document.getElementById('op-a').addEventListener('change', ({target}) => {
-        sumSpan.setAttribute('a', target.value)
+        comp.setAttribute('a', target.value)
     })
 
     document.getElementById('op-b').addEventListener('change', ({target}) => {
-        sumSpan.setAttribute('b', target.value)
+        comp.setAttribute('b', target.value)
     })
 
 </script>

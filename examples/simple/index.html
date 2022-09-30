@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple example</title>
+</head>
+<body>
+<display-number number="42"></display-number>
+<button id="unmount">unmount component</button>
+<script type="module">
+    import {component} from '../../src/component.js';
+    import {display} from "./components.js";
+
+    customElements.define('display-number', component(display));
+
+    document.getElementById('unmount').addEventListener('click', () => {
+        document.querySelector('display-number').remove();
+    })
+
+</script>
+</body>
+</html>
