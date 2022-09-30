@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Simple example</title>
+    <title>click update</title>
 </head>
 <body>
 <magic-button label="click me!"></magic-button>
@@ -11,28 +11,19 @@
     import {component} from '../src/component.js';
 
     customElements.define('magic-button', component(function* ({update}) {
-        try {
-            let clickCount = 0;
-            const button = document.createElement('button');
+        let clickCount = 0;
+        const button = document.createElement('button');
 
-            button.addEventListener('click', () => {
-                clickCount++;
-                update();
-            })
+        button.addEventListener('click', () => {
+            clickCount++;
+            update();
+        })
 
-            while (true) {
-                const {attributes} = yield button;
-                button.textContent = `${attributes.label} (${clickCount})`;
-            }
-        } finally {
-            console.log('unmounted');
+        while (true) {
+            const {attributes} = yield button;
+            button.textContent = `${attributes.label} (${clickCount})`;
         }
     }));
-
-    document.getElementById('unmount').addEventListener('click', () => {
-        document.querySelector('magic-button').remove();
-    })
-
 </script>
 </body>
 </html>

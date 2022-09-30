@@ -3,8 +3,8 @@ const getAttributes = (el) =>
     el.getAttributeNames().map((name) => [name, el.getAttribute(name)])
   );
 
-export const component = (renderLoop) =>
-  class extends HTMLElement {
+export const component = (renderLoop, opts = {}) => {
+  const Klass = class extends HTMLElement {
     #loop;
 
     constructor() {
@@ -33,3 +33,25 @@ export const component = (renderLoop) =>
       }
     }
   };
+
+  if (opts.observedAttributes) {
+    Object.defineProperty(Klass, 'observedAttributes', {
+      get() {
+        return [...opts.observedAttributes];
+      },
+      configurable: true,
+    });
+
+    Klass.prototype.attributeChangedCallback = function (
+      name,
+      oldValue,
+      newValue
+    ) {
+      if (oldValue !== newValue) {
+        this.render();
+      }
+    };
+  }
+
+  return Klass;
+};
