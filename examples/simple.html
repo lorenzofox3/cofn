@@ -6,16 +6,26 @@
 </head>
 <body>
 <display-number number="42"></display-number>
+<button id="unmount">unmount component</button>
 <script type="module">
     import {component} from '../src/component.js';
 
     customElements.define('display-number', component(function* () {
-        const span = document.createElement('span');
-        while (true) {
-            const {attributes} = yield span;
-            span.textContent = attributes.number;
+        try {
+            const span = document.createElement('span');
+            while (true) {
+                const {attributes} = yield span;
+                span.textContent = attributes.number;
+            }
+        } finally {
+            console.log('unmounted');
         }
     }));
+
+    document.getElementById('unmount').addEventListener('click', () => {
+        document.querySelector('display-number').remove();
+    })
+
 </script>
 </body>
 </html>
