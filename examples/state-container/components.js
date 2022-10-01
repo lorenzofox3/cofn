@@ -2,19 +2,20 @@ export const counterDisplay = function* () {
   const el = document.createElement('span');
 
   while (true) {
-    const received = yield el;
-    console.log(received);
     const {
       state: { counter },
-    } = received;
+    } = yield el;
     el.textContent = counter;
   }
 };
 
-export const actionButton = function* ({ actions }) {
+export const actionButton = function* ({ actions, update }) {
   const button = document.createElement('button');
   let actionName;
+  let clickCount = 0;
   button.addEventListener('click', () => {
+    clickCount++;
+    update(); // update local
     actions[actionName]();
   });
 
@@ -23,6 +24,6 @@ export const actionButton = function* ({ actions }) {
       attributes: { action },
     } = yield button;
     actionName = action;
-    button.textContent = action;
+    button.textContent = action + `( clicks:${clickCount} )`;
   }
 };

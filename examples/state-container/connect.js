@@ -11,11 +11,9 @@ export const connectToStore = (comp) => {
         state: store.getState(),
       });
 
-    const unsubscribe = store.subscribe(() => {
-      newUpdate();
-    });
+    const unsubscribe = store.subscribe(newUpdate);
 
-    const it = comp({ ...restInjected, update: newUpdate });
+    const it = comp({ update: newUpdate, ...restInjected });
     const next = ({ state = store.getState(), ...rest } = {}) =>
       it.next({ state, ...rest }).value;
 

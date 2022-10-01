@@ -29,7 +29,11 @@ export const component = (renderLoop, opts = {}) => {
       });
 
       if (this.firstElementChild !== el) {
-        this.appendChild(el);
+        if (this.firstElementChild) {
+          this.firstElementChild.replaceWith(el);
+        } else {
+          this.appendChild(el);
+        }
       }
     }
   };

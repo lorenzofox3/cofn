@@ -9,15 +9,14 @@
 <action-button action="increment"></action-button>
 <action-button action="decrement"></action-button>
 <script type="module">
-    import {component, compose} from '../../src/index.js';
+    import {component} from '../../src/index.js';
     import {actionButton, counterDisplay} from "./components.js";
     import {connectToStore, withStore} from "./connect";
 
-    const componentWithStore =compose(component, withStore)
-    const connectedComponent = compose(component, connectToStore);
-
-    customElements.define('counter-display', connectedComponent(counterDisplay));
-    customElements.define('action-button', componentWithStore(actionButton));
+    customElements.define('counter-display', component(connectToStore(counterDisplay)));
+    customElements.define('action-button', component(withStore(actionButton), {
+        observedAttributes: ['action']
+    }));
 </script>
 </body>
 </html>
