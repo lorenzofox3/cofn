@@ -13,8 +13,9 @@
 
     customElements.define('display-number', component(display, {
         shadow: {
-            mode: 'open'
-        }
+            mode: 'closed'
+        },
+        observedAttributes:['number']
     }));
 
     document.getElementById('unmount').addEventListener('click', () => {

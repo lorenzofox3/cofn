@@ -1,16 +1,22 @@
-export const counterDisplay = function* () {
-  const el = document.createElement('span');
+import { withTemplate } from '../../src/index.js';
 
+const withinSpan = withTemplate({ template: '<span></span>' });
+const withinButton = withTemplate({ template: '<button></button>' });
+
+export const counterDisplay = withinSpan(function* ({ node: el }) {
   while (true) {
     const {
       state: { counter },
     } = yield el;
     el.textContent = counter;
   }
-};
+});
 
-export const actionButton = function* ({ actions, update }) {
-  const button = document.createElement('button');
+export const actionButton = withinButton(function* ({
+  actions,
+  update,
+  node: button,
+}) {
   let actionName;
   let clickCount = 0;
   button.addEventListener('click', () => {
@@ -26,4 +32,4 @@ export const actionButton = function* ({ actions, update }) {
     actionName = action;
     button.textContent = action + `( clicks:${clickCount} )`;
   }
-};
+});

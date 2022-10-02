@@ -52,11 +52,11 @@ export const component = (renderLoop, opts = {}) => {
         attributes: getAttributes(this),
       });
 
-      const firstElementChild = this.#root.firstElementChild;
+      const firstChild = this.#root.firstChild;
 
-      if (firstElementChild !== el) {
-        if (firstElementChild) {
-          firstElementChild.replaceWith(el);
+      if (firstChild !== el) {
+        if (firstChild) {
+          firstChild.replaceWith(el);
         } else {
           this.#root.appendChild(el);
         }
