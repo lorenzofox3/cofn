@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>fetch</title>
+</head>
+<body>
+<resource-component></resource-component>
+</body>
+<script type="module">
+    import {resourceComponent} from './components.js';
+    import {component} from "../../src/index.js";
+
+    customElements.define('resource-component', component(resourceComponent));
+</script>
+</html>
