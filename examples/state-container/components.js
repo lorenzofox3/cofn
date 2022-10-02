@@ -14,14 +14,15 @@ export const counterDisplay = withinSpan(function* ({ node: el }) {
 
 export const actionButton = withinButton(function* ({
   actions,
-  update,
+  $el,
   node: button,
 }) {
   let actionName;
   let clickCount = 0;
+
   button.addEventListener('click', () => {
     clickCount++;
-    update(); // update local
+    $el.render();
     actions[actionName]();
   });
 

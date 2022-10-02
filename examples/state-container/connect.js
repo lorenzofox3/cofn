@@ -3,18 +3,20 @@ import * as actions from './actions.js';
 import { withInjectables } from '../../src/index.js';
 
 export const connectToStore = (comp) => {
-  return function* ({ update: baseUpdate, ...restInjected }) {
+  return function* ({ $el, ...restInjected }) {
     let forwarded;
 
-    const update = (arg = {}) =>
-      baseUpdate({
+    const { render } = $el;
+
+    $el.render = (arg = {}) =>
+      render({
         ...arg,
         state: store.getState(),
       });
 
-    const unsubscribe = store.subscribe(update);
+    const unsubscribe = store.subscribe($el.render);
 
-    const it = comp({ update, ...restInjected });
+    const it = comp({ $el, ...restInjected });
     const next = ({ state = store.getState(), ...rest } = {}) =>
       it.next({ state, ...rest }).value;
 

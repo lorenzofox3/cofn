@@ -1,14 +1,17 @@
-export const magicButton = function* ({ update }) {
+import { withTemplate } from '../../src';
+
+const withinButton = withTemplate({ template: '<button></button>' });
+
+export const magicButton = withinButton(function* ({ node: button, $el }) {
   let clickCount = 0;
-  const button = document.createElement('button');
 
   button.addEventListener('click', () => {
     clickCount++;
-    update();
+    $el.render();
   });
 
   while (true) {
     const { attributes } = yield button;
     button.textContent = `${attributes.label} (${clickCount})`;
   }
-};
+});

@@ -34,10 +34,8 @@ export const component = (renderLoop, opts = {}) => {
       this.#root = opts.shadow ? this.attachShadow(opts.shadow) : this;
       this.#loop = renderLoop({
         $el: this,
-        update: (updateNs = {}) => {
-          this.render(updateNs);
-        },
       });
+      this.render = this.render.bind(this);
       this.#loop.next();
       this.render();
     }
