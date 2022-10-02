@@ -11,7 +11,11 @@
     import {component} from '../../src/component.js';
     import {display} from "./components.js";
 
-    customElements.define('display-number', component(display));
+    customElements.define('display-number', component(display, {
+        shadow: {
+            mode: 'open'
+        }
+    }));
 
     document.getElementById('unmount').addEventListener('click', () => {
         document.querySelector('display-number').remove();

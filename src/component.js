@@ -6,9 +6,14 @@ const getAttributes = (el) =>
 export const component = (renderLoop, opts = {}) => {
   const Klass = class extends HTMLElement {
     #loop;
+    #root;
 
     constructor() {
       super();
+      if (opts.shadow) {
+        this.attachShadow(opts.shadow);
+      }
+      this.#root = opts.shadow?.mode === 'open' ? this.shadowRoot : this;
       this.#loop = renderLoop({
         update: (updateNs = {}) => {
           this.render(updateNs);
@@ -28,11 +33,13 @@ export const component = (renderLoop, opts = {}) => {
         attributes: getAttributes(this),
       });
 
-      if (this.firstElementChild !== el) {
-        if (this.firstElementChild) {
-          this.firstElementChild.replaceWith(el);
+      const firstElementChild = this.#root.firstElementChild;
+
+      if (firstElementChild !== el) {
+        if (firstElementChild) {
+          firstElementChild.replaceWith(el);
         } else {
-          this.appendChild(el);
+          this.#root.appendChild(el);
         }
       }
     }
