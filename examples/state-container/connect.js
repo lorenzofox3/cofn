@@ -1,19 +1,20 @@
 import { store } from './store.js';
 import * as actions from './actions.js';
+import { withInjectables } from '../../src/index.js';
 
 export const connectToStore = (comp) => {
-  return function* ({ update, ...restInjected }) {
+  return function* ({ update: baseUpdate, ...restInjected }) {
     let forwarded;
 
-    const newUpdate = (arg = {}) =>
-      update({
+    const update = (arg = {}) =>
+      baseUpdate({
         ...arg,
         state: store.getState(),
       });
 
-    const unsubscribe = store.subscribe(newUpdate);
+    const unsubscribe = store.subscribe(update);
 
-    const it = comp({ update: newUpdate, ...restInjected });
+    const it = comp({ update, ...restInjected });
     const next = ({ state = store.getState(), ...rest } = {}) =>
       it.next({ state, ...rest }).value;
 
@@ -27,7 +28,4 @@ export const connectToStore = (comp) => {
   };
 };
 
-export const withStore = (comp) =>
-  function* (args = {}) {
-    yield* comp({ ...args, actions, store });
-  };
+export const withStore = withInjectables({ store, actions });

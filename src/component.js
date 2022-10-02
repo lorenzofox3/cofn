@@ -3,6 +3,27 @@ const getAttributes = (el) =>
     el.getAttributeNames().map((name) => [name, el.getAttribute(name)])
   );
 
+const withObservedAttributes = ({ Klass, observedAttributes }) => {
+  Object.defineProperty(Klass, 'observedAttributes', {
+    get() {
+      return [...observedAttributes];
+    },
+    configurable: true,
+  });
+
+  Klass.prototype.attributeChangedCallback = function (
+    name,
+    oldValue,
+    newValue
+  ) {
+    if (oldValue !== newValue) {
+      this.render();
+    }
+  };
+
+  return Klass;
+};
+
 export const component = (renderLoop, opts = {}) => {
   const Klass = class extends HTMLElement {
     #loop;
@@ -10,11 +31,9 @@ export const component = (renderLoop, opts = {}) => {
 
     constructor() {
       super();
-      if (opts.shadow) {
-        this.attachShadow(opts.shadow);
-      }
-      this.#root = opts.shadow?.mode === 'open' ? this.shadowRoot : this;
+      this.#root = opts.shadow ? this.attachShadow(opts.shadow) : this;
       this.#loop = renderLoop({
+        $el: this,
         update: (updateNs = {}) => {
           this.render(updateNs);
         },
@@ -44,25 +63,7 @@ export const component = (renderLoop, opts = {}) => {
       }
     }
   };
-
-  if (opts.observedAttributes) {
-    Object.defineProperty(Klass, 'observedAttributes', {
-      get() {
-        return [...opts.observedAttributes];
-      },
-      configurable: true,
-    });
-
-    Klass.prototype.attributeChangedCallback = function (
-      name,
-      oldValue,
-      newValue
-    ) {
-      if (oldValue !== newValue) {
-        this.render();
-      }
-    };
-  }
-
-  return Klass;
+  return opts.observedAttributes
+    ? withObservedAttributes({ Klass, ...opts })
+    : Klass;
 };
