@@ -13,21 +13,14 @@ const template = ({ userResource, fetchUser }) =>
       </p>`
     : html`<p>Loading</p>`;
 
-// todo handle error;
-export const resourceComponent = useFetch(function* ({ resource }) {
+export const resourceComponent = useFetch(function* ({ resource, $el }) {
   let userResource;
-  let el = document.createElement('div');
-
-  const renderUser = ({ userResource, fetchUser }) =>
-    render(template({ userResource, fetchUser }), el);
-
-  // load on mount
   fetchUser();
 
   while (true) {
-    const input = yield el;
+    const input = yield;
     userResource = input.resources?.['/me'];
-    renderUser({ userResource, fetchUser });
+    render(template({ userResource, fetchUser }), $el);
   }
 
   function fetchUser() {

@@ -50,6 +50,10 @@ export const component = (renderLoop, opts = {}) => {
         attributes: getAttributes(this),
       });
 
+      if (!el) {
+        return; // in this case the component is already manipulating the dom
+      }
+
       const firstChild = this.#root.firstChild;
 
       if (firstChild !== el) {
