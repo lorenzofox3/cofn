@@ -4,8 +4,6 @@ import { withInjectables } from '../../src/index.js';
 
 export const connectToStore = (comp) => {
   return function* ({ $el, ...restInjected }) {
-    let forwarded;
-
     const { render } = $el;
 
     $el.render = (arg = {}) =>
@@ -16,14 +14,8 @@ export const connectToStore = (comp) => {
 
     const unsubscribe = store.subscribe($el.render);
 
-    const it = comp({ $el, ...restInjected });
-    const next = ({ state = store.getState(), ...rest } = {}) =>
-      it.next({ state, ...rest }).value;
-
     try {
-      while (true) {
-        forwarded = yield next(forwarded);
-      }
+      yield* comp({ $el, ...restInjected });
     } finally {
       unsubscribe();
     }
