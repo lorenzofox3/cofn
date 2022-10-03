@@ -1,4 +1,4 @@
-import { withInjectables } from '../../src/index.js';
+import { withFetch } from './with-fetch.js';
 import { fetch } from './fetch.js';
 
 const loader = document.createElement('span');
@@ -13,50 +13,36 @@ contentTemplate.innerHTML = `<div>
     <button>Refresh</button>
   </div>`;
 
-const useFetch = withInjectables({ fetch });
+const useFetch = withFetch({ fetch });
 
-const createResourceElement = ({ resource, loadResource }) => {
+const createUser = ({ user, fetchUser }) => {
   const resourceNode = contentTemplate.content.cloneNode(true);
-  resourceNode.querySelector('span').textContent = resource.name;
+  resourceNode.querySelector('span').textContent = user.name;
   resourceNode.querySelector('time').textContent = JSON.stringify(
-    new Date(resource.timestamp)
+    new Date(user.timestamp)
   );
-  resourceNode.querySelector('button').addEventListener('click', loadResource);
+  resourceNode.querySelector('button').addEventListener('click', fetchUser);
 
   return resourceNode;
 };
 
-export const resourceComponent = useFetch(function* ({ fetch, $el }) {
-  let isLoading = true;
-  let resource, error;
+// todo handle error;
+export const resourceComponent = useFetch(function* ({ resource }) {
+  let remoteResource;
+  let el = loader;
 
-  setTimeout(loadResource);
+  const fetchUser = () => resource.fetch('/me');
+
+  // load on mount
+  fetchUser();
 
   while (true) {
-    if (isLoading) {
-      yield loader;
-      continue;
-    }
+    const input = yield el;
 
-    if (error) {
-      yield error;
-      continue;
-    }
-
-    yield createResourceElement({ resource, loadResource });
-  }
-
-  async function loadResource() {
-    isLoading = true;
-    error = resource = undefined;
-    $el.render();
-    try {
-      resource = await fetch('foo');
-    } catch (e) {
-      error = e;
-    } finally {
-      isLoading = false;
-      $el.render();
-    }
+    remoteResource = input.resources?.['/me'];
+    el =
+      remoteResource?.state === 'loaded'
+        ? createUser({ user: remoteResource.data, fetchUser })
+        : loader;
   }
 });

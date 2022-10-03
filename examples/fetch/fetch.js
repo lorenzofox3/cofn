@@ -1,8 +1,8 @@
 const wait = (time = 1000) =>
   new Promise((resolve) => setTimeout(resolve, time));
 
-export const fetch = async (arg) => {
-  console.log('FETCHING');
+export const fetch = async (path) => {
+  console.log('FETCHING ', path);
   await wait();
   return {
     name: 'Laurent',
