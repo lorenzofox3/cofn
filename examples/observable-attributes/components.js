@@ -1,8 +1,8 @@
 import { withTemplate } from '../../src';
 
-export const sumSpan = withTemplate({ template: '<span></span>' })(function* ({
-  node: span,
-}) {
+const withinSpan = withTemplate({ template: '<span></span>' });
+
+export const sumSpan = withinSpan(function* ({ node: span }) {
   while (true) {
     const { attributes } = yield span;
     const { a, b } = attributes;

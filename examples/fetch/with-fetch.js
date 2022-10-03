@@ -5,7 +5,7 @@ export const withFetch =
       const { $el } = args;
       const resource = {
         fetch(path) {
-          // wrap in a setTimeout so we make sure we don't block a generator
+          // wrap in a setTimeout, so we make sure we don't block a generator
           setTimeout(async () => {
             $el.render({
               resources: {
@@ -26,8 +26,15 @@ export const withFetch =
                   },
                 },
               });
-            } catch (e) {
-              // todo render error state
+            } catch (err) {
+              $el.render({
+                resources: {
+                  [path]: {
+                    state: 'errored',
+                    err,
+                  },
+                },
+              });
             }
           });
         },

@@ -1,8 +1,8 @@
 import { withTemplate } from '../../src/index.js';
 
-export const display = withTemplate({ template: '<span></span>' })(function* ({
-  node: span,
-}) {
+const withinSpan = withTemplate({ template: '<span></span>' });
+
+export const display = withinSpan(function* ({ node: span }) {
   try {
     while (true) {
       const { attributes } = yield span;

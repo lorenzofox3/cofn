@@ -1,6 +1,7 @@
 import { withFetch } from './with-fetch.js';
 import { fetch } from './fetch.js';
 
+// TEMPLATES
 const loader = document.createElement('span');
 loader.textContent = 'loading...';
 
@@ -13,8 +14,6 @@ contentTemplate.innerHTML = `<div>
     <button>Refresh</button>
   </div>`;
 
-const useFetch = withFetch({ fetch });
-
 const createUser = ({ user, fetchUser }) => {
   const resourceNode = contentTemplate.content.cloneNode(true);
   resourceNode.querySelector('span').textContent = user.name;
@@ -26,7 +25,9 @@ const createUser = ({ user, fetchUser }) => {
   return resourceNode;
 };
 
-// todo handle error;
+// COMPONENT
+const useFetch = withFetch({ fetch });
+
 export const resourceComponent = useFetch(function* ({ resource }) {
   let remoteResource;
   let el = loader;
