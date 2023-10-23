@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <title>Some test</title>
+</head>
+<body>
+<hello-world></hello-world>
+<hello-world></hello-world>
+<script type='module'>
+
+    import {define} from 'dom';
+    import {simpleComponent} from './simple-component.js';
+
+    define('hello-world', simpleComponent);
+
+</script>
+</body>
+</html>
