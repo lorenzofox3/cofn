@@ -11,7 +11,6 @@ export const withView = (viewFactory) =>
 
     try {
       const { $root, $signal } = deps;
-
       observer.observe($root, { childList: true, subtree: true });
       const view = viewFactory({
         ...deps,
@@ -30,8 +29,9 @@ export const withView = (viewFactory) =>
     }
   };
 
-export const createHTML = ({ $signal: signal, templateCache }) => {
-  return (templateParts, ...interpolatedValues) => {
+export const createHTML =
+  ({ $signal: signal, templateCache }) =>
+  (templateParts, ...interpolatedValues) => {
     const templateRecord = findOrCreateTemplateRecord({
       blueprint: buildBlueprint({ templateParts, interpolatedValues }),
       templateCache,
@@ -46,12 +46,11 @@ export const createHTML = ({ $signal: signal, templateCache }) => {
     );
 
     toUpdate.forEach(([updateFn, value]) => {
-      updateFn[valueSymbol] = updateFn(value); // update and save new current value
+      updateFn[valueSymbol] = updateFn(value);
     });
 
     return templateRecord;
   };
-};
 const shouldUpdateActiveSite = ([updateFn, newValue]) =>
   updateFn[valueSymbol] === undefined ||
   !Object.is(updateFn[valueSymbol], newValue);
@@ -198,11 +197,9 @@ const createTextOrElementNodeUpdateFn = (node) => {
       return updateList(value, oldValue);
     }
 
-    if (isDomNode) {
-      return updateElementContent(value, oldValue);
-    }
-
-    return updateTextContent(value);
+    return isDomNode
+      ? updateElementContent(value, oldValue)
+      : updateTextContent(value);
   };
 
   return updateFn;
@@ -228,7 +225,7 @@ const createUpdateTextContent = (node) => (value) => (node.textContent = value);
 const createUpdateDOMNode = (node) => (value, oldValue) => {
   const newNode =
     value === undefined ? document.createTextNode('') : value.element;
-  const oldNode = oldValue || node;
+  const oldNode = oldValue ?? node;
   oldNode.replaceWith(newNode);
   return newNode;
 };

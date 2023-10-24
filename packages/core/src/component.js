@@ -37,6 +37,7 @@ export const component = (renderLoop, opts = defaultOptions) => {
 
     disconnectedCallback() {
       this.#pendingUpdate = true;
+      // we end the rendering loop only if the component is removed from de dom. Sometimes it is just moved from one place to another one
       window.queueMicrotask(() => {
         this.#pendingUpdate = false;
         if (this.isConnected === false) {
