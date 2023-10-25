@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+    <li id="li-1">1</li>
+    <li id="li-2">2</li>
+    <li id="li-3">3</li>
+    <li id="li-4">4</li>
+</ul>
+<script type="module">
+
+    const range = new Range();
+
+    const newLis = Array.from({length: 2}, (_, idx) => {
+        const li = document.createElement('li');
+        li.textContent = 'new-li' + idx
+        return li;
+    });
+
+    const commentBefore = document.createComment('before');
+    const commentAfter = document.createComment('after');
+
+    const fragment = document.createDocumentFragment();
+    fragment.append(...newLis)
+
+    const li1 = document.getElementById('li-1');
+    const li2 = document.getElementById('li-2');
+    const li3 = document.getElementById('li-3');
+    const li4 = document.getElementById('li-4')
+
+    li1.before(commentBefore);
+    li4.after(commentAfter);
+
+    range.setStartAfter(commentBefore);
+    range.setEndBefore(commentAfter)
+
+    range.deleteContents();
+
+    // // range.setStartBefore(li2);
+    // // range.setEndAfter(li3);
+    //
+    // range.selectNode(li3)
+    //
+    //
+    // range.deleteContents();
+    //
+    // range.insertNode(fragment);
+    //
+    // console.log(range)
+
+
+</script>
+</body>
+</html>

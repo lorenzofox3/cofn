@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>if test</title>
+</head>
+<if-test></if-test>
+<body>
+<script type="module">
+import {define, withView} from 'dom';
+
+define('if-test', withView(({html, $host}) => {
+    let count = 0;
+    $host.addEventListener('click', () =>{
+        count+=1;
+        $host.render({count});
+    })
+    return ({count = 0} = {}) => {
+        return html`
+            <div>
+                ${count % 3 === 0 ? html`<span>count ${count}</span>` : html`<span>Bar</span>`}
+                ${count % 4 === 0 ? null : html`<span>count bis ${count}</span>` }
+            </div>`
+    }
+}))
+
+
+</script>
+</body>
+</html>
