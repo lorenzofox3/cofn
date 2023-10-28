@@ -1,4 +1,4 @@
-import { ACTIVE_SITE_POINTER } from './blueprint.js';
+import { ACTIVE_SITE_POINTER } from './active-site.js';
 
 export const traverseTree = (templateElement) =>
   [..._traverseTree(createTreeWalker(templateElement))].flatMap(prepareNode);
@@ -31,8 +31,11 @@ const createTreeWalker = (fragment) =>
   );
 
 function* _traverseTree(treeWalker) {
-  let currentNode;
-  while ((currentNode = treeWalker.nextNode())) {
+  let { currentNode } = treeWalker;
+  debugger;
+  currentNode =
+    currentNode.nodeType === 11 ? treeWalker.nextNode() : currentNode; // if a document fragment we "enter" the fragment
+  while (currentNode) {
     yield* currentNode.nodeType === 1
       ? new Set(
           [...currentNode.attributes].filter((attr) =>
@@ -40,6 +43,7 @@ function* _traverseTree(treeWalker) {
           ),
         )
       : [currentNode];
+    currentNode = treeWalker.nextNode();
   }
 }
 

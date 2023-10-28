@@ -1,7 +1,7 @@
 const comment = (data) => document.createComment(data);
 
 export const createRange = ({ node, templateCache }) => {
-  const range = new Range();
+  const range = document.createRange();
   const before = comment('before');
   const after = comment('after');
   let currentContent;
@@ -11,14 +11,50 @@ export const createRange = ({ node, templateCache }) => {
     replaceWith(newContent) {
       range.setStartAfter(before);
       range.setEndBefore(after);
-      range.deleteContents();
-      if (newContent?.fragment) {
-        const { fragment } = newContent;
-        range.insertNode(fragment);
-        delete newContent.fragment; // drop useless fragment
+
+      if (Array.isArray(newContent)) {
+        const oldGroup = groupByKey(
+          Array.isArray(currentContent) ? currentContent : [],
+        );
+        const newGroup = groupByKey(newContent);
+
+        Object.entries(oldGroup)
+          .filter(([key]) => !(key in newGroup))
+          .forEach(([, activeSite]) => removeOldContent(activeSite));
+
+        newContent.forEach((activeSite, index) => {
+          const pivot = newContent[index - 1]?.content ?? before;
+          if (pivot.nextElementSibling !== activeSite.content) {
+            pivot.after(activeSite.content);
+          }
+        });
+      } else {
+        range.deleteContents();
+        if (newContent?.content) {
+          const { content } = newContent;
+          range.insertNode(content);
+          delete newContent.content; // drop useless fragment to free memory
+        }
+        removeOldContent(currentContent);
       }
-      templateCache.delete(currentContent?.key); // old node is permanently removed
       return (currentContent = newContent);
     },
   };
+
+  function removeOldContent(content) {
+    const activeSites = Array.isArray(content) ? content : [content];
+    activeSites.forEach((site) => {
+      site?.remove?.();
+      templateCache.delete(site?.key);
+    });
+  }
 };
+
+const groupByKey = (array) =>
+  array.reduce(
+    (acc, curr) => ({
+      ...acc,
+      [curr.key]: curr,
+    }),
+    {},
+  );

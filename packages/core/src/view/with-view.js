@@ -1,6 +1,5 @@
 import { zip } from '../utils.js';
-import { findOrCreateTemplateRecord } from './blueprint.js';
-import { valueSymbol } from './update.js';
+import { valueSymbol, findOrCreateTemplateRecord } from './active-site.js';
 
 export const withView = (viewFactory) =>
   function* (deps) {
@@ -12,11 +11,13 @@ export const withView = (viewFactory) =>
       html: createHTML({ $signal, templateCache }),
     });
 
-    const { fragment } = view(yield);
-    $root.replaceChildren(fragment);
+    const record = view(yield);
+    $root.replaceChildren(record.content);
+    delete record.content; // free memory
 
     try {
       while (true) {
+        console.log(templateCache);
         view(yield);
       }
     } finally {
