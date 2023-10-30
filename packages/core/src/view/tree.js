@@ -32,7 +32,6 @@ const createTreeWalker = (fragment) =>
 
 function* _traverseTree(treeWalker) {
   let { currentNode } = treeWalker;
-  debugger;
   currentNode =
     currentNode.nodeType === 11 ? treeWalker.nextNode() : currentNode; // if a document fragment we "enter" the fragment
   while (currentNode) {

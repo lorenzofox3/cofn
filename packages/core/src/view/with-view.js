@@ -17,7 +17,6 @@ export const withView = (viewFactory) =>
 
     try {
       while (true) {
-        console.log(templateCache);
         view(yield);
       }
     } finally {

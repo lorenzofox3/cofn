@@ -40,10 +40,11 @@ export const findOrCreateTemplateRecord = ({
 };
 const buildBlueprint = ({ templateParts, interpolatedValues }) => {
   const [firstPart, ...rest] = templateParts;
-  const isKeyed = firstPart === '' && rest?.[0].startsWith('::'); // if template is like "key::<li></li>"
+  const isKeyed = firstPart === '' && rest?.[0].startsWith('::'); // if template is like `${key}::<li></li>`
   const actualFirstPart = isKeyed ? rest.shift().slice(2) : firstPart;
-  const template =
-    actualFirstPart + rest.map((part) => ACTIVE_SITE_POINTER + part).join('');
+  const template = (
+    actualFirstPart + rest.map((part) => ACTIVE_SITE_POINTER + part).join('')
+  ).trim();
   return {
     isKeyed,
     key: isKeyed ? interpolatedValues[0] : template,
@@ -88,10 +89,7 @@ const createTextOrElementNodeUpdateFn = ({
   const updateFn = isElementLike
     ? createUpdateDOMNode({ node, templateCache })
     : createUpdateTextContent({ node });
-  const update = (value) => {
-    const oldValue = update[valueSymbol];
-    return updateFn(value, oldValue);
-  };
+  const update = (value) => updateFn(value, update[valueSymbol]);
 
   return updateFn;
 };
@@ -128,7 +126,7 @@ const createUpdateAttribute =
       if (value === false) {
         ownerElement.removeAttribute(attributeName);
       } else {
-        ownerElement.setAttribute(attributeName, '');
+        ownerElement.setAttribute(attributeName, 'true');
       }
     } else {
       ownerElement.setAttribute(attributeName, value);
