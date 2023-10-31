@@ -1,4 +1,5 @@
-const not = (fn) => (arg) => !fn(arg);
+import { not } from './utils.js';
+
 const isCompleted = ({ completed }) => completed;
 export const getModelFromState = ({ todos, filter = 'all' }) => {
   const toBeCompletedCount = todos.filter(({ completed }) => !completed).length;

@@ -1,6 +1,6 @@
-import { getModelFromState } from './todo.model.js';
+import { getModelFromState } from '../todo.model.js';
 
-export const todoListControls =
+export const todoListControlsView =
   ({ html }) =>
   ({ state }) => {
     const { toBeCompletedCount, hasAnyItem } = getModelFromState(state);

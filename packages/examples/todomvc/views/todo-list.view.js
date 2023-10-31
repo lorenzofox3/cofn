@@ -1,4 +1,4 @@
-import { getModelFromState } from './todo.model.js';
+import { getModelFromState } from '../todo.model.js';
 export const TodoListView = ({ html, todoService, $host, $signal }) => {
   bind('todo-toggled', todoService.toggleTodo);
   bind('todo-removed', todoService.removeTodo);

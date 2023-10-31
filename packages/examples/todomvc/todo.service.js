@@ -1,16 +1,9 @@
 import { addTodo, removeTodo, toggleTodo } from './todo.model.js';
-
-const mapValues = (mapFn) => (obj) =>
-  Object.fromEntries(
-    Object.entries(obj).map(([key, value]) => [key, mapFn(value)]),
-  );
-
+import { mapValues } from './utils.js';
 const createService = ({ emitter = new EventTarget() } = {}) => {
   let todos = [];
 
-  const getState = () => ({
-    todos: structuredClone(todos),
-  });
+  const getState = () => structuredClone({ todos });
 
   const withEmitter = mapValues((method) => (args) => {
     todos = method({ ...args, todos });
