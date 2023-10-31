@@ -1,9 +1,7 @@
-import { once } from '../utils.js';
 import { createRange } from './range.js';
-import { traverseTree } from './tree.js';
+import { traverseTree, ACTIVE_SITE_POINTER } from './tree.js';
 
 export const valueSymbol = Symbol('value');
-export const ACTIVE_SITE_POINTER = '__AS__';
 
 const activeSiteSymbol = Symbol('activeSite');
 
@@ -107,13 +105,20 @@ const createUpdateDOMNode = ({ node, templateCache }) => {
 const createUpdateListener = ({
   node: { ownerElement, name: attributeName },
   $signal: signal,
-}) =>
-  once((value) => {
-    ownerElement.addEventListener(attributeName.slice(1), value, { signal });
+}) => {
+  const update = (value) => {
+    const eventName = attributeName.slice(1);
+    const currentListener = update[valueSymbol];
+    if (currentListener) {
+      ownerElement.removeEventListener(eventName, currentListener);
+    }
+    ownerElement.addEventListener(eventName, value, { signal });
     ownerElement.removeAttribute(attributeName);
     return value;
-  });
+  };
 
+  return update;
+};
 const createUpdateProperty =
   ({ node: { ownerElement, name: attributeName } }) =>
   (value) =>

@@ -1,4 +1,4 @@
-import { ACTIVE_SITE_POINTER } from './active-site.js';
+export const ACTIVE_SITE_POINTER = '__AS__';
 
 export const traverseTree = (templateElement) =>
   [..._traverseTree(createTreeWalker(templateElement))].flatMap(prepareNode);
