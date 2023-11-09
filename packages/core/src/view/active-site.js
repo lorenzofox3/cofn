@@ -106,6 +106,7 @@ const createUpdateListener = ({
   node: { ownerElement, name: attributeName },
   $signal: signal,
 }) => {
+  ownerElement.removeAttribute(attributeName);
   const update = (value) => {
     const eventName = attributeName.slice(1);
     const currentListener = update[valueSymbol];
@@ -113,16 +114,17 @@ const createUpdateListener = ({
       ownerElement.removeEventListener(eventName, currentListener);
     }
     ownerElement.addEventListener(eventName, value, { signal });
-    ownerElement.removeAttribute(attributeName);
     return value;
   };
 
   return update;
 };
-const createUpdateProperty =
-  ({ node: { ownerElement, name: attributeName } }) =>
-  (value) =>
-    (ownerElement[attributeName] = value);
+const createUpdateProperty = ({
+  node: { ownerElement, name: attributeName },
+}) => {
+  ownerElement.removeAttribute(attributeName);
+  return (value) => (ownerElement[attributeName.slice(1)] = value);
+};
 
 const createUpdateAttribute =
   ({ node: { ownerElement, name: attributeName } }) =>

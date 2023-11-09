@@ -3,30 +3,29 @@ import { valueSymbol, findOrCreateTemplateRecord } from './active-site.js';
 
 export const withView = (viewFactory) =>
   function* (deps) {
-    const templateCache = new Map();
-
     const { $root, $signal } = deps;
     const view = viewFactory({
       ...deps,
-      html: createHTML({ $signal, templateCache }),
+      html: createHTML({ $signal }),
     });
 
     const record = view(yield);
     $root.replaceChildren(record.content);
     delete record.content; // free memory
 
-    try {
-      while (true) {
-        view(yield);
-      }
-    } finally {
-      templateCache.clear();
+    while (true) {
+      view(yield);
     }
   };
 
-export const createHTML =
-  ({ $signal, templateCache }) =>
-  (templateParts, ...interpolatedValues) => {
+export const createHTML = ({ $signal }) => {
+  const templateCache = new Map();
+
+  $signal.addEventListener('abort', () => templateCache.clear(), {
+    once: true,
+  });
+
+  return (templateParts, ...interpolatedValues) => {
     const templateRecord = findOrCreateTemplateRecord({
       templateParts,
       interpolatedValues,
@@ -48,5 +47,6 @@ export const createHTML =
 
     return templateRecord;
   };
+};
 const shouldUpdateActiveSite = ([updateFn, newValue]) =>
   !Object.is(updateFn[valueSymbol], newValue);
