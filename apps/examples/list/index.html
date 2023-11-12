@@ -23,7 +23,8 @@
     ];
 
 
-    import {define, withView} from 'dom';
+    import {define} from '@cofn/core';
+    import {withView } from '@cofn/view';
     import {List} from './simple-list.js';
 
     define('super-list', withView(List));

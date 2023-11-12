@@ -1,6 +1,3 @@
-import { getAttributes } from './utils.js';
-
-// where component are infinite loops !
 export const withController = (controllerFn) => (view) =>
   function* (deps) {
     const state = {};
@@ -55,3 +52,8 @@ export const withController = (controllerFn) => (view) =>
     // initial render of the view
     render();
   };
+
+const getAttributes = (el) =>
+  Object.fromEntries(
+    el.getAttributeNames().map((name) => [name, el.getAttribute(name)]),
+  );

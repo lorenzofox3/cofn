@@ -1,5 +1,5 @@
-import { withController } from 'dom';
-import { withView } from 'dom';
+import { withController } from '@cofn/controllers';
+import { withView } from '@cofn/view';
 const countController = ({ state }) => {
   state.count = 0;
 

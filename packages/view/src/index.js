@@ -1,5 +1,10 @@
-import { zip } from '../utils.js';
 import { valueSymbol, findOrCreateTemplateRecord } from './active-site.js';
+
+const shouldUpdateActiveSite = ([updateFn, newValue]) =>
+  !Object.is(updateFn[valueSymbol], newValue);
+
+const zip = (array1, array2) =>
+  array1.map((item, index) => [item, array2[index]]);
 
 export const withView = (viewFactory) =>
   function* (deps) {
@@ -48,5 +53,3 @@ export const createHTML = ({ $signal }) => {
     return templateRecord;
   };
 };
-const shouldUpdateActiveSite = ([updateFn, newValue]) =>
-  !Object.is(updateFn[valueSymbol], newValue);

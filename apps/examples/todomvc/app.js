@@ -1,4 +1,5 @@
-import { define, withView } from 'dom';
+import { define } from '@cofn/core';
+import { withView } from '@cofn/view';
 import { TodoItemView } from './views/todo-item.view.js';
 import { connectTodoService } from './todo-list.controller.js';
 import { TodoListView } from './views/todo-list.view.js';

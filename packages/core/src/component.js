@@ -1,5 +1,3 @@
-import { getAttributes } from './utils.js';
-
 const defaultOptions = Object.freeze({
   observedAttributes: [],
   Klass: HTMLElement,
@@ -65,3 +63,8 @@ export const component = (renderLoop, opts = defaultOptions) => {
     }
   };
 };
+
+export const getAttributes = (el) =>
+  Object.fromEntries(
+    el.getAttributeNames().map((name) => [name, el.getAttribute(name)]),
+  );

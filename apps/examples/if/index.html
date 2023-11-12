@@ -7,7 +7,8 @@
 <if-test></if-test>
 <body>
 <script type="module">
-import {define, withView} from 'dom';
+import {define} from '@cofn/core';
+import {withView } from '@cofn/view';
 
 define('if-test', withView(({html, $host}) => {
     let count = 0;

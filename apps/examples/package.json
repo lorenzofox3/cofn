@@ -1,12 +1,9 @@
 {
-  "name": "examples",
-  "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite"
+    "dev": "node_modules/.bin/vite"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +11,8 @@
     "vite": "^4.5.0"
   },
   "dependencies": {
-    "dom": "workspace:*"
+    "@cofn/core": "workspace:*",
+    "@cofn/view": "workspace:*",
+    "@cofn/controllers": "workspace:*"
   }
 }

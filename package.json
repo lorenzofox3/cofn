@@ -1,7 +1,4 @@
 {
-  "name": "cofn",
-  "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "size": "rollup -f es -p node-resolve -p terser $ENTRY | brotli | wc -c"
@@ -18,6 +15,5 @@
     "prettier": "^3.0.3",
     "rollup": "^4.1.4",
     "terser": "^5.23.0"
-  },
-  "description": ""
+  }
 }
