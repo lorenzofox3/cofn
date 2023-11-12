@@ -2,9 +2,13 @@ export const List = ({ html, $host }) => {
   return (state) => {
     const {
       items = [
-        { id: 1, name: 'Article X' },
-        { id: 2, name: 'Article Y' },
-        { id: 3, name: 'Article Z' },
+        { id: 1, name: 'Item 1' },
+        { id: 2, name: 'Item 2' },
+        { id: 3, name: 'Item 3' },
+        { id: 4, name: 'Item 4' },
+        { id: 5, name: 'Item 5' },
+        { id: 6, name: 'Item 6' },
+        { id: 7, name: 'Item 7' },
       ],
     } = state;
     return html`

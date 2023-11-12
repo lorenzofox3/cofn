@@ -8,17 +8,18 @@ export const AddTodoView = ({ html, todoService }) => {
   };
 
   return () =>
-    html`<form @submit="${handleSubmit}">
-      <label
-        >What needs to be done ?
+    html`<form id="add-todo-form" @submit="${handleSubmit}">
+      <label for="add-todo-input">What needs to be done ?</label>
+      <div id="add-todo-input-container">
         <input
+          id="add-todo-input"
           placeholder="ex: build a todo app"
           autofocus
           required
           name="new-content"
           type="text"
         />
-      </label>
-      <button>Add +</button>
+        <button>Add +</button>
+      </div>
     </form>`;
 };

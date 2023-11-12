@@ -4,25 +4,39 @@
 
     <meta charset="UTF-8">
     <title>Todo MVC</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <script src="https://unpkg.com/@ungap/custom-elements@1.3.0/es.js"></script>
     <link rel="stylesheet" href="theme.css">
 </head>
-<body>
+<body class="flex-col">
 <h1>Todo list app</h1>
-<main>
+<main class="flex-col">
     <app-add-todo>
-        <form>
-            <label>What needs to be done ?
-                <input required name="new-content" type="text">
-            </label>
-            <button>Add +</button>
+        <form id="add-todo-form" @submit="${handleSubmit}">
+            <label for="add-todo-input">What needs to be done ?</label>
+            <div id="add-todo-input-container">
+                <input
+                        id="add-todo-input"
+                        placeholder="ex: build a todo app"
+                        autofocus
+                        required
+                        name="new-content"
+                        type="text"
+                />
+                <button>Add +</button>
+            </div>
         </form>
     </app-add-todo>
-    <section>
-    <header is="app-controls"></header>
-    <app-todo-list>
-        Loading your todos...
-    </app-todo-list>
+    <section id="todo-list" class="flex-col">
+        <h2 class="visually-hidden" id="todo-list-header">Todo list</h2>
+        <header is="app-controls"></header>
+        <p id="navigation-info" class="visually-hidden">
+            You can go through the various todos by using <kbd>Arrow Down</kbd> and <kbd>Arrow Up</kbd>. Once an item
+            has focus, use the <kbd>TAB</kbd> sequence as usual get to the various controls
+        </p>
+        <app-todo-list aria-labelledby="todo-list-header" aria-describedby="navigation-info" class="flex-col" tabindex="0 ">
+            Loading your todos...
+        </app-todo-list>
     </section>
 </main>
 <script type="module" src="app.js"></script>

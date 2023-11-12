@@ -1,9 +1,23 @@
-import { addTodo, removeTodo, toggleTodo } from './todo.model.js';
+import {
+  addTodo,
+  clearCompleted,
+  removeTodo,
+  toggleAll,
+  toggleTodo,
+} from './todo.model.js';
 import { mapValues } from './utils.js';
-const createService = ({ emitter = new EventTarget() } = {}) => {
-  let todos = [];
 
-  const getState = () => structuredClone({ todos });
+const { localStorage } = window;
+
+const createService = ({
+  emitter = new EventTarget(),
+  todos: initialTodos = [],
+  filter: initialFilter = 'all',
+} = {}) => {
+  let todos = [...initialTodos];
+  let filter = initialFilter;
+
+  const getState = () => structuredClone({ todos, filter });
 
   const withEmitter = mapValues((method) => (args) => {
     todos = method({ ...args, todos });
@@ -17,11 +31,22 @@ const createService = ({ emitter = new EventTarget() } = {}) => {
       addTodo,
       removeTodo,
       toggleTodo,
+      clearCompleted,
+      toggleAll,
     }),
+    updateFilter({ filter: newFilter }) {
+      filter = newFilter;
+      emitter.dispatchEvent(new CustomEvent('state-changed'));
+    },
   };
 };
 
-const defaultImpl = createService();
+const initialState = JSON.parse(localStorage.getItem('state') || '{}');
+const defaultImpl = createService(initialState);
+
+defaultImpl.addEventListener('state-changed', () =>
+  localStorage.setItem('state', JSON.stringify(defaultImpl.getState())),
+);
 
 export const injectTodoService =
   (fn) =>

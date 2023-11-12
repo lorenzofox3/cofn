@@ -10,7 +10,7 @@ import { compose } from './utils.js';
 const connectWithView = compose([connectTodoService, withView]);
 
 define('app-todo', withView(TodoItemView), {
-  shadow: { mode: 'closed' },
+  shadow: { mode: 'open', delegatesFocus: true },
   observedAttributes: ['completed'],
 });
 define('app-todo-list', connectWithView(TodoListView));

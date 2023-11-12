@@ -4,15 +4,38 @@ export const TodoItemView = ({ html, $host }) => {
   const handleClick = dispatch('todo-removed');
 
   return ({ attributes }) =>
-    html` <label
+    html`<style>
+        label {
+          flex-grow: 1;
+          display: flex;
+          align-items: center;
+          gap: 1em;
+        }
+
+        input:checked + span {
+          text-decoration: line-through;
+          opacity: 0.3;
+        }
+
+        #remove-button {
+          color: #a80000;
+          border-color: #a80000 !important;
+        }
+      </style>
+      <label
         ><input
+          part="checkbox"
           @change="${handleChange}"
           type="checkbox"
-          checked="${attributes.completed !== undefined}"
+          .checked="${attributes.completed !== undefined}"
         />
-        <slot></slot>
+        <span>
+          <slot></slot>
+        </span>
       </label>
-      <button @click="${handleClick}">X</button>`;
+      <button id="remove-button" part="button" @click="${handleClick}">
+        X<span>Remove</span>
+      </button>`;
 
   function dispatch(eventName) {
     return (ev) => {

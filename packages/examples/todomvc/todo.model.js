@@ -15,6 +15,7 @@ export const getModelFromState = ({ todos, filter = 'all' }) => {
     hasAnyCompleted,
     hasAnyItem: todos.length > 0,
     areAllCompleted: toBeCompletedCount === 0 && hasAnyCompleted,
+    filter,
   };
 };
 
@@ -32,3 +33,13 @@ export const toggleTodo = ({ todos, id }) =>
   todos.map((todo) =>
     todo.id === id ? { ...todo, completed: !todo.completed } : todo,
   );
+
+export const clearCompleted = ({ todos }) => todos.filter(not(isCompleted));
+
+export const toggleAll = ({ todos }) => {
+  const { areAllCompleted } = getModelFromState({ todos });
+  return todos.map((todo) => ({
+    ...todo,
+    completed: !areAllCompleted,
+  }));
+};
