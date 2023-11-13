@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
+  "types": "./src/index.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
       "import": {
+        "types": "./src/index.d.ts",
         "default": "./src/index.js"
       }
     }
