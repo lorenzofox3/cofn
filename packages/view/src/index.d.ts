@@ -1,11 +1,11 @@
-import { ComponentRoutine } from '@cofn/core/src';
+import { ComponentDependencies, ComponentRoutine } from '@cofn/core';
 
 type TemplateRecord = {
   content: DocumentFragment;
 };
 
-type TemplatTagFunction = (
-  templateParts: [string, ...string[]],
+type TemplateTagFunction = (
+  templateParts: TemplateStringsArray,
   ...values: unknown[]
 ) => TemplateRecord;
 
@@ -13,28 +13,12 @@ export declare function createHTML({
   $signal,
 }: {
   $signal: AbortSignal;
-}): TemplatTagFunction;
+}): TemplateTagFunction;
 
-type CoRoutineDeps<State, Root> = {
-  $signal: AbortSignal;
-  $host: HTMLElement & {
-    render: (input?: State & { attributes?: Record<string, string> }) => void;
-  };
-  $root: Root;
-};
+type ViewFactory<State> = (
+  dependencies: ComponentDependencies<{ html: TemplateTagFunction }>,
+) => (state: State & { attributes: Record<string, string> }) => TemplateRecord;
 
-export declare function withView<
-  State,
-  Root extends HTMLElement | ShadowRoot = HTMLElement,
->(
-  viewFactory: (
-    deps: CoRoutineDeps<State, Root> & { html: TemplatTagFunction },
-  ) => (
-    state: State & { attributes: Record<string, string> },
-  ) => TemplateRecord,
-): (
-  view: (deps: CoRoutineDeps<State, Root>) => {
-    next(input?: State & { attributes: Record<string, string> }): any;
-    return(value: any): void;
-  },
-) => ComponentRoutine<State, Root>;
+export declare function withView<State>(
+  viewFactory: ViewFactory<State>,
+): ComponentRoutine<State>;

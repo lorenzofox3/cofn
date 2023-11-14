@@ -1,34 +1,24 @@
 type ComponentTag = `${string}-${string}`;
 
-export type ComponentRoutine<
-  RenderingState,
-  Root extends HTMLElement | ShadowRoot = HTMLElement,
-> = (x: {
+export type ComponentDependencies<T> = T & {
   $signal: AbortSignal;
   $host: HTMLElement & {
-    render: (
-      input?: RenderingState & { attributes?: Record<string, string> },
-    ) => void;
+    render: <Update>(input?: Update) => void;
   };
-  $root: Root;
-}) => {
+  $root: ShadowRoot;
+};
+export type ComponentRoutine<RenderingState, ExtraDep = {}> = (
+  dependencies: ComponentDependencies<ExtraDep>,
+) => {
   next(input?: RenderingState & { attributes: Record<string, string> }): any;
   return(value: any): void;
 };
 
 export declare function define<RenderingState>(
   tag: ComponentTag,
-  component: ComponentRoutine<RenderingState, ShadowRoot>,
-  options: {
-    shadow: ShadowRootInit;
-    extends?: string;
-    observedAttributes?: string[];
-  },
-): void;
-export declare function define<RenderingState>(
-  tag: ComponentTag,
   component: ComponentRoutine<RenderingState>,
   options?: {
+    shadow?: ShadowRootInit;
     extends?: string;
     observedAttributes?: string[];
   },
