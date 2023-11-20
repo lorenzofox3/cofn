@@ -1,4 +1,4 @@
-import { getModelFromState } from '../todo.model.js';
+import { getModelFromState } from '../todo.model.ts';
 
 export const todoListControlsView = ({ html, todoService }) => {
   const handleChange = ({ target }) =>

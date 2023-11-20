@@ -4,7 +4,7 @@ import {
   removeTodo,
   toggleAll,
   toggleTodo,
-} from './todo.model.js';
+} from './todo.model.ts';
 import { mapValues } from './utils.js';
 
 const { localStorage } = window;

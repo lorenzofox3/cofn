@@ -1,4 +1,4 @@
-import { injectTodoService } from './todo.service.js';
+import { injectTodoService } from './todo.service.ts';
 export const connectTodoService = (comp) => {
   return injectTodoService(connector);
   function* connector({ $signal, todoService, $host, ...deps }) {

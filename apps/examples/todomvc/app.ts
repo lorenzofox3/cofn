@@ -3,8 +3,8 @@ import { withView } from '@cofn/view';
 import { TodoItemView } from './views/todo-item.view.js';
 import { connectTodoService } from './todo-list.controller.js';
 import { TodoListView } from './views/todo-list.view.js';
-import { AddTodoView } from './views/add-todo.view.js';
-import { injectTodoService } from './todo.service.js';
+import { AddTodoView } from './views/add-todo.view.ts';
+import { injectTodoService } from './todo.service.ts';
 import { todoListControlsView } from './views/todo-list-controls.view.js';
 import { compose } from './utils.js';
 
