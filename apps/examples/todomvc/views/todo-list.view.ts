@@ -1,5 +1,10 @@
 import { getModelFromState } from '../todo.model.ts';
-export const TodoListView = ({ html, todoService, $host, $signal }) => {
+import { TodoService, TodoServiceState } from '../todo.service.ts';
+import { ViewFactory } from '@cofn/view';
+export const TodoListView: ViewFactory<
+  { todoService: TodoService },
+  { state: TodoServiceState }
+> = ({ html, todoService, $host, $signal }) => {
   bind('todo-toggled', todoService.toggleTodo);
   bind('todo-removed', (detail) => {
     todoService.removeTodo(detail);
@@ -34,6 +39,8 @@ export const TodoListView = ({ html, todoService, $host, $signal }) => {
       const node =
         key === 'ArrowDown' ? treeWalker.nextNode() : treeWalker.previousNode();
       treeWalker.currentNode = node || treeWalker.currentNode;
+      // todo
+      // @ts-ignore
       treeWalker.currentNode.focus();
     }
   }

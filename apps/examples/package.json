@@ -8,11 +8,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "typescript": "^5.2.2",
     "vite": "^4.5.0"
   },
   "dependencies": {
+    "@cofn/controllers": "workspace:*",
     "@cofn/core": "workspace:*",
-    "@cofn/view": "workspace:*",
-    "@cofn/controllers": "workspace:*"
+    "@cofn/view": "workspace:*"
   }
 }

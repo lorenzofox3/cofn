@@ -47,13 +47,13 @@ input {
     font-size: 0.9em;
 }
 
-input[type=checkbox], ::part(checkbox) {
-    appearance: none;
-    display: inline-block;
-    background: red;
-    width: 1em;
-    height: 1em;
-}
+/*input[type=checkbox], ::part(checkbox) {*/
+/*    appearance: none;*/
+/*    display: inline-block;*/
+/*    background: red;*/
+/*    width: 1em;*/
+/*    height: 1em;*/
+/*}*/
 
 fieldset {
     background: white;

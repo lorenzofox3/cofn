@@ -1,12 +1,27 @@
-import { injectTodoService } from './todo.service.ts';
-export const connectTodoService = (comp) => {
+import {
+  injectTodoService,
+  TodoService,
+  TodoServiceState,
+} from './todo.service.ts';
+import { ComponentDependencies, ComponentRoutine } from '@cofn/core';
+export const connectTodoService = (
+  comp: ComponentRoutine<
+    { todoService: TodoService },
+    { state: TodoServiceState }
+  >,
+) => {
   return injectTodoService(connector);
-  function* connector({ $signal, todoService, $host, ...deps }) {
+  function* connector({
+    $signal,
+    todoService,
+    $host,
+    ...deps
+  }: ComponentDependencies<{ todoService: TodoService }>) {
     const { render: _render } = $host;
 
-    $host.render = (args = {}) =>
+    $host.render = (args?) =>
       _render({
-        ...args,
+        ...(args ?? {}),
         state: todoService.getState(),
       });
 

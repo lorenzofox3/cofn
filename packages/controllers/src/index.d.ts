@@ -10,11 +10,11 @@ export declare function withController<State, ControllerAPI>(
   controllerFn: ControllerFn<State, ControllerAPI>,
 ): (
   view: ComponentRoutine<
-    State,
     {
       controller: ControllerAPI & {
         getState: () => State;
       };
-    }
+    },
+    State
   >,
 ) => ComponentRoutine<State>;

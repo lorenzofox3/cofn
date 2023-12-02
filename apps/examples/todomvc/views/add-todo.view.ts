@@ -1,4 +1,10 @@
-export const AddTodoView = ({ html, todoService }) => {
+import { TodoService } from '../todo.service.ts';
+import { ViewFactory } from '@cofn/view';
+
+export const AddTodoView: ViewFactory<{ todoService: TodoService }> = ({
+  html,
+  todoService,
+}) => {
   const handleSubmit = (ev) => {
     ev.preventDefault();
     const { target: form } = ev;

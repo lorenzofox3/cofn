@@ -18,7 +18,7 @@ export const component = (renderLoop, opts = defaultOptions) => {
       this.#abortController = new AbortController();
       const $host = this;
       const $root = shadow !== undefined ? $host.attachShadow(shadow) : $host;
-      this.#loop = renderLoop({
+      this.#loop = renderLoop.bind(this)({
         $host,
         $root,
         $signal: this.#abortController.signal,

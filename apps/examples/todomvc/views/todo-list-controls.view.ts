@@ -1,6 +1,11 @@
 import { getModelFromState } from '../todo.model.ts';
+import { ViewFactory } from '@cofn/view';
+import { TodoService, TodoServiceState } from '../todo.service.ts';
 
-export const todoListControlsView = ({ html, todoService }) => {
+export const todoListControlsView: ViewFactory<
+  { todoService: TodoService },
+  { state: TodoServiceState }
+> = ({ html, todoService }) => {
   const handleChange = ({ target }) =>
     todoService.updateFilter({ filter: target.value });
 

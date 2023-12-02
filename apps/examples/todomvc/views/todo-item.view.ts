@@ -1,4 +1,6 @@
-export const TodoItemView = ({ html, $host }) => {
+import { ViewFactory } from '@cofn/view';
+
+export const TodoItemView: ViewFactory = ({ html, $host }) => {
   const id = Number($host.getAttribute('data-id'));
   const handleChange = dispatch('todo-toggled');
   const handleClick = dispatch('todo-removed');
