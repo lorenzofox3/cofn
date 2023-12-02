@@ -46,7 +46,7 @@ export const component = (renderLoop, opts = defaultOptions) => {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-      if (oldValue !== newValue && !this.#pendingUpdate) {
+      if (oldValue !== newValue && !this.#pendingUpdate && this.isConnected) {
         this.#pendingUpdate = true;
         window.queueMicrotask(() => {
           this.#pendingUpdate = false;
