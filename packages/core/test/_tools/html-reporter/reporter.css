@@ -1,0 +1,19 @@
+body {
+    box-sizing: border-box;
+}
+
+body * {
+    box-sizing: inherit;
+}
+
+#report-container{
+    height: 100svh;
+}
+
+.success {
+    background: #3bcb3b;
+}
+
+.error {
+    background: #ff8f69;
+}

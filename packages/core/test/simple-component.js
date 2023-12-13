@@ -1,8 +1,8 @@
-import { test } from 'zora/es';
 import { define } from '../src/index.js';
+import { test } from './_tools/test.js';
 import { nextTick } from './utils.js';
 
-const body = document.querySelector('body');
+const debug = document.getElementById('debug');
 define('simple-component', function* ({ $root, $host }) {
   $host.hasBeenRemoved = false;
 
@@ -16,11 +16,12 @@ define('simple-component', function* ({ $root, $host }) {
   }
 });
 
-const withEl = (specFn) => (assert) => {
-  const el = document.createElement('simple-component');
-  body.appendChild(el);
-  return specFn({ ...assert, el });
-};
+const withEl = (specFn) =>
+  function zora_spec_fn(assert) {
+    const el = document.createElement('simple-component');
+    debug.appendChild(el);
+    return specFn({ ...assert, el });
+  };
 test(
   'define a simple component from a coroutine',
   withEl(({ eq, el }) => {
@@ -56,7 +57,7 @@ test(
   'when moved around, the finally flow is not invoked',
   withEl(async ({ eq, el }) => {
     eq(el.hasBeenRemoved, false);
-    body.prepend(el);
+    debug.prepend(el);
 
     await nextTick();
 

@@ -23,6 +23,7 @@
   "author": "Laurent RENARD",
   "devDependencies": {
     "vite": "^5.0.4",
-    "zora": "^5.2.0"
+    "zora": "^5.2.0",
+    "zora-reporters": "^1.4.0"
   }
 }

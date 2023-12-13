@@ -1,4 +1,4 @@
-import { test } from 'zora/es';
+import { test } from './_tools/test.js';
 import { define } from '../src/index.js';
 import { nextTick } from './utils.js';
 

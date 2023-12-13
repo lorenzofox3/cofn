@@ -3,14 +3,27 @@
 <head>
   <meta charset='UTF-8'>
   <title>Test suite for package core</title>
+  <link rel='stylesheet' href="./_tools/html-reporter/reporter.css" type="text/css">
 </head>
 <body>
-<script>
-  // window.ZORA_ONLY=true;
-</script>
-<script type='module'>
-  import './simple-component.js';
-  import './reactive-attributes.js'
-</script>
+  <div id="report-container">
+    <h1>Tests reporting</h1>
+    <ol id="report"></ol>
+  </div>
+  <div id="debug"></div>
 </body>
+<script type='module'>
+  import { report } from './_tools/test.js';
+  import './simple-component.js';
+  import './reactive-attributes.js';
+
+  import { createHTMLReporter, createSocketSink } from './_tools/writable.js';
+
+  const [st1, st2] = report().tee();
+  st1.pipeTo(createSocketSink(import.meta.hot));
+  st2.pipeTo(createHTMLReporter({element: document.getElementById('report')}))
+
+
+
+</script>
 </html>
