@@ -16,14 +16,13 @@
   import { report } from './_tools/test.js';
   import './simple-component.js';
   import './reactive-attributes.js';
+  import './abort-signal.js';
+  import './shadow-dom.js';
 
   import { createHTMLReporter, createSocketSink } from './_tools/writable.js';
 
   const [st1, st2] = report().tee();
   st1.pipeTo(createSocketSink(import.meta.hot));
   st2.pipeTo(createHTMLReporter({element: document.getElementById('report')}))
-
-
-
 </script>
 </html>
