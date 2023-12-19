@@ -1,0 +1,35 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  all:
+    name: build and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: 8
+          run_install: true
+      - name: Build
+        run: pnpm run build
+      - name: Install browsers
+        run: npx playwright install --with-deps
+      - name: Test
+        run: pnpm --filter='./packages/core' test:ci
+
