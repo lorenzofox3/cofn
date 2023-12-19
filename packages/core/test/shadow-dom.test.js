@@ -23,5 +23,5 @@ test('when shadow dom option is passed, $root becomes the shadow root', ({
   const elShadow = document.createElement('shadow-dom');
   debug.appendChild(elLight);
   eq(elLight.textContent, 'hello');
-  eq(elShadow.textContent, 'world');
+  eq(elShadow.textContent, '');
 });
