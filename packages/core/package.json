@@ -18,8 +18,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "test:ci": "node test/run-ci.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:ci": "node test/run-ci.js"
   },
   "author": "Laurent RENARD",
   "devDependencies": {
