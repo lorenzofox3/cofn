@@ -18,10 +18,12 @@
   },
   "scripts": {
     "dev": "vite",
+    "test:ci": "node test/run-ci.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Laurent RENARD",
   "devDependencies": {
+    "playwright": "^1.40.1",
     "vite": "^5.0.4",
     "zora": "^5.2.0",
     "zora-reporters": "^1.4.0"

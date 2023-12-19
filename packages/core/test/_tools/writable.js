@@ -1,5 +1,5 @@
-export const createSocketSink = (ws) =>
-  new WritableStream({
+export const createSocketSink = (ws) => {
+  return new WritableStream({
     start() {
       ws.send('zora', { type: 'STREAM_STARTED' });
     },
@@ -10,5 +10,6 @@ export const createSocketSink = (ws) =>
       ws.send('zora', { type: 'STREAM_ENDED' });
     },
   });
+};
 
 export { createHTMLReporter } from './html-reporter/repoter.js';

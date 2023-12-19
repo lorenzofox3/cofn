@@ -51,9 +51,12 @@ importers:
 
   packages/core:
     devDependencies:
+      playwright:
+        specifier: ^1.40.1
+        version: 1.40.1
       vite:
         specifier: ^5.0.4
-        version: 5.0.4(terser@5.23.0)
+        version: 5.0.4
       zora:
         specifier: ^5.2.0
         version: 5.2.0
@@ -851,6 +854,14 @@ packages:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
     dev: true
 
+  /fsevents@2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
   /fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
@@ -904,6 +915,22 @@ packages:
   /picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
+    dev: true
+
+  /playwright-core@1.40.1:
+    resolution: {integrity: sha512-+hkOycxPiV534c4HhpfX6yrlawqVUzITRKwHAmYfmsVreltEl6fAZJ3DPfLMOODw0H3s1Itd6MDCWmP1fl/QvQ==}
+    engines: {node: '>=16'}
+    hasBin: true
+    dev: true
+
+  /playwright@1.40.1:
+    resolution: {integrity: sha512-2eHI7IioIpQ0bS1Ovg/HszsN/XKNwEG1kbzSDDmADpclKc7CyqkHw7Mg2JCz/bbCxg25QUPcjksoMW7JcIFQmw==}
+    engines: {node: '>=16'}
+    hasBin: true
+    dependencies:
+      playwright-core: 1.40.1
+    optionalDependencies:
+      fsevents: 2.3.2
     dev: true
 
   /postcss@8.4.31:
@@ -1073,7 +1100,7 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vite@5.0.4(terser@5.23.0):
+  /vite@5.0.4:
     resolution: {integrity: sha512-RzAr8LSvM8lmhB4tQ5OPcBhpjOZRZjuxv9zO5UcxeoY2bd3kP3Ticd40Qma9/BqZ8JS96Ll/jeBX9u+LJZrhVg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -1104,7 +1131,6 @@ packages:
       esbuild: 0.19.8
       postcss: 8.4.31
       rollup: 4.6.1
-      terser: 5.23.0
     optionalDependencies:
       fsevents: 2.3.3
     dev: true
