@@ -22,9 +22,25 @@ const PORT = 3001;
     );
 
     await Promise.all(
-      browsers.map(async (browser) => {
-        const page = await browser.newPage();
-        return page.goto(`http://localhost:${PORT}/test/test-suite.html`);
+      browsers.map((browser) => {
+        console.log(browser._name);
+        return new Promise((resolve, reject) => {
+          browser
+            .newPage()
+            .then((page) => {
+              page.on('websocket', (webSocket) => {
+                webSocket.on('framesent', ({ payload }) => {
+                  const asJson = JSON.parse(payload);
+                  if (asJson?.data?.type === 'STREAM_ENDED') {
+                    resolve();
+                  }
+                });
+              });
+
+              return page.goto(`http://localhost:${PORT}/test/test-suite.html`);
+            })
+            .catch(reject);
+        });
       }),
     );
   } catch (e) {
