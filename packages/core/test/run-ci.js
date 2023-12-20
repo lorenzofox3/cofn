@@ -16,9 +16,7 @@ const PORT = 3001;
     await server.listen();
 
     browsers = await Promise.all(
-      browserList.map((browserApp) => {
-        return browserApp.launch({ headless: true });
-      }),
+      browserList.map((browserApp) => browserApp.launch({ headless: true })),
     );
 
     await Promise.all(

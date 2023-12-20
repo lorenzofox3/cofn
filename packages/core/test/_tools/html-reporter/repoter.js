@@ -1,13 +1,7 @@
-const template = document.createElement('template');
-template.innerHTML = `
-<li></li>
-`;
+import { Diagnostic, TestResult } from './components.js';
 
-const createTestElement = ({ data }) => {
-  const container = template.content.cloneNode(true);
-  container.querySelector('li').textContent = data.description;
-  return container.firstElementChild;
-};
+customElements.define('zora-diagnostic', Diagnostic);
+customElements.define('zora-test-result', TestResult);
 
 export const createHTMLReporter = ({ element }) => {
   const rootEl = element || document.querySelector('body');
@@ -20,12 +14,19 @@ export const createHTMLReporter = ({ element }) => {
       const { type, data } = message;
       switch (type) {
         case 'TEST_START': {
-          const el = (currentTestEl = createTestElement({ data }));
+          const el = (currentTestEl =
+            document.createElement('zora-test-result'));
           rootEl.appendChild(el);
+          el.description = data.description;
           break;
         }
         case 'ASSERTION': {
-          currentTestEl.classList.add(data.pass === true ? 'success' : 'error');
+          currentTestEl.addAssertion(data);
+          console.log(data);
+          break;
+        }
+        case 'TEST_END': {
+          currentTestEl.endsTest(data);
           break;
         }
       }
