@@ -1,4 +1,5 @@
-import { Diagnostic, TestResult } from './components.js';
+import { Diagnostic } from './diagnostic.component.js';
+import { TestResult } from './test-result.component.js';
 
 customElements.define('zora-diagnostic', Diagnostic);
 customElements.define('zora-test-result', TestResult);
