@@ -78,15 +78,23 @@ export class TestResult extends HTMLElement {
 
 const diagnosticTemplate = document.createElement('template');
 diagnosticTemplate.innerHTML = `
-<details>
+<details open>
   <summary>
     <span>
       <span class="description"></span>
       <span>at <a class="location"></a></span>
     </span>
 </summary>
-<pre>
-</pre>
+<div class="comparison-container">
+  <figure>
+    <figcatpion>actual</figcatpion>
+    <pre></pre>
+  </figure>
+  <figure>
+    <figcatpion>expected</figcatpion>
+    <pre></pre>
+  </figure>
+</div>
 </details>
 `;
 export class Diagnostic extends HTMLElement {
@@ -117,17 +125,15 @@ export class Diagnostic extends HTMLElement {
     ).textContent = `[${operator}] ${description}`;
 
     const locationElement = this.querySelector('.location');
-    const f = new URL(at);
-    const [_, row, column] = f.search.split(':');
-    locationElement.textContent = `${f.pathname}:${row}:${column}`;
+    const locationURL = new URL(at);
+    const [_, row, column] = locationURL.search.split(':');
+    locationElement.textContent = `${locationURL.pathname}:${row}:${column}`;
     locationElement.setAttribute('href', at);
-    this.querySelector('pre').textContent = JSON.stringify(
-      {
-        expected,
-        actual,
-      },
-      null,
-      4,
-    );
+
+    const [actualEl, expectedEl] = this.querySelectorAll('pre');
+    actualEl.textContent = prettyPrint(actual);
+    expectedEl.textContent = prettyPrint(expected);
   }
 }
+
+const prettyPrint = (value) => JSON.stringify(value, null, 4);

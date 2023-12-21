@@ -81,8 +81,8 @@ zora-test-result svg {
 
 zora-test-result section {
     --_spacing: var(--spacing, 1em);
-    display: grid;
-    place-items: center;
+    display: flex;
+    flex-direction: column;
     padding: var(--_spacing);
     border-top: 1px solid currentColor;
 }
@@ -117,7 +117,6 @@ zora-test-result.failure .icon-container {
 
 zora-diagnostic {
     font-size: 0.9em;
-    width: 100%;
 }
 
 zora-diagnostic pre {
@@ -128,6 +127,7 @@ zora-diagnostic pre {
     background: var(--_bg-color);
     border-radius: 4px;
     box-shadow: 0 0 2px 0 color-mix(in srgb, black 70%, var(--_bg-color)) inset;
+    overflow: scroll;
 }
 
 zora-diagnostic summary {
@@ -161,4 +161,19 @@ zora-diagnostic a {
     font-size: 0.9em;
 }
 
+zora-diagnostic .comparison-container{
+    --_spacing: var(--spacing, 1em);
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--_spacing);
+    padding-block: var(--_spacing);
+}
+
+zora-diagnostic figure {
+    margin: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    flex-basis: calc((100% - var(--_spacing)) / 2);
+}
 
