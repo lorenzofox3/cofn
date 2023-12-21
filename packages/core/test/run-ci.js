@@ -2,6 +2,7 @@ import { createServer } from 'vite';
 import { firefox, chromium, webkit } from 'playwright';
 
 const PORT = 3001;
+const TIMEOUT = 30_000;
 
 (async () => {
   let server,
@@ -23,21 +24,30 @@ const PORT = 3001;
       browsers.map((browser) => {
         console.log(browser._name);
         return new Promise((resolve, reject) => {
-          browser
-            .newPage()
-            .then((page) => {
-              page.on('websocket', (webSocket) => {
-                webSocket.on('framesent', ({ payload }) => {
-                  const asJson = JSON.parse(payload);
-                  if (asJson?.data?.type === 'STREAM_ENDED') {
-                    resolve();
-                  }
+          let timerId;
+          Promise.race([
+            browser
+              .newPage()
+              .then((page) => {
+                page.on('websocket', (webSocket) => {
+                  webSocket.on('framesent', ({ payload }) => {
+                    const asJson = JSON.parse(payload);
+                    if (asJson?.data?.type === 'STREAM_ENDED') {
+                      clearTimeout(timerId);
+                      resolve();
+                    }
+                  });
                 });
-              });
 
-              return page.goto(`http://localhost:${PORT}/test/test-suite.html`);
-            })
-            .catch(reject);
+                return page.goto(
+                  `http://localhost:${PORT}/test/test-suite.html`,
+                );
+              })
+              .catch(reject),
+            new Promise((resolve, reject) => {
+              timerId = setTimeout(() => reject('timeout'), TIMEOUT);
+            }),
+          ]);
         });
       }),
     );
