@@ -1,7 +1,7 @@
 export const withController = (controllerFn) => (view) =>
   function* (deps) {
     const state = {};
-    let connected = false;
+    const { $host } = deps;
     let pendingUpdate = false;
 
     const ctrl = {
@@ -15,11 +15,11 @@ export const withController = (controllerFn) => (view) =>
           set(obj, prop, value) {
             obj[prop] = value;
             // no need to render if the view is not connected or is already rendering
-            if (connected && !pendingUpdate) {
+            if ($host.isConnected && !pendingUpdate) {
               pendingUpdate = true;
               window.queueMicrotask(() => {
                 pendingUpdate = false;
-                render();
+                $host.render();
               });
             }
             return true;
@@ -35,8 +35,11 @@ export const withController = (controllerFn) => (view) =>
       controller: ctrl,
     });
 
-    const render = () =>
-      componentInstance.next({
+    // overwrite render fn
+    const _render = $host.render.bind($host);
+    $host.render = (args = {}) =>
+      _render({
+        ...args,
         state: ctrl.getState(),
       });
 
@@ -45,12 +48,7 @@ export const withController = (controllerFn) => (view) =>
       once: true,
     });
 
-    // enter the rendering loop
-    componentInstance.next();
-    connected = true;
-
-    // initial render of the view
-    render();
+    yield* componentInstance;
   };
 
 const getAttributes = (el) =>

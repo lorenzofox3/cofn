@@ -81,7 +81,7 @@ diagnosticTemplate.innerHTML = `
 <details open>
   <summary>
     <span>
-      <span class="description"></span>
+      <span class="description"></span><br/>
       <span>at <a class="location"></a></span>
     </span>
 </summary>

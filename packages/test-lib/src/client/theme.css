@@ -5,15 +5,8 @@
     --spacing: 0.75em;
 }
 
-@media (prefers-color-scheme: light) {
-    :root{
-        --disclosure-adorner-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" viewBox="0 0 16 16"><path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg>');
-    }
-}
-
 @media (prefers-color-scheme: dark) {
     :root {
-        --disclosure-adorner-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" viewBox="0 0 16 16"><path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg>');
         --code-block-bg-color: #313044;
     }
 }
@@ -44,8 +37,8 @@ body * {
 }
 
 #report {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-auto-flow: row;
     gap: 0.5em;
 }
 
@@ -81,8 +74,6 @@ zora-test-result svg {
 
 zora-test-result section {
     --_spacing: var(--spacing, 1em);
-    display: flex;
-    flex-direction: column;
     padding: var(--_spacing);
     border-top: 1px solid currentColor;
 }
@@ -131,40 +122,12 @@ zora-diagnostic pre {
     flex-grow: 1;
 }
 
-zora-diagnostic summary {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-
-zora-diagnostic summary::before {
-    transition: transform 0.2s ease-out;
-    content: '';
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    background: var(--disclosure-adorner-url);
-}
-
-zora-diagnostic details[open] > summary::before {
-    transform: rotateZ(90deg);
-}
-
-
-zora-diagnostic summary > span {
-    display: flex;
-    flex-direction: column;
-}
-
 zora-diagnostic a {
     font-size: 0.9em;
 }
 
 zora-diagnostic .comparison-container{
     --_spacing: var(--spacing, 1em);
-    width: 100%;
     display: flex;
     flex-wrap: wrap;
     gap: var(--_spacing);
@@ -174,10 +137,7 @@ zora-diagnostic .comparison-container{
 zora-diagnostic figure {
     margin: 0;
     flex-grow: 1;
-    max-width: 100%;
     flex-basis: calc((100% - var(--_spacing)) / 2);
     display: flex;
     flex-direction: column;
 }
-
-

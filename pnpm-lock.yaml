@@ -44,10 +44,19 @@ importers:
         version: 4.5.0(terser@5.23.0)
 
   packages/controllers:
-    dependencies:
+    devDependencies:
       '@cofn/core':
         specifier: workspace:*
         version: link:../core
+      '@cofn/test-lib':
+        specifier: workspace:*
+        version: link:../test-lib
+      playwright:
+        specifier: ^1.40.1
+        version: 1.40.1
+      vite:
+        specifier: ^5.0.4
+        version: 5.0.4(terser@5.23.0)
 
   packages/core:
     devDependencies:
@@ -59,7 +68,7 @@ importers:
         version: 1.40.1
       vite:
         specifier: ^5.0.4
-        version: 5.0.4
+        version: 5.0.4(terser@5.23.0)
 
   packages/test-lib:
     dependencies:
@@ -1106,7 +1115,7 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vite@5.0.4:
+  /vite@5.0.4(terser@5.23.0):
     resolution: {integrity: sha512-RzAr8LSvM8lmhB4tQ5OPcBhpjOZRZjuxv9zO5UcxeoY2bd3kP3Ticd40Qma9/BqZ8JS96Ll/jeBX9u+LJZrhVg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -1137,6 +1146,7 @@ packages:
       esbuild: 0.19.8
       postcss: 8.4.31
       rollup: 4.6.1
+      terser: 5.23.0
     optionalDependencies:
       fsevents: 2.3.3
     dev: true

@@ -1,6 +1,5 @@
 {
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "size": "rollup -f es -p node-resolve -p terser $ENTRY | brotli | wc -c"
   },
   "prettier": {

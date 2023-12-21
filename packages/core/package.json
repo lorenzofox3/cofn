@@ -18,7 +18,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "test:ci": "node test/run-ci.js"
+    "test": "node test/run-ci.js"
   },
   "author": "Laurent RENARD",
   "devDependencies": {

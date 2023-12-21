@@ -31,5 +31,6 @@ jobs:
       - name: Install browsers
         run: npx playwright install --with-deps
       - name: Test
-        run: pnpm --filter='./packages/core' test:ci
+        run: pnpm t --recursive --if-present
+
 
