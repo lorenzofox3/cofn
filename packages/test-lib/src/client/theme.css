@@ -2,7 +2,7 @@
     --flag-success-color: #1a751a;
     --flag-failure-color: #ef4d4d;
     --code-block-bg-color: #ececec;
-    --spacing: 1em;
+    --spacing: 0.75em;
 }
 
 @media (prefers-color-scheme: light) {
@@ -128,6 +128,7 @@ zora-diagnostic pre {
     border-radius: 4px;
     box-shadow: 0 0 2px 0 color-mix(in srgb, black 70%, var(--_bg-color)) inset;
     overflow: scroll;
+    flex-grow: 1;
 }
 
 zora-diagnostic summary {
@@ -175,5 +176,8 @@ zora-diagnostic figure {
     flex-grow: 1;
     max-width: 100%;
     flex-basis: calc((100% - var(--_spacing)) / 2);
+    display: flex;
+    flex-direction: column;
 }
+
 

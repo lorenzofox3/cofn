@@ -136,4 +136,4 @@ export class Diagnostic extends HTMLElement {
   }
 }
 
-const prettyPrint = (value) => JSON.stringify(value, null, 4);
+const prettyPrint = (value) => JSON.stringify(value, null, 2);
