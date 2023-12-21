@@ -22,7 +22,6 @@ export const createHTMLReporter = ({ element }) => {
         }
         case 'ASSERTION': {
           currentTestEl.addAssertion(data);
-          console.log(data);
           break;
         }
         case 'TEST_END': {

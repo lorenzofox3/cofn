@@ -11,5 +11,3 @@ export const createSocketSink = (ws) => {
     },
   });
 };
-
-export { createHTMLReporter } from './html-reporter/repoter.js';

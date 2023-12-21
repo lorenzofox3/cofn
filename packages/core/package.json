@@ -22,9 +22,8 @@
   },
   "author": "Laurent RENARD",
   "devDependencies": {
+    "@cofn/test-lib": "workspace:*",
     "playwright": "^1.40.1",
-    "vite": "^5.0.4",
-    "zora": "^5.2.0",
-    "zora-reporters": "^1.4.0"
+    "vite": "^5.0.4"
   }
 }

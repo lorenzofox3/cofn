@@ -1,5 +1,5 @@
 import { define } from '../src/index.js';
-import { test } from './_tools/test.js';
+import { test } from '@cofn/test-lib/client';
 import { nextTick } from './utils.js';
 
 const debug = document.getElementById('debug');
@@ -17,10 +17,10 @@ define('simple-component', function* ({ $root, $host }) {
 });
 
 const withEl = (specFn) =>
-  function zora_spec_fn(assert) {
+  async function zora_spec_fn(assert) {
     const el = document.createElement('simple-component');
     debug.appendChild(el);
-    return specFn({ ...assert, el });
+    return await specFn({ ...assert, el });
   };
 test(
   'define a simple component from a coroutine',

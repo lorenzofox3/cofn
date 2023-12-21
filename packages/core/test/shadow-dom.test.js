@@ -1,4 +1,4 @@
-import { test } from './_tools/test.js';
+import { test } from '@cofn/test-lib/client';
 import { define } from '../src/index.js';
 
 const debug = document.getElementById('debug');

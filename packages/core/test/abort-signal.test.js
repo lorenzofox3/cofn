@@ -1,6 +1,6 @@
 import { define } from '../src/index.js';
-import { test } from './_tools/test.js';
 import { nextTick } from './utils.js';
+import { test } from '@cofn/test-lib/client';
 
 const debug = document.getElementById('debug');
 define('abort-signal', function* ({ $signal, $host }) {

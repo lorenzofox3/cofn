@@ -3,7 +3,9 @@
 <head>
   <meta charset='UTF-8'>
   <title>Test suite for package core</title>
-  <link rel='stylesheet' href="./_tools/html-reporter/reporter.css" type="text/css">
+  <style>
+    @import url("@cofn/test-lib/client/theme.css");
+  </style>
 </head>
 <body>
   <div id="report-container">
@@ -13,13 +15,11 @@
   <div id="debug"></div>
 </body>
 <script type='module'>
-  import { report } from './_tools/test.js';
+  import { report, createHTMLReporter, createSocketSink } from '@cofn/test-lib/client';
   import './simple-component.test.js';
   import './reactive-attributes.test.js';
   import './abort-signal.test.js';
   import './shadow-dom.test.js';
-
-  import { createHTMLReporter, createSocketSink } from './_tools/writable.js';
 
   const [st1, st2] = report().tee();
   st1.pipeTo(createSocketSink(import.meta.hot));

@@ -1,0 +1,27 @@
+{
+  "name": "@cofn/test-lib",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "module": "./src/client/index.js",
+  "style": "./src/client/theme.css",
+  "scripts": {},
+  "exports": {
+    "./package.json": "./package.json",
+    "./client": {
+      "import": "./src/client/index.js"
+    },
+    "./client/theme.css": {
+      "import": "./src/client/theme.css",
+      "require": "./src/client/theme.css"
+    },
+    "./vite": {
+      "import": "./src/vite/index.js"
+    }
+  },
+  "author": "Laurent RENARD",
+  "dependencies": {
+    "zora": "^5.2.0",
+    "zora-reporters": "^1.4.0"
+  }
+}

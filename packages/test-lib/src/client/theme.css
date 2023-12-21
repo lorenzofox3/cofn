@@ -2,6 +2,7 @@
     --flag-success-color: #1a751a;
     --flag-failure-color: #ef4d4d;
     --code-block-bg-color: #ececec;
+    --spacing: 1em;
 }
 
 @media (prefers-color-scheme: light) {
@@ -49,7 +50,6 @@ body * {
 }
 
 zora-test-result {
-    --spacing: 1em;
     border: 1px solid currentColor;
     border-radius: 0 4px 4px 0;
 }
