@@ -18,6 +18,7 @@
 <script type='module'>
   import { report, createHTMLReporter, createSocketSink } from '@cofn/test-lib/client';
   import './simple-render.js';
+  import './attributes.js';
 
   const [st1, st2] = report().tee();
   st1.pipeTo(createSocketSink(import.meta.hot));

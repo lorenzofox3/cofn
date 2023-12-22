@@ -3,7 +3,7 @@ import { fromView } from './utils.js';
 
 const debug = document.getElementById('debug');
 
-test('render a component when mounted', ({ eq }) => {
+test('renders a component when mounted', ({ eq }) => {
   const el = fromView(
     ({ html }) =>
       ({ attributes }) =>
@@ -33,4 +33,36 @@ test('component is updated when rendered is called, passing the relevant data', 
   });
 
   eq(el.innerHTML, '<p>hello Robert</p>');
+});
+
+test('a text node can have multiple active sites', ({ eq }) => {
+  const el = fromView(
+    ({ html }) =>
+      ({ attributes }) =>
+        html`<p>hello ${attributes.firstname} ${attributes.lastname}</p>`,
+  );
+  el.setAttribute('firstname', 'Laurent');
+  el.setAttribute('lastname', 'Renard');
+  debug.appendChild(el);
+
+  eq(el.innerHTML, '<p>hello Laurent Renard</p>');
+
+  el.render({
+    attributes: { firstname: 'Robert', lastname: 'Marley' },
+  });
+
+  eq(el.innerHTML, '<p>hello Robert Marley</p>');
+});
+
+test('renders a document fragment', ({ eq }) => {
+  const el = fromView(
+    ({ html }) =>
+      ({ attributes }) =>
+        // prettier-ignore
+        html`<h2>some title</h2><p>hello ${attributes.name}</p>`,
+  );
+
+  el.setAttribute('name', 'Laurent');
+  debug.appendChild(el);
+  eq(el.innerHTML, `<h2>some title</h2><p>hello Laurent</p>`);
 });
