@@ -66,3 +66,32 @@ test('renders a document fragment', ({ eq }) => {
   debug.appendChild(el);
   eq(el.innerHTML, `<h2>some title</h2><p>hello Laurent</p>`);
 });
+
+test('renders a nested template', ({ eq }) => {
+  const el = fromView(
+    ({ html }) =>
+      ({ attributes }) =>
+        // prettier-ignore
+        html`<h2>some title</h2><p>hello ${attributes.name}</p>${html`<p>you are ${attributes.mood}</p>`}`,
+  );
+
+  el.setAttribute('name', 'Laurent');
+  el.setAttribute('mood', 'happy');
+  debug.appendChild(el);
+  eq(
+    el.innerHTML,
+    `<h2>some title</h2><p>hello Laurent</p><!--before--><p>you are happy</p><!--after-->`,
+  );
+
+  el.render({
+    attributes: {
+      name: 'Robert',
+      mood: 'very happy',
+    },
+  });
+
+  eq(
+    el.innerHTML,
+    `<h2>some title</h2><p>hello Robert</p><!--before--><p>you are very happy</p><!--after-->`,
+  );
+});
