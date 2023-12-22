@@ -17,9 +17,18 @@
     "singleQuote": true
   },
   "scripts": {
+    "dev": "vite",
+    "test": "node test/run-ci.js"
   },
   "author": "Laurent RENARD",
   "peerDependencies": {
     "@cofn/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@cofn/core": "workspace:*",
+    "@cofn/test-lib": "workspace:*",
+    "playwright": "^1.40.1",
+    "vite": "^5.0.4",
+    "zora-reporters": "^1.4.0"
   }
 }

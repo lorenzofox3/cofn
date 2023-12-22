@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
   <meta charset='UTF-8'>
-  <title>Test suite for package controllers</title>
+  <title>Test suite for package view</title>
   <style>
     @import url("@cofn/test-lib/client/theme.css");
   </style>
@@ -17,7 +17,7 @@
 </body>
 <script type='module'>
   import { report, createHTMLReporter, createSocketSink } from '@cofn/test-lib/client';
-  import './index.js';
+  import './simple-render.js';
 
   const [st1, st2] = report().tee();
   st1.pipeTo(createSocketSink(import.meta.hot));
