@@ -2,7 +2,7 @@
     --flag-success-color: #1a751a;
     --flag-failure-color: #ef4d4d;
     --code-block-bg-color: #ececec;
-    --spacing: 0.75em;
+    --spacing: 0.9em;
 }
 
 @media (prefers-color-scheme: dark) {

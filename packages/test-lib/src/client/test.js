@@ -12,7 +12,14 @@ const createReporter = (messageStream) => {
   });
 };
 
-const { test, skip, only, report: _report } = createHarness();
+const {
+  test,
+  skip,
+  only,
+  report: _report,
+} = createHarness({
+  onlyMode: new URL(window.location).searchParams.get('only') === 'true',
+});
 const report = () => _report({ reporter: createReporter });
 
 export { test, skip, only, report };
