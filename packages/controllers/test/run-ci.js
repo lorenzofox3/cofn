@@ -1,7 +1,7 @@
 import { createServer } from 'vite';
 import { firefox, chromium, webkit } from 'playwright';
 
-const PORT = 3001;
+const PORT = 3003;
 const TIMEOUT = 30_000;
 
 (async () => {
