@@ -2,7 +2,7 @@
     --flag-success-color: #1a751a;
     --flag-failure-color: #ef4d4d;
     --code-block-bg-color: #ececec;
-    --spacing: 0.9em;
+    --spacing: 0.85em;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -49,6 +49,7 @@ zora-test-result {
 
 zora-test-result  h2 {
     font-size: 1em;
+    font-weight: 500;
     margin: 0;
     flex-grow: 1;
 }

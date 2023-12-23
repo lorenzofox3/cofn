@@ -17,9 +17,10 @@
 </body>
 <script type='module'>
   import { report, createHTMLReporter, createSocketSink } from '@cofn/test-lib/client';
-  import './simple-render.js';
-  import './attributes.js';
-  import './event-listeners.js'
+  import './simple-render.test.js';
+  import './attributes.test.js';
+  import './event-listeners.test.js'
+  import './if-dom.test.js'
 
   const [st1, st2] = report().tee();
   st1.pipeTo(createSocketSink(import.meta.hot));
