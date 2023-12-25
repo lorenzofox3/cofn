@@ -44,3 +44,20 @@ test('attribute is set when value type is boolean and value is "true", attribute
   });
   eq(pEl.hasAttribute('open'), false);
 });
+
+test('attribute starting with "." sets a property', ({ eq }) => {
+  const el = fromView(
+    ({ html }) =>
+      ({ value }) =>
+        html`<input .value="${value}" type="text" />`,
+  );
+
+  debug.appendChild(el);
+
+  const input = el.firstElementChild;
+  eq(input.value, '');
+  el.render({ value: 'hello' });
+  eq(input.value, 'hello');
+  el.render({ value: 'hello world' });
+  eq(input.value, 'hello world');
+});
