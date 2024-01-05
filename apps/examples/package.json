@@ -13,6 +13,7 @@
   "dependencies": {
     "@cofn/controllers": "workspace:*",
     "@cofn/core": "workspace:*",
-    "@cofn/view": "workspace:*"
+    "@cofn/view": "workspace:*",
+    "bootstrap-icons": "^1.11.2"
   }
 }

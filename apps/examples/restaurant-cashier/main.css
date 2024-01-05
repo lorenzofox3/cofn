@@ -1,0 +1,137 @@
+@import url('./button.css');
+@import url('./product-list.css');
+
+:root {
+    font-family: system-ui, Avenir, sans-serif;
+    --font-color: #3b3b3b;
+    --surface-bg: white;
+    --app-bg: #f5f5f5;
+    --spacing-big: 1.5em;
+    --spacing-small: 1em;
+    --action-color: #426cb3;
+    --action-contrast-color: white;
+    --danger-color: orangered;
+    --blurry-color: #8a8a8a;
+}
+
+html {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    box-sizing: border-box;
+    color: var(--font-color);
+    min-height: 100svh;
+    font-size: clamp(1.2rem, 1.8vw, 1.3rem);
+    background: var(--app-bg);
+    margin: 0;
+    padding-bottom: var(--spacing-big);
+}
+
+.text-ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+body * {
+    box-sizing: inherit;
+}
+
+h1, h2, h3 {
+    font-size: 1.2em;
+    font-weight: 500;
+    margin-block: calc(var(--spacing-small) / 2);
+}
+
+a {
+    color: var(--action-color);
+    text-underline-offset: 4px;
+}
+
+ui-icon {
+    --_width: 1em;
+    aspect-ratio: 1 / 1;
+    display: inline-block;
+    width: var(--_width);
+    height: var(--_width);
+}
+
+.wrapper {
+    max-width: min(70ch, 100% - var(--spacing-big));
+    margin: auto;
+}
+
+.surface {
+    background: var(--surface-bg);
+}
+
+.action {
+    background: var(--action-color);
+    color: var(--action-contrast-color);
+}
+
+.danger {
+    color: var(--danger-color);
+}
+
+/**
+HEADER
+ */
+
+#logo {
+    width: 3rem;
+    height: 3rem;
+}
+
+.boxed {
+    box-shadow: 0 0 2px 0 var(--blurry-color);
+}
+
+#main-header > .wrapper{
+    --_spacing: calc(var(--spacing-big) * 2);
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    align-items: center;
+    gap: var(--_spacing);
+}
+
+#main-nav ul {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+#main-nav {
+    flex-grow: 1;
+}
+
+#main-nav li {
+    flex-basis: 100px;
+}
+
+#main-nav a {
+    --_spacing: 4px;
+    text-decoration: none;
+    display: grid;
+    gap: var(--_spacing);
+    padding-inline: var(--_spacing);
+    padding-block: var(--_spacing);
+    grid-template-rows: 1fr auto;
+    justify-items: center;
+    border-width: calc(var(--_spacing) / 2) 0;
+    border-style: solid;
+    border-color: transparent;
+    color: currentColor;
+}
+
+#main-nav a > span:last-child {
+    font-size: 0.7em;
+}
+
+#main-nav a > ui-icon:first-child {
+    --_width: 1.8rem;
+    display: block;
+}
