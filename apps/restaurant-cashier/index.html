@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Restaurant Cashier</title>
+  <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="./main.css" rel="stylesheet" type="text/css" />
 </head>
@@ -17,16 +18,16 @@
     </div>
     <nav id="main-nav">
       <ul>
-        <li><a href="./">
+        <li><a is="ui-page-link" href="/me">
           <ui-icon name="person-fill"></ui-icon>
           <span>me<ui-icon name="caret-down-fill"></ui-icon></span></a></li>
-        <li><a href="./">
+        <li><a href="/dashboard" is="ui-page-link">
           <ui-icon name="bar-chart-fill"></ui-icon>
           <span>dashboard</span></a></li>
-        <li><a href="./">
+        <li><a is="ui-page-link" href="/products">
           <ui-icon name="tag-fill"></ui-icon>
           <span>products</span></a></li>
-        <li><a href="./">
+        <li><a href="/sales" is="ui-page-link">
           <ui-icon name="cash-coin"></ui-icon>
           <span>sales</span></a></li>
       </ul>
@@ -46,45 +47,6 @@
     Loading products
   </app-product-list>
 </main>
-<script type="module">
-  import { define } from '@cofn/core';
-  import { withView } from '@cofn/view';
-  import { uiIcon } from './components/ui-icon.js';
-  import { createProductListController } from './products/product-list.controller.js';
-  import { createProductListComponent } from './products/product-list.component.js';
-  import { createProductListService } from './products/product-list.service.js';
-  import { compose } from './utils/functions.js';
-
-  const connectedProductListView = compose([
-    createProductListController({
-      productListService: createProductListService()
-    }),
-    withView
-  ]);
-
-  define('app-product-list', connectedProductListView(createProductListComponent));
-  define('ui-icon', uiIcon, { shadow: { mode: 'open' }, observedAttributes: ['name'] });
-
-  // service worker
-  const registerServiceWorker = async () => {
-    if ("serviceWorker" in navigator) {
-      try {
-        const registration = await navigator.serviceWorker.register("./service-worker.js",{type:'module'});
-        if (registration.installing) {
-          console.log("Service worker installing");
-        } else if (registration.waiting) {
-          console.log("Service worker installed");
-        } else if (registration.active) {
-          console.log("Service worker active");
-        }
-      } catch (error) {
-        console.error(`Registration failed with ${error}`);
-      }
-    }
-  };
-
-  registerServiceWorker();
-
-</script>
+  <script type="module" src="./index.js"></script>
 </body>
 </html>

@@ -11,7 +11,7 @@
     --action-color: #426cb3;
     --action-contrast-color: white;
     --danger-color: orangered;
-    --blurry-color: #8a8a8a;
+    --shadow-color: #8a8a8a;
 }
 
 html {
@@ -86,7 +86,7 @@ HEADER
 }
 
 .boxed {
-    box-shadow: 0 0 2px 0 var(--blurry-color);
+    box-shadow: 0 0 2px 0 var(--shadow-color);
 }
 
 #main-header > .wrapper{
@@ -121,11 +121,16 @@ HEADER
     padding-block: var(--_spacing);
     grid-template-rows: 1fr auto;
     justify-items: center;
-    border-width: calc(var(--_spacing) / 2) 0;
+    border-width: var(--_spacing) 0;
     border-style: solid;
     border-color: transparent;
     color: currentColor;
     opacity: 0.8;
+    transition: border-bottom-color 0.3s;
+}
+
+#main-nav a[aria-current=page]{
+    border-bottom-color: var(--action-color);
 }
 
 #main-nav a:hover {

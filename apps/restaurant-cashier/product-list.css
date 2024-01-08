@@ -13,7 +13,7 @@
 
 #list-section:has(:nth-child(2)) > :first-child {
     border-width: 2px;
-    border-color: var(--blurry-color);
+    border-color: var(--shadow-color);
     border-style: dashed;
     border-radius: 5px;
 }

@@ -2,7 +2,7 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "dev": "node_modules/.bin/vite"
+    "dev": "vite"
   },
   "author": "",
   "license": "ISC",
