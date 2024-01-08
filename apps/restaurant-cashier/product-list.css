@@ -18,13 +18,18 @@
     border-radius: 5px;
 }
 
-.product-card {
+app-product-list-item {
     --_spacing: calc(var(--spacing-small) * 2 / 3);
-    font-size: 0.85em;
-    padding: var(--_spacing);
-    border-radius: 5px;
     display: flex;
     flex-direction: column;
+    padding: var(--_spacing);
+}
+
+.product-card {
+    font-size: 0.85em;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     gap: var(--_spacing);
 }
 
