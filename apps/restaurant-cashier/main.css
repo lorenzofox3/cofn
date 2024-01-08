@@ -23,7 +23,7 @@ body {
     box-sizing: border-box;
     color: var(--font-color);
     min-height: 100svh;
-    font-size: clamp(1.2rem, 1.8vw, 1.3rem);
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
     background: var(--app-bg);
     margin: 0;
     padding-bottom: var(--spacing-big);

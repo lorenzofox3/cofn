@@ -6,6 +6,7 @@ export const navigationEvents = {
   ROUTE_CHANGE_STARTED: 'ROUTE_CHANGE_STARTED',
   ROUTE_CHANGE_SUCCEEDED: 'ROUTE_CHANGE_SUCCEEDED',
   ROUTE_CHANGE_FAILED: 'ROUTE_CHANGE_FAILED',
+  PAGE_LOADED: 'PAGE_LOADED',
 };
 
 export const createRouter = ({ global = window } = {}) => {

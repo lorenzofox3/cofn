@@ -1,9 +1,9 @@
-export const createProductListComponent = ({ html, productListService }) => {
+export const ProductList = ({ html, productListService }) => {
   productListService.fetch();
 
   return ({ products }) => {
     return html`
-      <h1>Product list</h1>
+      <h1 tabindex="-1">Product list</h1>
       <div id="list-section">
         <div>
           <a class="action button-like">
@@ -30,7 +30,7 @@ export const createProductListComponent = ({ html, productListService }) => {
                     <span>${product.price.currency}</span>
                   </span>
                 </div>
-              </article> `,
+              </article>`,
         )}
       </div>
     `;

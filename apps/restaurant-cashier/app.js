@@ -1,10 +1,11 @@
 import { define } from '@cofn/core';
 import { uiIcon } from './components/ui-icon.js';
-import './products/product-list.page.js';
-import { PageLink } from './router/pag-link.component.js';
+import './products/index.js';
+import { PageLink } from './router/page-link.component.js';
+import { PageOutlet } from './router/page-outlet.component.js';
 import { navigationEvents } from './router/router.js';
 
-const userLogger = (ctx, next) => {
+const useLogger = (ctx, next) => {
   console.debug(`loading route: ${ctx.state.navigation?.URL}`);
   return next();
 };
@@ -25,16 +26,37 @@ export const createApp = ({ router }) => {
   define('ui-page-link', withRoot(PageLink), {
     extends: 'a',
   });
+  define('ui-page-outlet', withRoot(PageOutlet));
 
-  router.on(navigationEvents.ROUTE_CHANGE_SUCCEEDED, () => {
-    console.log('in here');
-  });
+  const usePageLoader =
+    ({ pagePath }) =>
+    async (ctx, next) => {
+      const module = await import(pagePath);
+      const page = await module.loadPage({ state: ctx.state, router });
+      router.emit({
+        type: navigationEvents.PAGE_LOADED,
+        detail: { page },
+      });
+      return next();
+    };
 
   router
-    .addRoute({ pattern: 'me' }, [userLogger])
-    .addRoute({ pattern: 'dashboard' }, [userLogger])
-    .addRoute({ pattern: 'products' }, [userLogger])
-    .addRoute({ pattern: 'sales' }, [userLogger])
+    .addRoute({ pattern: 'me' }, [
+      useLogger,
+      usePageLoader({ pagePath: '/not-available.page.js' }),
+    ])
+    .addRoute({ pattern: 'dashboard' }, [
+      useLogger,
+      usePageLoader({ pagePath: '/not-available.page.js' }),
+    ])
+    .addRoute({ pattern: 'products' }, [
+      useLogger,
+      usePageLoader({ pagePath: '/products/index.js' }),
+    ])
+    .addRoute({ pattern: 'sales' }, [
+      useLogger,
+      usePageLoader({ pagePath: '/not-available.page.js' }),
+    ])
     .notFound(() => {
       router.redirect('/products');
     });
