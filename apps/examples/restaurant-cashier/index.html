@@ -5,7 +5,6 @@
   <title>Restaurant Cashier</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="./main.css" rel="stylesheet" type="text/css" />
-  <link href="../node_modules/bootstrap-icons/bootstrap-icons.svg" rel="preload" as="image" />
 </head>
 <body>
 <header id="main-header" class="surface boxed">
@@ -43,60 +42,49 @@
   </div>
 </header>
 <main class="wrapper">
-  <h1>Product list</h1>
-  <div id="list-section">
-    <div>
-      <a class="action button-like">
-        <ui-icon name="plus"></ui-icon>
-        Add new</a>
-    </div>
-    <article class="product-card boxed surface">
-      <header><h2 class="text-ellipsis">Big Mac long string don't know what to do</h2><button class="danger"><ui-icon name="x"></ui-icon>
-        <span>remove</span></button></header>
-      <div class="image-container">
-      </div>
-      <p class="description">A slice of beef between two buns but with a long description which wraps anyways</p>
-      <div>
-        <a class="sku" href="/">#BIGMC</a>
-        <span class="price">
-          <span>4.99</span>
-          <span>$</span>
-        </span>
-      </div>
-    </article>
-    <article class="product-card boxed surface">
-      <header><h2>Big Mac</h2><button class="danger"><ui-icon name="x"></ui-icon><span>remove</span></button></header>
-      <div class="image-container">
-      </div>
-      <p class="description">A slice of beef between two buns</p>
-      <div>
-        <a class="sku" href="/">#BIGMC</a>
-        <span class="price">
-          <span>4.99</span>
-          <span>$</span>
-        </span>
-      </div>
-    </article>
-    <article class="product-card boxed surface">
-      <header><h2>Big Mac</h2><button class="danger"><ui-icon name="x"></ui-icon><span>remove</span></button></header>
-      <div class="image-container">
-      </div>
-      <p>A slice of beef between two buns</p>
-      <div>
-        <a class="sku" href="/">#BIGMC</a>
-        <span class="price">
-          <span>4.99</span>
-          <span>$</span>
-        </span>
-      </div>
-    </article>
-  </div>
+  <app-product-list>
+    Loading products
+  </app-product-list>
 </main>
 <script type="module">
   import { define } from '@cofn/core';
+  import { withView } from '@cofn/view';
   import { uiIcon } from './components/ui-icon.js';
+  import { createProductListController } from './products/product-list.controller.js';
+  import { createProductListComponent } from './products/product-list.component.js';
+  import { createProductListService } from './products/product-list.service.js';
+  import { compose } from './utils/functions.js';
 
+  const connectedProductListView = compose([
+    createProductListController({
+      productListService: createProductListService()
+    }),
+    withView
+  ]);
+
+  define('app-product-list', connectedProductListView(createProductListComponent));
   define('ui-icon', uiIcon, { shadow: { mode: 'open' }, observedAttributes: ['name'] });
+
+  // service worker
+  const registerServiceWorker = async () => {
+    if ("serviceWorker" in navigator) {
+      try {
+        const registration = await navigator.serviceWorker.register("./service-worker.js",{type:'module'});
+        if (registration.installing) {
+          console.log("Service worker installing");
+        } else if (registration.waiting) {
+          console.log("Service worker installed");
+        } else if (registration.active) {
+          console.log("Service worker active");
+        }
+      } catch (error) {
+        console.error(`Registration failed with ${error}`);
+      }
+    }
+  };
+
+  registerServiceWorker();
+
 </script>
 </body>
 </html>

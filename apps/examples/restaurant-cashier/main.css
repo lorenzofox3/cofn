@@ -5,9 +5,9 @@
     font-family: system-ui, Avenir, sans-serif;
     --font-color: #3b3b3b;
     --surface-bg: white;
-    --app-bg: #f5f5f5;
-    --spacing-big: 1.5em;
-    --spacing-small: 1em;
+    --app-bg: #f6f6f6;
+    --spacing-big: 1em;
+    --spacing-small: 0.75em;
     --action-color: #426cb3;
     --action-contrast-color: white;
     --danger-color: orangered;
@@ -59,7 +59,7 @@ ui-icon {
 }
 
 .wrapper {
-    max-width: min(70ch, 100% - var(--spacing-big));
+    max-width: min(80ch, 100% - var(--spacing-big));
     margin: auto;
 }
 
@@ -125,6 +125,11 @@ HEADER
     border-style: solid;
     border-color: transparent;
     color: currentColor;
+    opacity: 0.8;
+}
+
+#main-nav a:hover {
+    opacity: 1;
 }
 
 #main-nav a > span:last-child {
