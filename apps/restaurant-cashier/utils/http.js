@@ -1,4 +1,4 @@
-import { APIRootURL } from './config.js';
+import { APIRootURL } from '../config.js';
 
 export const createHTTPFacade = () => {
   return {

@@ -1,0 +1,62 @@
+form {
+    --_spacing: var(--spacing-small, 1em);
+    display: flex;
+    flex-direction: column;
+    gap: var(--_spacing);
+    padding: var(--_spacing);
+    max-width: min(50ch, 100% - var(--_spacing));
+    margin: auto;
+}
+
+label {
+    font-size: 0.9em;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--_spacing) / 4);
+}
+
+label > span:first-child:first-letter {
+    text-transform: uppercase;
+}
+
+label > span:first-child:has(+ input[required]):after {
+    content:'*';
+    color: var(--danger-color);
+}
+
+label:focus-within > span:first-child {
+    text-decoration: underline solid;
+}
+
+input, textarea {
+    font-size: 0.9em;
+    padding: 0.25em;
+    border: 1px solid;
+    background: inherit;
+    outline: none;
+}
+
+:is(input, textarea):focus{
+    background: var(--surface-bg);
+}
+
+input:invalid{
+    border-color: var(--danger-color);
+}
+
+/**
+ todo
+ */
+
+.new-product-form input,
+.new-product-form textarea {
+    width: min(20em, 100%);
+    transition: width 0.3s, transform 0.3s;
+    transform-origin: 0 0;
+}
+
+:is(.new-product-form input,
+.new-product-form textarea):focus {
+    transform: scaleX(1.1);
+}
+

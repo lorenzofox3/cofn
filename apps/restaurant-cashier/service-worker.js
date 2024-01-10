@@ -1,5 +1,3 @@
-const APIRootURL = 'http://localhost:5173/api/';
-
 const fakeProducts = {
   BIGMC: {
     title: `Big Mac long string don't know what to do`,
@@ -25,6 +23,46 @@ const fakeProducts = {
       currency: '$',
     },
   },
+  ADKL: {
+    title: `Mac Chicken`,
+    description: `A burger made of a nice piece of chicken`,
+    price: {
+      amountInCents: 6.99,
+      currency: '$',
+    },
+  },
+  ASL: {
+    title: `Mac Chicken`,
+    description: `A burger made of a nice piece of chicken`,
+    price: {
+      amountInCents: 6.99,
+      currency: '$',
+    },
+  },
+  ALK: {
+    title: `Mac Chicken`,
+    description: `A burger made of a nice piece of chicken`,
+    price: {
+      amountInCents: 6.99,
+      currency: '$',
+    },
+  },
+  WOR: {
+    title: `Mac Chicken`,
+    description: `A burger made of a nice piece of chicken`,
+    price: {
+      amountInCents: 6.99,
+      currency: '$',
+    },
+  },
+  IEO: {
+    title: `Mac Chicken`,
+    description: `A burger made of a nice piece of chicken`,
+    price: {
+      amountInCents: 6.99,
+      currency: '$',
+    },
+  },
 };
 
 self.addEventListener('activate', (event) => {
@@ -34,8 +72,8 @@ self.addEventListener('activate', (event) => {
 });
 self.addEventListener('fetch', (event) => {
   const { request } = event;
-  const test = new URL('products', APIRootURL).toString();
-  if (request.method === 'GET' && request.url === test) {
+  const requestURL = new URL(request.url);
+  if (request.method === 'GET' && requestURL.pathname === '/api/products') {
     event.respondWith(
       new Response(JSON.stringify(fakeProducts), {
         headers: {
@@ -43,5 +81,19 @@ self.addEventListener('fetch', (event) => {
         },
       }),
     );
+  }
+
+  if (request.method === 'DELETE') {
+    const matches = requestURL.pathname.match(/\/api\/products\/(\w+)/);
+    if (matches.length) {
+      const [, sku] = matches;
+      const uppercaseSku = sku.toUpperCase();
+      if (fakeProducts[uppercaseSku]) {
+        delete fakeProducts[uppercaseSku];
+        event.respondWith(new Response(null, { status: 204 }));
+      } else {
+        event.respondWith(new Response(null, { status: 404 }));
+      }
+    }
   }
 });

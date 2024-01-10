@@ -2,12 +2,12 @@ import { navigationEvents } from './router.js';
 
 export const connectToRouter = (component) =>
   function* ({ router, $host, $signal, ...rest }) {
+    const linkHref = $host.getAttribute('href');
     router.on(
       navigationEvents.ROUTE_CHANGE_SUCCEEDED,
       ({ detail }) => {
-        const isCurrent = $host
-          .getAttribute('href')
-          .includes(new URL(detail.requestedURL).pathname);
+        const requestedPathname = new URL(detail.requestedURL).pathname;
+        const isCurrent = requestedPathname.includes(linkHref);
         $host.render({ isCurrent });
       },
       { signal: $signal },
@@ -17,7 +17,7 @@ export const connectToRouter = (component) =>
       'click',
       (ev) => {
         ev.preventDefault();
-        router.goTo($host.getAttribute('href'));
+        router.goTo(linkHref);
       },
       { signal: $signal },
     );

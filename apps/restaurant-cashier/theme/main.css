@@ -1,5 +1,6 @@
-@import url('./button.css');
-@import url('./product-list.css');
+@import url('button.css');
+@import url('../products/products.css');
+@import url('form.css');
 
 :root {
     font-family: system-ui, Avenir, sans-serif;
@@ -9,7 +10,6 @@
     --spacing-big: 1em;
     --spacing-small: 0.75em;
     --action-color: #426cb3;
-    --action-contrast-color: white;
     --danger-color: orangered;
     --shadow-color: #8a8a8a;
 }
@@ -59,17 +59,13 @@ ui-icon {
 }
 
 .wrapper {
-    max-width: min(80ch, 100% - var(--spacing-big));
+    --_max-width: var(--max-width, 80ch);
+    max-width: min(var(--_max-width), 100% - var(--spacing-big));
     margin: auto;
 }
 
 .surface {
     background: var(--surface-bg);
-}
-
-.action {
-    background: var(--action-color);
-    color: var(--action-contrast-color);
 }
 
 .danger {
@@ -89,7 +85,7 @@ HEADER
     box-shadow: 0 0 2px 0 var(--shadow-color);
 }
 
-#main-header > .wrapper{
+#main-header > .wrapper {
     --_spacing: calc(var(--spacing-big) * 2);
     display: grid;
     grid-template-columns: min-content 1fr;

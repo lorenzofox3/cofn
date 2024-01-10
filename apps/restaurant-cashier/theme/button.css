@@ -1,0 +1,49 @@
+a.button-like {
+    text-decoration: none;
+    color: currentColor;
+}
+
+button, .button-like {
+    --_padding: var(--padding, 0.5em);
+    --_shadow-color: var(--shadow-color, currentColor);
+    font-size: 0.9em;
+    background: inherit;
+    padding-inline: var(--_padding);
+    padding-block: calc(var(--_padding) / 2);
+    border: 1px solid currentColor;
+    font-weight: 300;
+    cursor: pointer;
+    box-shadow: 0 0 1px 0 var(--_shadow-color),
+    0 0 2px 0 var(--_shadow-color);
+    outline: transparent dotted 1px;
+    transition: outline-width 0.3s, outline-color 0.3s;
+}
+
+:is(button, .button-like) > span {
+    line-height: 1;
+}
+
+:is(button, .button-like):focus,
+:is(button, .button-like):hover
+{
+    outline-color: currentColor;
+    outline-offset: calc(var(--_padding) * -0.65);
+}
+
+
+:is(button, .button-like):not(:active):hover {
+    box-shadow: 0 0 2px 0 var(--_shadow-color),
+    0 0 6px 0 var(--_shadow-color);
+}
+
+:is(button, .button-like):active {
+    box-shadow: 0 0 2px 1px var(--_shadow-color);
+}
+
+:is(button, .button-like):has(ui-icon:first-child) {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--_padding) / 2);
+}
+
+

@@ -5,6 +5,13 @@
     gap: var(--_gap);
 }
 
+/* todo */
+ui-page-outlet > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 #list-section > :first-child {
     display: grid;
     place-content: center;
@@ -15,7 +22,7 @@
     border-width: 2px;
     border-color: var(--shadow-color);
     border-style: dashed;
-    border-radius: 5px;
+    border-radius: 4px;
 }
 
 app-product-list-item {

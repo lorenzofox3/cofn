@@ -1,6 +1,6 @@
 import { define } from '@cofn/core';
 import { uiIcon } from './components/ui-icon.js';
-import './products/page.js';
+import './products/product-list.page.js';
 import { PageLink } from './router/page-link.component.js';
 import { PageOutlet } from './router/page-outlet.component.js';
 import { navigationEvents } from './router/router.js';
@@ -51,7 +51,11 @@ export const createApp = ({ router }) => {
     ])
     .addRoute({ pattern: 'products' }, [
       useLogger,
-      usePageLoader({ pagePath: '/products/page.js' }),
+      usePageLoader({ pagePath: '/products/product-list.page.js' }),
+    ])
+    .addRoute({ pattern: 'products/new' }, [
+      useLogger,
+      usePageLoader({ pagePath: '/products/new-product.page.js' }),
     ])
     .addRoute({ pattern: 'sales' }, [
       useLogger,
