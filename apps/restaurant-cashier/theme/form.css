@@ -1,7 +1,8 @@
 form {
     --_spacing: var(--spacing, var(--spacing-small,1em));
     --_control-baground: inherit;
-    --_animation_duration: var(--animation-duration,0.3s);
+    --_animation-duration: var(--animation-duration,0.3s);
+    --_border-color: currentColor;
     padding: var(--padding, 1em);
 }
 
@@ -19,8 +20,8 @@ label > span:first-child::first-letter {
 label > span:first-child:has(+ input[required])::after {
     content:'*';
     font-size: 0.8em;
-    position: relative;
-    top: -4px
+    /*position: relative;*/
+    /*top: -4px*/
 }
 
 label:focus-within > span:first-child {
@@ -31,7 +32,7 @@ input, textarea {
     font-size: 0.9em;
     padding: 0.3em;
     outline: none;
-    border: 1px solid;
+    border: 1px solid var(--_border-color);
     font-family: inherit;
     background: var(--_control-baground);
 }
@@ -45,11 +46,11 @@ input[type=file]{
 }
 
 :is(input, textarea):focus{
-    --_control-baground: #e5f5ff;
+    --_control-baground: var(--control-focus-color);
 }
 
 input:user-invalid{
-    border-color: var(--danger-color);
+    --_border-color: var(--danger-color);
 }
 
 .action-bar {

@@ -16,7 +16,13 @@ const animationConfiguration = {
   fill: 'forwards',
 };
 
-export const ProductList = ({ html, $host, $signal, productListService }) => {
+export const ProductList = ({
+  html,
+  $host,
+  $signal,
+  animationService,
+  productListService,
+}) => {
   productListService.fetch();
 
   $host.addEventListener(
@@ -24,10 +30,7 @@ export const ProductList = ({ html, $host, $signal, productListService }) => {
     async ({ detail }) => {
       const { sku } = detail;
       const itemToRemove = $host.querySelector(`[data-id=${sku}]`);
-      await Promise.all([
-        animate(itemToRemove, removeAnimation, animationConfiguration),
-        wait(300),
-      ]);
+      await animationService.removeElement(itemToRemove);
       productListService.remove({ sku });
     },
     { signal: $signal },

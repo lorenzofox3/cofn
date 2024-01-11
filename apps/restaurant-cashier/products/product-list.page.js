@@ -2,7 +2,6 @@ import { compose } from '../utils/functions.js';
 import { createProductListController } from './product-list.controller.js';
 import { productListService } from './product-list.service.js';
 import { withView } from '@cofn/view';
-import { define } from '@cofn/core';
 import { ProductList } from './product-list.component.js';
 import { ProductListItemComponent } from './product-list-item.component.js';
 
@@ -13,7 +12,7 @@ const connectedProductListView = compose([
   withView,
 ]);
 
-export const loadPage = async () => {
+export const loadPage = async ({ define }) => {
   define('app-product-list-item', ProductListItemComponent);
   define('app-product-list', connectedProductListView(ProductList));
 

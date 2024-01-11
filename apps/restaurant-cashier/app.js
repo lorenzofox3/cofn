@@ -4,6 +4,7 @@ import './products/product-list.page.js';
 import { PageLink } from './router/page-link.component.js';
 import { PageOutlet } from './router/page-outlet.component.js';
 import { navigationEvents } from './router/router.js';
+import { createAnimationsService } from './animations/animations.service.js';
 
 const useLogger = (ctx, next) => {
   console.debug(`loading route: ${ctx.state.navigation?.URL}`);
@@ -11,28 +12,39 @@ const useLogger = (ctx, next) => {
 };
 
 export const createApp = ({ router }) => {
+  const animationService = createAnimationsService();
+  const root = {
+    animationService,
+    router,
+  };
   const withRoot = (comp) =>
     function* (deps) {
       yield* comp({
-        router,
+        ...root,
         ...deps,
       });
     };
 
-  define('ui-icon', uiIcon, {
+  const _define = (tag, comp, ...rest) => define(tag, withRoot(comp), ...rest);
+
+  _define('ui-icon', uiIcon, {
     shadow: { mode: 'open' },
     observedAttributes: ['name'],
   });
-  define('ui-page-link', withRoot(PageLink), {
+  _define('ui-page-link', PageLink, {
     extends: 'a',
   });
-  define('ui-page-outlet', withRoot(PageOutlet));
+  _define('ui-page-outlet', PageOutlet);
 
   const usePageLoader =
     ({ pagePath }) =>
     async (ctx, next) => {
       const module = await import(pagePath);
-      const page = await module.loadPage({ state: ctx.state, router });
+      const page = await module.loadPage({
+        state: ctx.state,
+        ...root,
+        define: _define,
+      });
       router.emit({
         type: navigationEvents.PAGE_LOADED,
         detail: { page },

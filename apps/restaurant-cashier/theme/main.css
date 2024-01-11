@@ -10,6 +10,7 @@
     --spacing-big: 1.5em;
     --spacing-small: 1em;
     --action-color: #426cb3;
+    --control-focus-color: #e9f6ff;
     --action-color-contrast: white;
     --danger-color: orangered;
     --shadow-color: #8a8a8a;
@@ -47,8 +48,15 @@ h1, h2, h3 {
 }
 
 a {
+    --_padding: 0.4em;
+    padding: var(--_padding);
     color: var(--action-color);
     text-underline-offset: 4px;
+}
+
+a:focus {
+    outline: 2px dotted;
+    outline-offset: calc(var(--_padding) * -0.65);
 }
 
 ui-icon {

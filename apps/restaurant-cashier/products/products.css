@@ -38,7 +38,6 @@ app-product-list-item {
     align-items: center;
     gap:var(--spacing-small);
     justify-content: space-between;
-    margin-bottom: var(--spacing-small);
     font-size: 0.9em;
 }
 
@@ -110,7 +109,7 @@ div:has(> .product-form) {
 }
 
 .product-form ui-file-input{
-    background: #f8f8f8;
+    background: #f8f8f8; /* todo */
     flex-grow: 1;
 }
 

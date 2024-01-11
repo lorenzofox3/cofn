@@ -1,4 +1,4 @@
-import { animate } from '../utils/dom.js';
+import { animate, wait } from '../utils/dom.js';
 
 const removeAnimation = [
   {
@@ -20,7 +20,10 @@ const animationConfiguration = {
 export const createAnimationsService = () => {
   return {
     async removeElement(el) {
-      return await Promise.all([animate()]);
+      return await Promise.all([
+        animate(el, removeAnimation, animationConfiguration),
+        wait(animationConfiguration.duration * 1.1),
+      ]);
     },
   };
 };
