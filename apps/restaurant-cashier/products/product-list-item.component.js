@@ -24,14 +24,14 @@ export const ProductListItemComponent = compositionPipeline(
         <header>
           <h2 class="text-ellipsis">${product.title}</h2>
           <button @click="${onclickHandler}" class="danger">
-            <ui-icon name="x"></ui-icon> <span>remove</span>
+            <ui-icon name="x-circle"></ui-icon> <span>remove</span>
           </button>
         </header>
-        <div class="image-container"></div>
-        <p class="description">${product.description}</p>
+        <div class="product-card__image-container"></div>
+        <p>${product.description}</p>
         <div>
-          <a class="sku" href="/">#${product.sku}</a>
-          <span class="price">
+          <a class="product-card__sku" href="/">#${product.sku}</a>
+          <span class="product-card__price">
             <span>${product.price?.amountInCents}</span>
             <span>${product.price?.currency}</span>
           </span>

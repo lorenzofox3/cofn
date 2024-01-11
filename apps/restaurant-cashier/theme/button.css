@@ -17,6 +17,16 @@ button, .button-like {
     0 0 2px 0 var(--_shadow-color);
     outline: transparent dotted 1px;
     transition: outline-width 0.3s, outline-color 0.3s;
+    font-family: inherit;
+}
+
+/**
+todo
+ */
+:is(button, .button-like).action {
+    background: var(--action-color);
+    color: var(--action-color-contrast);
+    border-color: transparent;
 }
 
 :is(button, .button-like) > span {

@@ -5,13 +5,6 @@
     gap: var(--_gap);
 }
 
-/* todo */
-ui-page-outlet > header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
 #list-section > :first-child {
     display: grid;
     place-content: center;
@@ -59,25 +52,78 @@ app-product-list-item {
     flex-grow: 1;
 }
 
-.image-container {
+.product-card__image-container {
     aspect-ratio: 3 / 2;
     background: lightgray;
 }
 
-div:has(>.price){
+div:has(>.product-card__price){
     display: flex;
     justify-content: space-between;
     align-items: baseline;
 }
 
-.price > span:first-child {
+.product-card__price > span:first-child {
     font-size: 3em;
 }
 
-.sku {
+.product-card__sku {
     font-size: 0.9em;
     text-transform: uppercase;
     display: flex;
     align-items: center;
     gap: var(--_spacing);
 }
+
+/**
+ * Product form
+ */
+
+div:has(> .product-form) {
+    --spacing: calc(var(--spacing-small) * 2/3);
+    --_large-spacing:calc(var(--spacing) * 4);
+    padding-inline: var(--_large-spacing);
+}
+
+.product-form {
+    display: grid;
+    grid-template-columns: 0.6fr 0.4fr;
+    gap: var(--_spacing) var(--_large-spacing);
+}
+
+.product-form input[type=file]{
+    width: 50%;
+}
+
+.product-form > .action-bar {
+    padding-block-start: var(--_spacing);
+    grid-column: 1 / span 2;
+}
+
+.product-form label {
+    grid-column: 1;
+}
+
+.product-form label:has(ui-file-input){
+    grid-column: 2;
+    grid-row: 1 / span 4 ;
+}
+
+.product-form ui-file-input{
+    background: #f8f8f8;
+    flex-grow: 1;
+}
+
+@media (max-width: 720px) {
+
+    div:has(.product-form) {
+        --_large-spacing: 0;
+    }
+
+    .product-form {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+

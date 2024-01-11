@@ -41,7 +41,7 @@ export const ProductList = ({ html, $host, $signal, productListService }) => {
       <div id="list-section" aria-labelledby="page-header">
         <div>
           <a class="button-like" is="ui-page-link" href="/products/new">
-            <ui-icon name="plus"></ui-icon>
+            <ui-icon name="plus-circle"></ui-icon>
             Add new</a
           >
         </div>
