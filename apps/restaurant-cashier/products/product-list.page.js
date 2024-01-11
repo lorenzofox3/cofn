@@ -4,6 +4,7 @@ import { productListService } from './product-list.service.js';
 import { withView } from '@cofn/view';
 import { ProductList } from './product-list.component.js';
 import { ProductListItemComponent } from './product-list-item.component.js';
+import { createElement } from '../utils/dom.js';
 
 const connectedProductListView = compose([
   createProductListController({
@@ -16,5 +17,5 @@ export const loadPage = async ({ define }) => {
   define('app-product-list-item', ProductListItemComponent);
   define('app-product-list', connectedProductListView(ProductList));
 
-  return document.createElement('app-product-list');
+  return createElement('app-product-list');
 };

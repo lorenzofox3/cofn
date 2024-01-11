@@ -1,0 +1,23 @@
+
+#preferences {
+    --_spacing: calc(var(--spacing-small) / 2);
+    --_spacing-lg: var(--spacing-small);
+}
+
+#preferences summary {
+    padding: var(--_spacing);
+}
+
+#preferences label {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#preferences > .container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--_spacing);
+    padding: var(--_spacing-lg);
+}
+
+

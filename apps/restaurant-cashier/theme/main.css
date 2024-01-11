@@ -1,6 +1,7 @@
 @import url('button.css');
 @import url('../products/products.css');
 @import url('form.css');
+@import url('../users/me.css');
 
 :root {
     font-family: system-ui, Avenir, sans-serif;
@@ -10,10 +11,11 @@
     --spacing-big: 1.5em;
     --spacing-small: 1em;
     --action-color: #426cb3;
-    --control-focus-color: #e9f6ff;
     --action-color-contrast: white;
+    --control-focus-color: #e9f6ff;
     --danger-color: orangered;
     --shadow-color: #8a8a8a;
+    --animation-duration: 0.3s;
 }
 
 html {
@@ -29,6 +31,25 @@ body {
     background: var(--app-bg);
     margin: 0;
     padding-bottom: var(--spacing-big);
+}
+
+body.dark{
+    --font-color: #f2f2f2;
+    --surface-bg: #202945;
+    --app-bg: #152028;
+    --spacing-big: 1.5em;
+    --spacing-small: 1em;
+    --action-color: #5be382;
+    --action-color-contrast: #1e1e1e;
+    --control-focus-color: #5a839f;
+    --danger-color: #fd793c;
+    --shadow-color: #b5ffc2;
+    --animation-duration: 0.3s;
+    --form-border-color: #76ac80;
+}
+
+body.motion-reduced {
+    --animation-duration: 0;
 }
 
 .text-ellipsis {
@@ -48,28 +69,22 @@ h1, h2, h3 {
 }
 
 a {
-    --_padding: 0.4em;
-    padding: var(--_padding);
     color: var(--action-color);
     text-underline-offset: 4px;
 }
 
-a:focus {
-    outline: 2px dotted;
-    outline-offset: calc(var(--_padding) * -0.65);
-}
-
 ui-icon {
-    --_width: 1em;
+    --_size: var(--size, 1em);
     aspect-ratio: 1 / 1;
     display: inline-block;
-    width: var(--_width);
-    height: var(--_width);
+    width: var(--_size);
+    height: var(--_size);
 }
 
 .wrapper {
     --_max-width: var(--max-width, 80ch);
-    max-width: min(var(--_max-width), 100% - var(--spacing-big));
+    --_spacing: var(--spacing, var(--spacing-big));
+    max-width: min(var(--_max-width), 100% - var(--_spacing));
     margin: auto;
 }
 
@@ -95,11 +110,11 @@ HEADER
 }
 
 #main-header > .wrapper {
-    --_spacing: calc(var(--spacing-big) * 2);
+    --spacing: calc(var(--spacing-big) * 2);
     display: grid;
     grid-template-columns: min-content 1fr;
     align-items: center;
-    gap: var(--_spacing);
+    gap: var(--spacing);
 }
 
 #main-nav ul {
@@ -131,7 +146,7 @@ HEADER
     border-color: transparent;
     color: currentColor;
     opacity: 0.8;
-    transition: border-bottom-color 0.3s;
+    transition: border-bottom-color var(--animation-duration);
 }
 
 #main-nav a[aria-current=page]{
@@ -147,6 +162,6 @@ HEADER
 }
 
 #main-nav a > ui-icon:first-child {
-    --_width: 1.8rem;
+    --size: 1.5rem;
     display: block;
 }

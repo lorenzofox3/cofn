@@ -1,6 +1,6 @@
 import { composeStack, createContext } from './utils.js';
 import { createTrie } from './trie.js';
-import { createEventEmitter } from '../utils/events.js';
+import { createEventEmitter } from '../utils/events.service.js';
 
 export const navigationEvents = {
   ROUTE_CHANGE_STARTED: 'ROUTE_CHANGE_STARTED',

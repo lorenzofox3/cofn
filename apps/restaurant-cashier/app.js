@@ -4,18 +4,45 @@ import './products/product-list.page.js';
 import { PageLink } from './router/page-link.component.js';
 import { PageOutlet } from './router/page-outlet.component.js';
 import { navigationEvents } from './router/router.js';
-import { createAnimationsService } from './animations/animations.service.js';
+import { createAnimationsService } from './utils/animations.service.js';
+import { createStorageService } from './utils/storage.service.js';
+import {
+  createPreferencesService,
+  motionSettings,
+  preferencesEvents,
+  themeSettings,
+} from './users/preferences.service.js';
+import { querySelector } from './utils/dom.js';
 
 const useLogger = (ctx, next) => {
   console.debug(`loading route: ${ctx.state.navigation?.URL}`);
   return next();
 };
 
+const togglePreferences = ({ motion, theme }) => {
+  const classList = querySelector('body').classList;
+  classList.toggle('dark', theme === themeSettings.DARK);
+  classList.toggle('motion-reduced', motion === motionSettings.REDUCED);
+};
+
 export const createApp = ({ router }) => {
-  const animationService = createAnimationsService();
+  const storageService = createStorageService();
+  const preferencesService = createPreferencesService({
+    storageService,
+  });
+
+  preferencesService.on(preferencesEvents.PREFERENCES_CHANGED, () =>
+    togglePreferences(preferencesService.getState()),
+  );
+
+  const animationService = createAnimationsService({
+    preferencesService,
+  });
   const root = {
     animationService,
     router,
+    storageService,
+    preferenceService: preferencesService,
   };
   const withRoot = (comp) =>
     function* (deps) {
@@ -55,7 +82,7 @@ export const createApp = ({ router }) => {
   router
     .addRoute({ pattern: 'me' }, [
       useLogger,
-      usePageLoader({ pagePath: '/not-available.page.js' }),
+      usePageLoader({ pagePath: '/users/me.page.js' }),
     ])
     .addRoute({ pattern: 'dashboard' }, [
       useLogger,
@@ -76,6 +103,11 @@ export const createApp = ({ router }) => {
     .notFound(() => {
       router.redirect('/products');
     });
+
+  preferencesService.emit({
+    type: preferencesEvents.PREFERENCES_CHANGED,
+  });
+
   return {
     start() {
       router.redirect(location.pathname + location.search + location.hash);

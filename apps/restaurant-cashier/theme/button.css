@@ -16,7 +16,7 @@ button, .button-like {
     box-shadow: 0 0 1px 0 var(--_shadow-color),
     0 0 2px 0 var(--_shadow-color);
     outline: transparent dotted 1px;
-    transition: outline-width 0.3s, outline-color 0.3s;
+    transition: outline-width var(--animation-duration), outline-color var(--animation-duration);
     font-family: inherit;
 }
 

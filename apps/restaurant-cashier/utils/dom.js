@@ -1,8 +1,8 @@
-export const animate = (el, ...rest) =>
-  new Promise((resolve) => {
-    const animation = el.animate(...rest);
-    animation.addEventListener('finish', resolve, { once: true });
-  });
+import { mapBind } from './objects.js';
+import { identity } from './functions.js';
 
-export const wait = (time) =>
-  new Promise((resolve) => setTimeout(resolve, time));
+const bind = mapBind(identity);
+const { createElement, querySelector } = bind(document);
+const { matchMedia } = bind(window);
+
+export { createElement, matchMedia, querySelector };

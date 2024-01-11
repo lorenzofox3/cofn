@@ -1,4 +1,4 @@
-import { createEventEmitter } from '../utils/events.js';
+import { createEventEmitter } from '../utils/events.service.js';
 import { http } from '../utils/http.js';
 
 export const createProductListService = () => {

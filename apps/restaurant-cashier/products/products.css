@@ -1,8 +1,7 @@
 #list-section {
-    --_gap: var(--spacing-small);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: var(--_gap);
+    gap: var(--spacing-small);
 }
 
 #list-section > :first-child {

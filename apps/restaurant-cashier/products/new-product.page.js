@@ -1,4 +1,7 @@
-const template = document.createElement('template');
+import { createElement } from '../utils/dom.js';
+
+const template = createElement('template');
+
 template.innerHTML = `
 <h1 tabindex="-1">Add new product</h1>
 <div class="surface boxed">
