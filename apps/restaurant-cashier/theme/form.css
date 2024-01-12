@@ -1,8 +1,8 @@
 form {
     --_spacing: var(--spacing, var(--spacing-small, 1em));
     --_control-bg: inherit;
-    --_border-color: var(--form-border-color, currentColor);
-    padding: var(--padding, 1em);
+    --_border-color: var(--form-border-color, gray);
+    padding: 1em;
 }
 
 label {
@@ -12,34 +12,33 @@ label {
     gap: calc(var(--_spacing) / 4);
 }
 
-label > span:first-child::first-letter {
-    text-transform: uppercase;
-}
-
-label > span:first-child:has(+ input[required])::after {
-    content: '*';
-    font-size: 0.8em;
-}
-
-label:focus-within > span:first-child {
-    text-decoration: underline solid var(--action-color);
-}
-
 input, textarea {
     font-size: 0.9em;
     padding: 0.3em;
     outline: none;
     border: 1px solid var(--_border-color);
+    border-radius: var(--border-radius);
     background: var(--_control-bg);
     font-family: inherit;
+    transition: background var(--animation-duration);
 }
 
-input::file-selector-button {
-    display: none;
+label > span:first-child::first-letter {
+    text-transform: uppercase;
 }
 
-input[type=file] {
-    cursor: pointer;
+span:has(+ input[required])::after {
+    content: '*';
+    font-size: 0.8em;
+}
+
+label:focus-within > span:first-child{
+    text-decoration: underline solid var(--action-color);
+}
+
+
+input, textarea, .radio-group {
+    box-shadow: 0 0 2px 0 var(--shadow-color);
 }
 
 :is(input, textarea):focus {
@@ -48,12 +47,6 @@ input[type=file] {
 
 input:user-invalid {
     --_border-color: var(--danger-color);
-}
-
-.action-bar {
-    display: flex;
-    gap: var(--_spacing);
-    justify-content: flex-end;
 }
 
 ui-file-input {
@@ -65,3 +58,21 @@ ui-file-input {
     cursor: pointer;
 }
 
+input::file-selector-button {
+    display: none;
+}
+
+input[type=file] {
+    cursor: pointer;
+}
+
+.action-bar {
+    display: flex;
+    gap: var(--_spacing);
+    justify-content: flex-end;
+}
+
+fieldset {
+    border: unset;
+    padding: unset;
+}

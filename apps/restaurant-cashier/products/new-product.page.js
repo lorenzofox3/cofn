@@ -29,7 +29,8 @@ template.innerHTML = `
         </ui-file-input>
       </label>
       <div class="action-bar">
-        <a href="/products" is="ui-page-link" class="button-like"><ui-icon name="x-circle"></ui-icon>cancel</a>
+        <a href="/products" is="ui-page-link" class="button-like">
+        <span><ui-icon name="x-circle"></ui-icon>cancel</a>
         <button class="action">
           <ui-icon name="plus-circle"></ui-icon>
           create

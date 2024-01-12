@@ -1,6 +1,7 @@
+@import url("reset.css");
 @import url('button.css');
-@import url('../products/products.css');
 @import url('form.css');
+@import url('../products/products.css');
 @import url('../users/me.css');
 
 :root {
@@ -16,20 +17,16 @@
     --danger-color: orangered;
     --shadow-color: #8a8a8a;
     --animation-duration: 0.3s;
-}
-
-html {
-    padding: 0;
-    margin: 0;
+    --border-radius: 3px;
+    --form-border-color: #414d62;
 }
 
 body {
     box-sizing: border-box;
     color: var(--font-color);
     min-height: 100svh;
-    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+    font-size: clamp(1.3rem, 1.8vw, 1.6rem);
     background: var(--app-bg);
-    margin: 0;
     padding-bottom: var(--spacing-big);
 }
 
@@ -49,7 +46,7 @@ body.dark{
 }
 
 body.motion-reduced {
-    --animation-duration: 0;
+    --animation-duration: 1ms;
 }
 
 .text-ellipsis {
@@ -65,7 +62,7 @@ body * {
 h1, h2, h3 {
     font-size: 1.2em;
     font-weight: 500;
-    margin-block: calc(var(--spacing-small) / 2);
+    margin-block: 0.4em;
 }
 
 a {
@@ -81,11 +78,20 @@ ui-icon {
     height: var(--_size);
 }
 
+:is(span, button, a):has(ui-icon:first-child){
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .wrapper {
-    --_max-width: var(--max-width, 80ch);
-    --_spacing: var(--spacing, var(--spacing-big));
-    max-width: min(var(--_max-width), 100% - var(--_spacing));
+    max-width: min(var(--max-width, 80ch), 100% - var(--spacing-big));
     margin: auto;
+}
+
+.boxed {
+    box-shadow: 0 0 2px 0 var(--shadow-color);
+    border-radius: var(--border-radius);
 }
 
 .surface {
@@ -105,9 +111,6 @@ HEADER
     height: 3rem;
 }
 
-.boxed {
-    box-shadow: 0 0 2px 0 var(--shadow-color);
-}
 
 #main-header > .wrapper {
     --spacing: calc(var(--spacing-big) * 2);
@@ -133,7 +136,7 @@ HEADER
 }
 
 #main-nav a {
-    --_spacing: 4px;
+    --_spacing: 2px;
     text-decoration: none;
     display: grid;
     gap: var(--_spacing);

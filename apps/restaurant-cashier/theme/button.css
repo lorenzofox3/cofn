@@ -4,38 +4,32 @@ a.button-like {
 }
 
 button, .button-like {
-    --_padding: var(--padding, 0.5em);
+    --_padding: var(--padding, 0.4em);
     --_shadow-color: var(--shadow-color, currentColor);
     font-size: 0.9em;
     background: inherit;
     padding-inline: var(--_padding);
-    padding-block: calc(var(--_padding) / 2);
+    padding-block: calc(var(--_padding) / 2.5);
     border: 1px solid currentColor;
     font-weight: 300;
     cursor: pointer;
     box-shadow: 0 0 1px 0 var(--_shadow-color),
-    0 0 2px 0 var(--_shadow-color);
+    0 0 3px 0 var(--_shadow-color);
     outline: transparent dotted 1px;
     transition: outline-width var(--animation-duration), outline-color var(--animation-duration);
     font-family: inherit;
+    color:inherit;
+    border-radius: var(--border-radius);
 }
 
-/**
-todo
- */
 :is(button, .button-like).action {
     background: var(--action-color);
     color: var(--action-color-contrast);
     border-color: transparent;
 }
 
-:is(button, .button-like) > span {
-    line-height: 1;
-}
-
 :is(button, .button-like):focus,
-:is(button, .button-like):hover
-{
+:is(button, .button-like):hover {
     outline-color: currentColor;
     outline-offset: calc(var(--_padding) * -0.65);
 }
@@ -49,11 +43,4 @@ todo
 :is(button, .button-like):active {
     box-shadow: 0 0 2px 1px var(--_shadow-color);
 }
-
-:is(button, .button-like):has(ui-icon:first-child) {
-    display: flex;
-    align-items: center;
-    gap: calc(var(--_padding) / 2);
-}
-
 

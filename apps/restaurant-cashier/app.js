@@ -14,11 +14,6 @@ import {
 } from './users/preferences.service.js';
 import { querySelector } from './utils/dom.js';
 
-const useLogger = (ctx, next) => {
-  console.debug(`loading route: ${ctx.state.navigation?.URL}`);
-  return next();
-};
-
 const togglePreferences = ({ motion, theme }) => {
   const classList = querySelector('body').classList;
   classList.toggle('dark', theme === themeSettings.DARK);
@@ -30,14 +25,14 @@ export const createApp = ({ router }) => {
   const preferencesService = createPreferencesService({
     storageService,
   });
+  const animationService = createAnimationsService({
+    preferencesService,
+  });
 
   preferencesService.on(preferencesEvents.PREFERENCES_CHANGED, () =>
     togglePreferences(preferencesService.getState()),
   );
 
-  const animationService = createAnimationsService({
-    preferencesService,
-  });
   const root = {
     animationService,
     router,
@@ -104,6 +99,7 @@ export const createApp = ({ router }) => {
       router.redirect('/products');
     });
 
+  // trigger initial preference state
   preferencesService.emit({
     type: preferencesEvents.PREFERENCES_CHANGED,
   });
@@ -115,25 +111,7 @@ export const createApp = ({ router }) => {
   };
 };
 
-// service worker
-const registerServiceWorker = async () => {
-  if ('serviceWorker' in navigator) {
-    try {
-      const registration = await navigator.serviceWorker.register(
-        './service-worker.js',
-        { type: 'module' },
-      );
-      if (registration.installing) {
-        console.log('Service worker installing');
-      } else if (registration.waiting) {
-        console.log('Service worker installed');
-      } else if (registration.active) {
-        console.log('Service worker active');
-      }
-    } catch (error) {
-      console.error(`Registration failed with ${error}`);
-    }
-  }
+const useLogger = (ctx, next) => {
+  console.debug(`loading route: ${ctx.state.navigation?.URL}`);
+  return next();
 };
-
-registerServiceWorker();

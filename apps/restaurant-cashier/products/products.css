@@ -32,6 +32,12 @@ app-product-list-item {
     gap: var(--_spacing);
 }
 
+.product-card button {
+    --padding: 4px;
+    font-size: 0.95em;
+
+}
+
 .product-card > header {
     display: flex;
     align-items: center;

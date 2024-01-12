@@ -28,6 +28,7 @@ export const createPreferencesService = ({ storageService }) => {
   const emit = () =>
     service.emit({ type: preferencesEvents.PREFERENCES_CHANGED });
 
+  // init
   storageService.getItem(preferencesStorageKey).then((settings) => {
     if (settings) {
       state = JSON.parse(settings);
