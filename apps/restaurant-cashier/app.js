@@ -13,11 +13,13 @@ import {
   themeSettings,
 } from './users/preferences.service.js';
 import { querySelector } from './utils/dom.js';
+import { compose } from './utils/functions.js';
+import { mapValues } from './utils/objects.js';
 
 const togglePreferences = ({ motion, theme }) => {
   const classList = querySelector('body').classList;
-  classList.toggle('dark', theme === themeSettings.DARK);
-  classList.toggle('motion-reduced', motion === motionSettings.REDUCED);
+  classList.toggle('dark', theme === themeSettings.dark);
+  classList.toggle('motion-reduced', motion === motionSettings.reduced);
 };
 
 export const createApp = ({ router }) => {
@@ -29,15 +31,20 @@ export const createApp = ({ router }) => {
     preferencesService,
   });
 
-  preferencesService.on(preferencesEvents.PREFERENCES_CHANGED, () =>
-    togglePreferences(preferencesService.getState()),
+  preferencesService.on(
+    preferencesEvents.PREFERENCES_CHANGED,
+    compose([
+      togglePreferences,
+      mapValues(({ computed }) => computed),
+      preferencesService.getState,
+    ]),
   );
 
   const root = {
     animationService,
     router,
     storageService,
-    preferenceService: preferencesService,
+    preferencesService,
   };
   const withRoot = (comp) =>
     function* (deps) {

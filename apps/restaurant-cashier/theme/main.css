@@ -38,7 +38,7 @@ body.dark{
     --spacing-small: 1em;
     --action-color: #5be382;
     --action-color-contrast: #1e1e1e;
-    --control-focus-color: #5a839f;
+    /*--control-focus-color: #5a839f;*/
     --danger-color: #fd793c;
     --shadow-color: #b5ffc2;
     --animation-duration: 0.3s;

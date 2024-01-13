@@ -2,13 +2,15 @@ import { createEventEmitter } from '../utils/events.service.js';
 import { matchMedia } from '../utils/dom.js';
 
 export const motionSettings = {
-  REDUCED: 'REDUCED',
-  NORMAL: 'NORMAL',
+  default: 'default',
+  reduced: 'reduced',
+  normal: 'normal',
 };
 
 export const themeSettings = {
-  LIGHT: 'LIGHT',
-  DARK: 'DARK',
+  default: 'default',
+  light: 'light',
+  dark: 'dark',
 };
 
 export const preferencesEvents = {
@@ -22,7 +24,10 @@ export const createPreferencesService = ({ storageService }) => {
   colorSchemeMedia.addEventListener('change', mediaQueryChangeHandler);
   reducedMotionMedia.addEventListener('change', mediaQueryChangeHandler);
 
-  let state = fromMediaQueries();
+  let state = {
+    theme: themeSettings.default,
+    motion: motionSettings.default,
+  };
 
   const service = createEventEmitter();
   const emit = () =>
@@ -38,7 +43,22 @@ export const createPreferencesService = ({ storageService }) => {
 
   return Object.assign(service, {
     getState() {
-      return structuredClone(state);
+      return structuredClone({
+        theme: {
+          value: state.theme,
+          computed:
+            state.theme !== themeSettings.default
+              ? state.theme
+              : fromMediaQueries().theme,
+        },
+        motion: {
+          value: state.motion,
+          computed:
+            state.motion !== motionSettings.default
+              ? state.motion
+              : fromMediaQueries().motion,
+        },
+      });
     },
     changeTheme: withDispatch((value) => {
       state.theme = themeSettings[value] ?? state.theme;
@@ -48,7 +68,8 @@ export const createPreferencesService = ({ storageService }) => {
     }),
   });
   async function mediaQueryChangeHandler() {
-    if (!(await storageService.getItem(preferencesStorageKey))) {
+    const storedSettings = await storageService.getItem(preferencesStorageKey);
+    if (!storedSettings) {
       state = fromMediaQueries({
         colorSchemeMedia,
         reducedMotionMedia,
@@ -67,9 +88,9 @@ export const createPreferencesService = ({ storageService }) => {
 };
 function fromMediaQueries() {
   return {
-    theme: colorSchemeMedia.matches ? themeSettings.DARK : themeSettings.LIGHT,
+    theme: colorSchemeMedia.matches ? themeSettings.dark : themeSettings.light,
     motion: reducedMotionMedia.matches
-      ? motionSettings.REDUCED
-      : motionSettings.NORMAL,
+      ? motionSettings.reduced
+      : motionSettings.normal,
   };
 }

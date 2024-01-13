@@ -7,8 +7,13 @@
 }
 
 app-preferences {
-    font-size: 0.95em;
+    font-size: 0.9em;
 }
+
+app-preferences .legend {
+    padding-left: var(--_spacing);
+}
+
 
 /**
 todo eventually draw what is related to radio group into forms.css
@@ -43,6 +48,11 @@ input[type=radio] {
 .radio-group label {
     flex-direction: row;
     padding: calc(var(--_spacing) / 2) var(--_spacing);
+}
+
+.radio-group label:has(input[checked]){
+    background-color: var(--action-color);
+    color: var(--action-color-contrast);
 }
 
 .radio-group label:not(:last-child){

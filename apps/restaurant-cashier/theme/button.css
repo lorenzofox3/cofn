@@ -22,25 +22,25 @@ button, .button-like {
     border-radius: var(--border-radius);
 }
 
-:is(button, .button-like).action {
+:where(button, .button-like).action {
     background: var(--action-color);
     color: var(--action-color-contrast);
     border-color: transparent;
 }
 
-:is(button, .button-like):focus,
-:is(button, .button-like):hover {
+:where(button, .button-like):focus,
+:where(button, .button-like):hover {
     outline-color: currentColor;
     outline-offset: calc(var(--_padding) * -0.65);
 }
 
 
-:is(button, .button-like):not(:active):hover {
+:where(button, .button-like):not(:active):hover {
     box-shadow: 0 0 2px 0 var(--_shadow-color),
     0 0 6px 0 var(--_shadow-color);
 }
 
-:is(button, .button-like):active {
+:where(button, .button-like):active {
     box-shadow: 0 0 2px 1px var(--_shadow-color);
 }
 

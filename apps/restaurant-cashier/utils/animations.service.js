@@ -23,9 +23,11 @@ const animationConfiguration = {
 
 export const createAnimationsService = ({ preferencesService }) => {
   preferencesService.on(preferencesEvents.PREFERENCES_CHANGED, () => {
-    const { motion } = preferencesService.getState();
+    const {
+      motion: { value },
+    } = preferencesService.getState();
     animationConfiguration.duration =
-      motion === motionSettings.REDUCED ? 0 : 200;
+      value === motionSettings.reduced ? 0 : 200;
   });
 
   return {

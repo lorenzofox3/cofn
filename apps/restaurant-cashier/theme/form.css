@@ -6,14 +6,13 @@ form {
 }
 
 label {
-    font-size: 0.9em;
+    font-size: 0.85em;
     display: flex;
     flex-direction: column;
     gap: calc(var(--_spacing) / 4);
 }
 
 input, textarea {
-    font-size: 0.9em;
     padding: 0.3em;
     outline: none;
     border: 1px solid var(--_border-color);
