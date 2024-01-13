@@ -68,12 +68,10 @@ export const createPreferencesService = ({ storageService }) => {
     }),
   });
   async function mediaQueryChangeHandler() {
-    const storedSettings = await storageService.getItem(preferencesStorageKey);
-    if (!storedSettings) {
-      state = fromMediaQueries({
-        colorSchemeMedia,
-        reducedMotionMedia,
-      });
+    if (
+      state.theme === themeSettings.default ||
+      state.motion === motionSettings.default
+    ) {
       emit();
     }
   }
