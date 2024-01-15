@@ -5,9 +5,9 @@ import { PreferencesComponent } from './preferences.component.js';
 
 const template = createElement('template');
 
-template.innerHTML = `<h1 tabindex="-1">Me</h1>
+template.innerHTML = `<h1 tabindex="-1"><span><ui-icon name="person-fill"></ui-icon>My account</span></h1>
 <details id="preferences" class="surface boxed" open>
-  <summary autofocus>Preferences</summary>
+  <summary>UI Preferences</summary>
   <app-preferences></app-preferences>
 </details>
 `;

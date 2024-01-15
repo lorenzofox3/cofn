@@ -18,14 +18,14 @@
     --shadow-color: #8a8a8a;
     --animation-duration: 0.3s;
     --border-radius: 3px;
-    --form-border-color: #414d62;
+    --form-border-color: #afafaf;
 }
 
 body {
     box-sizing: border-box;
     color: var(--font-color);
     min-height: 100svh;
-    font-size: clamp(1.3rem, 1.8vw, 1.6rem);
+    font-size: clamp(1.3rem, 1.6vw, 1.4rem);
     background: var(--app-bg);
     padding-bottom: var(--spacing-big);
 }
@@ -38,11 +38,11 @@ body.dark{
     --spacing-small: 1em;
     --action-color: #5be382;
     --action-color-contrast: #1e1e1e;
-    /*--control-focus-color: #5a839f;*/
+    --control-focus-color: #ceffed;
     --danger-color: #fd793c;
     --shadow-color: #b5ffc2;
     --animation-duration: 0.3s;
-    --form-border-color: #76ac80;
+    --form-border-color: #adeab8;
 }
 
 body.motion-reduced {

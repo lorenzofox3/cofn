@@ -1,9 +1,9 @@
-const fakeProducts = {
+let fakeProducts = {
   BIGMC: {
     title: `Big Mac long string don't know what to do`,
     description: `A slice of beef between two buns but with a long description which wraps anyways`,
     price: {
-      amountInCents: 8.99,
+      amountInCents: 899,
       currency: '$',
     },
   },
@@ -11,7 +11,7 @@ const fakeProducts = {
     title: `Mac Flurry ice cream`,
     description: `An yummy icecream with a topping. The whole thing is full of sugar`,
     price: {
-      amountInCents: 2.59,
+      amountInCents: 259,
       currency: '$',
     },
   },
@@ -19,7 +19,7 @@ const fakeProducts = {
     title: `Mac Chicken`,
     description: `A burger made of a nice piece of chicken`,
     price: {
-      amountInCents: 6.99,
+      amountInCents: 699,
       currency: '$',
     },
   },
@@ -27,7 +27,7 @@ const fakeProducts = {
     title: `Mac Chicken`,
     description: `A burger made of a nice piece of chicken`,
     price: {
-      amountInCents: 6.99,
+      amountInCents: 699,
       currency: '$',
     },
   },
@@ -35,7 +35,7 @@ const fakeProducts = {
     title: `Mac Chicken`,
     description: `A burger made of a nice piece of chicken`,
     price: {
-      amountInCents: 6.99,
+      amountInCents: 699,
       currency: '$',
     },
   },
@@ -43,7 +43,7 @@ const fakeProducts = {
     title: `Mac Chicken`,
     description: `A burger made of a nice piece of chicken`,
     price: {
-      amountInCents: 6.99,
+      amountInCents: 699,
       currency: '$',
     },
   },
@@ -51,7 +51,7 @@ const fakeProducts = {
     title: `Mac Chicken`,
     description: `A burger made of a nice piece of chicken`,
     price: {
-      amountInCents: 6.99,
+      amountInCents: 699,
       currency: '$',
     },
   },
@@ -59,7 +59,7 @@ const fakeProducts = {
     title: `Mac Chicken`,
     description: `A burger made of a nice piece of chicken`,
     price: {
-      amountInCents: 6.99,
+      amountInCents: 699,
       currency: '$',
     },
   },
@@ -73,14 +73,46 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const requestURL = new URL(request.url);
-  if (request.method === 'GET' && requestURL.pathname === '/api/products') {
-    event.respondWith(
-      new Response(JSON.stringify(fakeProducts), {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }),
-    );
+  if (requestURL.pathname === '/api/products') {
+    if (request.method === 'GET') {
+      event.respondWith(
+        new Response(JSON.stringify(fakeProducts), {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }),
+      );
+    } else if (request.method === 'POST') {
+      event.respondWith(
+        new Promise((resolve) => {
+          event.request
+            .clone()
+            .json()
+            .then((product) => {
+              if (
+                fakeProducts[product.sku] ||
+                fakeProducts[product.sku.toUpperCase()]
+              ) {
+                resolve(
+                  new Response(null, {
+                    status: 409,
+                  }),
+                );
+              } else {
+                fakeProducts = {
+                  [product.sku]: product,
+                  ...fakeProducts,
+                };
+                resolve(
+                  new Response(null, {
+                    status: 201,
+                  }),
+                );
+              }
+            });
+        }),
+      );
+    }
   }
 
   if (request.method === 'DELETE') {
@@ -90,6 +122,9 @@ self.addEventListener('fetch', (event) => {
       const uppercaseSku = sku.toUpperCase();
       if (fakeProducts[uppercaseSku]) {
         delete fakeProducts[uppercaseSku];
+        event.respondWith(new Response(null, { status: 204 }));
+      } else if (fakeProducts[sku]) {
+        delete fakeProducts[sku];
         event.respondWith(new Response(null, { status: 204 }));
       } else {
         event.respondWith(new Response(null, { status: 404 }));

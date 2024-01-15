@@ -58,7 +58,16 @@ app-product-list-item {
 
 .product-card__image-container {
     aspect-ratio: 3 / 2;
-    background: lightgray;
+    background: var(--app-bg);
+}
+
+.product-card__image-container:empty:after {
+    content: 'no picture';
+    display: grid;
+    place-items: center;
+    height: 3em;
+    font-style: italic;
+    font-size: 0.6em;
 }
 
 div:has(>.product-card__price){
@@ -114,7 +123,6 @@ div:has(> .product-form) {
 }
 
 .product-form ui-file-input{
-    background: #f8f8f8; /* todo */
     flex-grow: 1;
 }
 

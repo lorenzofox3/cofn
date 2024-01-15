@@ -3,7 +3,9 @@ import { http } from '../utils/http.js';
 
 export const createProductListService = () => {
   const store = {
-    products: {},
+    products: {
+      items: {},
+    },
   };
 
   const service = createEventEmitter();
@@ -25,10 +27,22 @@ export const createProductListService = () => {
       const toRemove = store.products.items[sku];
       delete store.products.items[sku];
       // optimistic update: we do not wait for the result
-      http(`products/${sku}`, {
+      return http(`products/${sku}`, {
         method: 'DELETE',
-      }).catch(() => {
+      }).catch((err) => {
         store.products.items[sku] = toRemove;
+        throw err;
+      });
+    }),
+    create: withDispatch(async ({ product }) => {
+      store.products.items[product.sku] = product;
+      // optimistic update: we do not wait for the result
+      return http(`products`, {
+        method: 'POST',
+        body: JSON.stringify(product),
+      }).catch((err) => {
+        delete store.products.items[product.sku];
+        throw err;
       });
     }),
     getState() {

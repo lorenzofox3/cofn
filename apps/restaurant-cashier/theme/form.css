@@ -1,8 +1,13 @@
 form {
     --_spacing: var(--spacing, var(--spacing-small, 1em));
-    --_control-bg: inherit;
     --_border-color: var(--form-border-color, gray);
+    --_adorner-size: 3px;
     padding: 1em;
+
+
+    --_font-color: black; /* todo */
+    /*--_adorner-color todo */
+
 }
 
 label {
@@ -13,17 +18,47 @@ label {
 }
 
 input, textarea {
+    color:var(--_font-color);
     padding: 0.3em;
     outline: none;
     border: 1px solid var(--_border-color);
     border-radius: var(--border-radius);
-    background: var(--_control-bg);
+    background-color: inherit;
+    background-image:
+            linear-gradient(90deg, var(--control-focus-color), var(--control-focus-color)),
+            linear-gradient(90deg, var(--action-color), var(--action-color));
+    background-size: 0 calc(100% - var(--_adorner-size)), 0 var(--_adorner-size);
+    background-repeat: no-repeat, no-repeat;
+    background-position: top left, left bottom;
+    transition: background-size var(--animation-duration);
     font-family: inherit;
-    transition: background var(--animation-duration);
+}
+
+textarea {
+    resize: none;
+}
+
+:where(input, textarea):focus {
+    /*color: var(--action-color-contrast);*/
+    background-size: 100% calc(100% - var(--_adorner-size)), 100% var(--_adorner-size);
+    --_border-color: var(--action-color);
 }
 
 label > span:first-child::first-letter {
     text-transform: uppercase;
+}
+
+label > span:first-child {
+    align-self: flex-start;
+    width: min-content; /* looks like there is a bug in FF */
+    background-image: linear-gradient(90deg, var(--action-color), var(--action-color));
+    background-size: 0 var(--_adorner-size);
+    background-repeat: no-repeat;
+    background-position: left bottom;
+}
+
+label:focus-within > span:first-child{
+    background-size: 100% 0.2em;
 }
 
 span:has(+ input[required])::after {
@@ -31,17 +66,9 @@ span:has(+ input[required])::after {
     font-size: 0.8em;
 }
 
-label:focus-within > span:first-child{
-    text-decoration: underline solid var(--action-color);
-}
-
 
 input, textarea, .radio-group {
     box-shadow: 0 0 2px 0 var(--shadow-color);
-}
-
-:is(input, textarea):focus {
-    --_control-bg: var(--control-focus-color);
 }
 
 input:user-invalid {

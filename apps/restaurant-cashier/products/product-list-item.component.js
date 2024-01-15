@@ -32,8 +32,8 @@ export const ProductListItemComponent = compositionPipeline(
         <div>
           <a class="product-card__sku" href="/">#${product.sku}</a>
           <span class="product-card__price">
-            <span>${product.price?.amountInCents}</span>
-            <span>${product.price?.currency}</span>
+            <span>${product.price.amountInCents / 100}</span>
+            <span>${product.price.currency}</span>
           </span>
         </div>
       </article>`;

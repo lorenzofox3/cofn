@@ -48,6 +48,7 @@ input[type=radio] {
 .radio-group label {
     flex-direction: row;
     padding: calc(var(--_spacing) / 2) var(--_spacing);
+    transition: background-color var(--animation-duration), color var(--animation-duration);
 }
 
 .radio-group label:has(input[checked]){

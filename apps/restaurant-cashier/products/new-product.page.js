@@ -1,9 +1,10 @@
 import { createElement } from '../utils/dom.js';
+import { productListService } from './product-list.service.js';
 
 const template = createElement('template');
 
 template.innerHTML = `
-<h1 tabindex="-1">Add new product</h1>
+<h1 tabindex="-1"><span><ui-icon name="plus-circle"></ui-icon>Add new product</span></h1>
 <div class="surface boxed">
   <form class="product-form">
       <label>
@@ -38,13 +39,36 @@ template.innerHTML = `
       </div>
   </form>
 </div>`;
-export const loadPage = async () => {
-  const handleSubmit = (ev) => {
+export const loadPage = async ({ router }) => {
+  const handleSubmit = async (ev) => {
     ev.preventDefault();
     ev.stopPropagation();
-    console.log('submit');
+    const { target: form } = ev;
+    form.disabled = true;
+    const product = productFromForm(form);
+    try {
+      await productListService.create({ product });
+      router.goTo('products');
+    } finally {
+      form.disabled = false;
+    }
   };
   const page = template.content.cloneNode(true);
   page.querySelector('form').addEventListener('submit', handleSubmit);
   return page;
+};
+
+const productFromForm = (form) => {
+  const formData = new FormData(form);
+  return {
+    sku: formData.get('sku'),
+    price: {
+      amountInCents: Number(formData.get('price')) * 100,
+      currency: '$',
+    },
+    title: formData.get('title'),
+    ...(formData.get('description') !== ''
+      ? { description: formData.get('description') }
+      : {}),
+  };
 };
