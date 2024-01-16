@@ -98,6 +98,10 @@ export const createApp = ({ router }) => {
       useLogger,
       usePageLoader({ pagePath: '/products/new-product.page.js' }),
     ])
+    .addRoute({ pattern: 'products/:product-sku' }, [
+      useLogger,
+      usePageLoader({ pagePath: '/products/edit-product.page.js' }),
+    ])
     .addRoute({ pattern: 'sales' }, [
       useLogger,
       usePageLoader({ pagePath: '/not-available.page.js' }),

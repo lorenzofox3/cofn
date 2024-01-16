@@ -7,12 +7,12 @@ export const createTrie = () => {
     },
     search(value) {
       const segments = getSegments(value);
-      const match = getSegments(
-        search({
-          segments,
-        })
-      ).join('/');
+      const searchResult = search({
+        segments,
+      });
+      const match = getSegments(searchResult?.path ?? '').join('/');
       return {
+        ...(searchResult ? searchResult : {}),
         match,
       };
     },
@@ -32,21 +32,29 @@ export const createTrie = () => {
     return insert({ node: node[current], segments });
   }
 
-  function search({ node = root, segments = [], path = '' }) {
+  function search({ node = root, segments = [], path = '', params = {} }) {
     const current = segments.shift();
 
     if (!current) {
-      return path;
+      return { path, params };
     }
 
-    if (!node[current]) {
-      return '';
+    const withParameterKey = Object.keys(node).find((key) =>
+      key.startsWith(':'),
+    );
+
+    if (!node[current] && !withParameterKey) {
+      return undefined;
     }
 
     return search({
-      node: node[current],
+      node: node[current] || node[withParameterKey],
       segments,
-      path: `${path}/${current}`,
+      path: `${path}/${node[current] ? current : withParameterKey}`,
+      params: {
+        ...params,
+        ...(withParameterKey ? { [withParameterKey.slice(1)]: current } : {}),
+      },
     });
   }
 

@@ -28,9 +28,14 @@ export const ProductListItemComponent = compositionPipeline(
           </button>
         </header>
         <div class="product-card__image-container"></div>
-        <p>${product.description}</p>
+        <p class="product-card__description">${product.description ?? ''}</p>
         <div>
-          <a class="product-card__sku" href="/">#${product.sku}</a>
+          <a
+            class="product-card__sku"
+            href="${'/products/' + product.sku}"
+            is="ui-page-link"
+            >#${product.sku}</a
+          >
           <span class="product-card__price">
             <span>${product.price.amountInCents / 100}</span>
             <span>${product.price.currency}</span>

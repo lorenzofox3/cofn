@@ -34,6 +34,26 @@ export const createProductListService = () => {
         throw err;
       });
     }),
+    fetchOne: async ({ sku }) => {
+      // todo we could get it from cache first ??
+      return http(`products/${sku}`, {
+        method: 'GET',
+      }).then((product) => {
+        return (store.products.items[product.sku] = product);
+      });
+    },
+    update: withDispatch(async ({ product }) => {
+      const oldValue = store.products.items[product.sku];
+      store.products.items[product.sku] = product;
+      // optimistic update: we do not wait for the result
+      return http(`products/${product.sku}`, {
+        method: 'PUT',
+        body: JSON.stringify(product),
+      }).catch((err) => {
+        store.products.items[product.sku] = oldValue;
+        throw err;
+      });
+    }),
     create: withDispatch(async ({ product }) => {
       store.products.items[product.sku] = product;
       // optimistic update: we do not wait for the result

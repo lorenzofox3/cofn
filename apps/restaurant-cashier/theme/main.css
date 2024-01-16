@@ -25,7 +25,7 @@ body {
     box-sizing: border-box;
     color: var(--font-color);
     min-height: 100svh;
-    font-size: clamp(1.3rem, 1.6vw, 1.4rem);
+    font-size: clamp(1.3rem, 0.5vw + 1rem, 1.4rem);
     background: var(--app-bg);
     padding-bottom: var(--spacing-big);
 }
@@ -62,7 +62,7 @@ body * {
 h1, h2, h3 {
     font-size: 1.2em;
     font-weight: 500;
-    margin-block: 0.4em;
+    margin-block: 0.75em;
 }
 
 a {

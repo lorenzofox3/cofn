@@ -50,7 +50,8 @@ export const createRouter = ({ global = window } = {}) => {
 
   async function handlePopState({ state = {} }) {
     try {
-      const requestedURL = state.navigation?.URL ?? origin;
+      const navigation = state.navigation ?? {};
+      const requestedURL = navigation.URL ?? origin;
       const pathName = new URL(requestedURL).pathname;
 
       service.emit(navigationEvents.ROUTE_CHANGE_STARTED, {
@@ -58,10 +59,16 @@ export const createRouter = ({ global = window } = {}) => {
         state,
       });
 
-      const { match } = trie.search(pathName);
+      const { match, params } = trie.search(pathName);
       const routeDef = routes?.[match] ?? { handler: notFoundHandler };
       const context = createContext({
-        state,
+        state: {
+          ...state,
+          navigation: {
+            ...navigation,
+            params,
+          },
+        },
         routeDef,
         router: service,
       });

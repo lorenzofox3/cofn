@@ -1,5 +1,6 @@
 import { createElement } from '../utils/dom.js';
 import { productListService } from './product-list.service.js';
+import { fromForm } from './product-list.model.js';
 
 const template = createElement('template');
 
@@ -45,7 +46,7 @@ export const loadPage = async ({ router }) => {
     ev.stopPropagation();
     const { target: form } = ev;
     form.disabled = true;
-    const product = productFromForm(form);
+    const product = fromForm(form);
     try {
       await productListService.create({ product });
       router.goTo('products');
@@ -56,19 +57,4 @@ export const loadPage = async ({ router }) => {
   const page = template.content.cloneNode(true);
   page.querySelector('form').addEventListener('submit', handleSubmit);
   return page;
-};
-
-const productFromForm = (form) => {
-  const formData = new FormData(form);
-  return {
-    sku: formData.get('sku'),
-    price: {
-      amountInCents: Number(formData.get('price')) * 100,
-      currency: '$',
-    },
-    title: formData.get('title'),
-    ...(formData.get('description') !== ''
-      ? { description: formData.get('description') }
-      : {}),
-  };
 };
