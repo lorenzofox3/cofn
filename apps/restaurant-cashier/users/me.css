@@ -25,7 +25,7 @@ fieldset {
     align-items: center;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: var(--_spacing)
+    gap: var(--_spacing) calc(var(--_spacing) / 2);
 }
 
 fieldset:focus-within .legend {
@@ -70,7 +70,6 @@ input[type=radio]:focus ~ span {
     fieldset {
         flex-direction: column;
         align-items: stretch;
-        gap: calc(var(--_spacing) / 2);
     }
 
     .legend {

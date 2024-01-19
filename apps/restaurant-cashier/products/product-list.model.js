@@ -12,3 +12,5 @@ export const fromForm = (form) => {
       : {}),
   };
 };
+
+export const productSkus = ({ products }) => products.map(({ sku }) => sku);

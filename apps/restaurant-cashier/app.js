@@ -1,5 +1,5 @@
 import { define } from '@cofn/core';
-import { uiIcon } from './components/ui-icon.js';
+import { UIIcon } from './components/ui-icon.js';
 import './products/product-list.page.js';
 import { PageLink } from './router/page-link.component.js';
 import { PageOutlet } from './router/page-outlet.component.js';
@@ -15,6 +15,7 @@ import {
 import { querySelector } from './utils/dom.js';
 import { compose } from './utils/functions.js';
 import { mapValues } from './utils/objects.js';
+import { UILabel } from './components/ui-label.js';
 
 const togglePreferences = ({ motion, theme }) => {
   const classList = querySelector('body').classList;
@@ -56,9 +57,12 @@ export const createApp = ({ router }) => {
 
   const _define = (tag, comp, ...rest) => define(tag, withRoot(comp), ...rest);
 
-  _define('ui-icon', uiIcon, {
+  _define('ui-icon', UIIcon, {
     shadow: { mode: 'open' },
     observedAttributes: ['name'],
+  });
+  _define('ui-label', UILabel, {
+    extends: 'label',
   });
   _define('ui-page-link', PageLink, {
     extends: 'a',
@@ -83,27 +87,21 @@ export const createApp = ({ router }) => {
 
   router
     .addRoute({ pattern: 'me' }, [
-      useLogger,
       usePageLoader({ pagePath: '/users/me.page.js' }),
     ])
     .addRoute({ pattern: 'dashboard' }, [
-      useLogger,
       usePageLoader({ pagePath: '/not-available.page.js' }),
     ])
     .addRoute({ pattern: 'products' }, [
-      useLogger,
       usePageLoader({ pagePath: '/products/product-list.page.js' }),
     ])
     .addRoute({ pattern: 'products/new' }, [
-      useLogger,
       usePageLoader({ pagePath: '/products/new-product.page.js' }),
     ])
     .addRoute({ pattern: 'products/:product-sku' }, [
-      useLogger,
       usePageLoader({ pagePath: '/products/edit-product.page.js' }),
     ])
     .addRoute({ pattern: 'sales' }, [
-      useLogger,
       usePageLoader({ pagePath: '/not-available.page.js' }),
     ])
     .notFound(() => {

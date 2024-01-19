@@ -30,7 +30,7 @@ body {
     padding-bottom: var(--spacing-big);
 }
 
-body.dark{
+body.dark {
     --font-color: #f2f2f2;
     --surface-bg: #202945;
     --app-bg: #152028;
@@ -78,10 +78,14 @@ ui-icon {
     height: var(--_size);
 }
 
-:is(span, button, a):has(ui-icon:first-child){
+:is(span, button, a):has(ui-icon:first-child) {
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+ui-page-outlet{
+    view-transition-name: main-content;
 }
 
 .wrapper {
@@ -120,51 +124,79 @@ HEADER
     gap: var(--spacing);
 }
 
-#main-nav ul {
-    list-style: none;
-    display: flex;
-    padding: 0;
-    margin: 0;
-}
-
 #main-nav {
     flex-grow: 1;
+
+    ul {
+        list-style: none;
+        display: flex;
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        flex-basis: 100px;
+    }
+
+    a {
+        --_spacing: 2px;
+        text-decoration: none;
+        display: grid;
+        gap: var(--_spacing);
+        padding-inline: var(--_spacing);
+        padding-block: var(--_spacing);
+        grid-template-rows: 1fr auto;
+        justify-items: center;
+        border-width: var(--_spacing) 0;
+        border-style: solid;
+        border-color: transparent;
+        color: currentColor;
+        opacity: 0.8;
+        transition: border-bottom-color var(--animation-duration);
+
+        > span:last-child {
+            font-size: 0.7em;
+        }
+
+        > ui-icon:first-child {
+            --size: 1.5rem;
+            display: block;
+        }
+    }
+
+    a[aria-current=page] {
+        border-bottom-color: var(--action-color);
+    }
+
+    a:hover {
+        opacity: 1;
+    }
 }
 
-#main-nav li {
-    flex-basis: 100px;
+@keyframes fade-in {
+    from { opacity: 0; }
 }
 
-#main-nav a {
-    --_spacing: 2px;
-    text-decoration: none;
-    display: grid;
-    gap: var(--_spacing);
-    padding-inline: var(--_spacing);
-    padding-block: var(--_spacing);
-    grid-template-rows: 1fr auto;
-    justify-items: center;
-    border-width: var(--_spacing) 0;
-    border-style: solid;
-    border-color: transparent;
-    color: currentColor;
-    opacity: 0.8;
-    transition: border-bottom-color var(--animation-duration);
+@keyframes fade-out {
+    to { opacity: 0; }
 }
 
-#main-nav a[aria-current=page]{
-    border-bottom-color: var(--action-color);
+@keyframes slide-from-right {
+    from { transform: translateX(30px); }
 }
 
-#main-nav a:hover {
-    opacity: 1;
+@keyframes slide-to-left {
+    to { transform: translateX(-30px); }
 }
 
-#main-nav a > span:last-child {
-    font-size: 0.7em;
+::view-transition-old(main-content) {
+    animation: 90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+    300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
 }
 
-#main-nav a > ui-icon:first-child {
-    --size: 1.5rem;
-    display: block;
+::view-transition-new(main-content) {
+    animation: 210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
+    300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
 }
+
+

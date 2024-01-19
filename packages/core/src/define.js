@@ -15,6 +15,7 @@ export const define = (tag, coroutine, opts = {}) => {
 };
 
 const classElementMap = {
+  label: HTMLLabelElement,
   button: HTMLButtonElement,
   form: HTMLFormElement,
   li: HTMLLIElement,

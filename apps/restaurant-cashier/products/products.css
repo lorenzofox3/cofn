@@ -35,7 +35,6 @@ app-product-list-item {
 .product-card button {
     --padding: 4px;
     font-size: 0.95em;
-
 }
 
 .product-card > header {
@@ -102,7 +101,7 @@ div:has(> .product-form) {
 .product-form {
     display: grid;
     grid-template-columns: 0.6fr 0.4fr;
-    gap: var(--_spacing) var(--_large-spacing);
+    gap: 0 var(--_large-spacing);
 }
 
 .product-form input[type=file]{

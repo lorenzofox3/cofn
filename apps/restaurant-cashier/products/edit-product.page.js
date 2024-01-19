@@ -23,6 +23,9 @@ const EditProductForm = reactiveProps(['product'])(
       ev.stopPropagation();
       const { target: form } = ev;
       form.disabled = true;
+      if (!form.checkValidity()) {
+        return;
+      }
       const product = fromForm(form);
       try {
         await productListService.update({ product });
@@ -32,27 +35,27 @@ const EditProductForm = reactiveProps(['product'])(
       }
     };
     return ({ product }) => html`
-        <h1><span><ui-icon name="pencil-fill"></ui-icon>Edit product #${product.sku.toUpperCase()}</span></h1>
+        <h1 tabindex="-1"><span><ui-icon name="pencil-fill"></ui-icon>Edit product #${product.sku.toUpperCase()}</span></h1>
         <div class="surface boxed">
-          <form @submit="${handleSubmit}" class="product-form">
+          <form autocomplete="off" novalidate @submit="${handleSubmit}" class="product-form">
               <input type="hidden" .value="${
                 product.sku
               }" name="sku" type="text" required />
-            <label>
+            <label is="ui-label">
               <span>title</span>
               <input .value="${
                 product.title
-              }" name="title" autofocus type="text" required />
+              }" name="title" type="text" required />
             </label>
-            <label>
+            <label is="ui-label">
               <span>description</span>
               <textarea .value="${
                 product.description
               }" name="description"></textarea>
             </label>
-            <label>
-              <span>price</span>
-              <input .value="${
+            <label is="ui-label">
+              <span>price($)</span>
+              <input inputmode="numeric" .value="${
                 product.price.amountInCents / 100
               }" pattern="\\d+(\\.\\d+)?" name="price" type="text" required />
             </label>

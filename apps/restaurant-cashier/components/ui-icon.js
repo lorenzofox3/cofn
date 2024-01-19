@@ -17,7 +17,7 @@ svg {
 
 const spriteURL = `../node_modules/bootstrap-icons/bootstrap-icons.svg`;
 
-export const uiIcon = function* ({ $host, $root }) {
+export const UIIcon = function* ({ $host, $root }) {
   $root.replaceChildren(template.content.cloneNode(true));
   $root.querySelector('svg').setAttribute('aria-hidden', 'true');
   while (true) {

@@ -15,6 +15,26 @@ label {
     display: flex;
     flex-direction: column;
     gap: calc(var(--_spacing) / 4);
+    overflow: hidden;
+}
+
+
+.input-error {
+    color: var(--danger-color);
+    line-height: 1;
+    font-size: 0.75rem;
+    padding-block-end: 0.3rem;
+    transform: scaleY(0);
+    transform-origin: 0 0;
+    transition: transform var(--animation-duration);
+}
+
+.input-error.active {
+    transform: scaleY(1);
+}
+
+input:has(+ .input-error.active){
+    --_border-color: var(--danger-color);
 }
 
 input, textarea {
@@ -32,6 +52,7 @@ input, textarea {
     background-position: top left, left bottom;
     transition: background-size var(--animation-duration);
     font-family: inherit;
+    font-size: 0.9em;
 }
 
 textarea {
@@ -39,7 +60,6 @@ textarea {
 }
 
 :where(input, textarea):focus {
-    /*color: var(--action-color-contrast);*/
     background-size: 100% calc(100% - var(--_adorner-size)), 100% var(--_adorner-size);
     --_border-color: var(--action-color);
 }
@@ -58,7 +78,7 @@ label > span:first-child {
 }
 
 label:focus-within > span:first-child{
-    background-size: 100% 0.2em;
+    background-size: 100% 3px;
 }
 
 span:has(+ input[required])::after {
@@ -69,10 +89,6 @@ span:has(+ input[required])::after {
 
 input, textarea, .radio-group {
     box-shadow: 0 0 2px 0 var(--shadow-color);
-}
-
-input:user-invalid {
-    --_border-color: var(--danger-color);
 }
 
 ui-file-input {
