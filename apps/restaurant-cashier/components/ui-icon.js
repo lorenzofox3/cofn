@@ -15,7 +15,7 @@ svg {
 </svg>
 `;
 
-const spriteURL = `../node_modules/bootstrap-icons/bootstrap-icons.svg`;
+const spriteURL = `/node_modules/bootstrap-icons/bootstrap-icons.svg`;
 
 export const UIIcon = function* ({ $host, $root }) {
   $root.replaceChildren(template.content.cloneNode(true));

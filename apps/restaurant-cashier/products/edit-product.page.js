@@ -36,7 +36,7 @@ const EditProductForm = reactiveProps(['product'])(
     };
     return ({ product }) => html`
         <h1 tabindex="-1"><span><ui-icon name="pencil-fill"></ui-icon>Edit product #${product.sku.toUpperCase()}</span></h1>
-        <div class="surface boxed">
+        <div class="surface transition-card boxed">
           <form autocomplete="off" novalidate @submit="${handleSubmit}" class="product-form">
               <input type="hidden" .value="${
                 product.sku

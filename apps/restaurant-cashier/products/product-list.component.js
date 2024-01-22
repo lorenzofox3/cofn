@@ -18,13 +18,17 @@ export const ProductList = ({
     { signal: $signal },
   );
 
+  function transitionCard() {
+    this.classList.add('transition-card');
+  }
+
   return ({ products }) => {
     return html`
       <h1 id="page-header" tabindex="-1">
         <span><ui-icon name="tag-fill"></ui-icon>Product list</span>
       </h1>
       <div id="list-section" aria-labelledby="page-header">
-        <div>
+        <div @click="${transitionCard}">
           <a class="button-like" is="ui-page-link" href="/products/new">
             <ui-icon name="plus-circle"></ui-icon>
             Add new</a
@@ -36,6 +40,7 @@ export const ProductList = ({
                 data-id="${product.sku}"
                 class="boxed surface"
                 .product="${product}"
+                @click="${transitionCard}"
               ></app-product-list-item>`,
         )}
       </div>

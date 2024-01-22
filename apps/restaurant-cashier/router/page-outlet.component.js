@@ -32,9 +32,9 @@ export const PageOutlet = pageOutlet(function* ({ $host, preferencesService }) {
         const elToFocus = autofocusElement || $host.querySelector('h1');
         elToFocus?.focus();
       } else {
-        const transition = document.startViewTransition(() =>
-          updateDOM({ page }),
-        );
+        const transition = document.startViewTransition(() => {
+          updateDOM({ page });
+        });
         transition.updateCallbackDone.then(() => {
           const elToFocus = autofocusElement || $host.querySelector('h1');
           elToFocus?.focus();
