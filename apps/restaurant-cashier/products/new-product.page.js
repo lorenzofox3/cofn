@@ -65,12 +65,8 @@ export const loadPage = async ({ router }) => {
 
     form.disabled = true;
     const product = fromForm(form);
-    try {
-      await productListService.create({ product });
-      router.goTo('products');
-    } finally {
-      form.disabled = false;
-    }
+    productListService.create({ product });
+    router.goTo('products');
   };
   const page = template.content.cloneNode(true);
   const form = page.querySelector('form');

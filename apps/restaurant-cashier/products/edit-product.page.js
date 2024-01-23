@@ -27,12 +27,8 @@ const EditProductForm = reactiveProps(['product'])(
         return;
       }
       const product = fromForm(form);
-      try {
-        await productListService.update({ product });
-        router.goTo('products');
-      } finally {
-        form.disabled = false;
-      }
+      productListService.update({ product });
+      router.goTo('products');
     };
     return ({ product }) => html`
         <h1 tabindex="-1">Edit product #${product.sku.toUpperCase()}</h1>

@@ -14,23 +14,20 @@ export const createProductListService = ({ notificationsService }) => {
 
   const service = createEventEmitter();
 
-  const withDispatch =
-    (method) =>
-    async (...args) => {
-      await method(...args);
+  return Object.assign(service, {
+    fetch: async () => {
+      store.products.items = await http('products');
       service.emit({
         type: 'product-list-changed',
       });
-    };
-
-  return Object.assign(service, {
-    fetch: withDispatch(async () => {
-      store.products.items = await http('products');
-    }),
-    remove: withDispatch(async ({ sku }) => {
+    },
+    remove: async ({ sku }) => {
       const toRemove = store.products.items[sku];
       delete store.products.items[sku];
       // optimistic update: we do not wait for the result
+      service.emit({
+        type: 'product-list-changed',
+      });
       return http(`products/${sku}`, {
         method: 'DELETE',
       }).catch((err) => {
@@ -38,9 +35,12 @@ export const createProductListService = ({ notificationsService }) => {
           message: 'An error occurred. The product could not be deleted.',
         });
         store.products.items[sku] = toRemove;
+        service.emit({
+          type: 'product-list-changed',
+        });
         throw err;
       });
-    }),
+    },
     fetchOne: async ({ sku }) => {
       // todo we could get it from cache first ??
       return http(`products/${sku}`, {
@@ -49,10 +49,13 @@ export const createProductListService = ({ notificationsService }) => {
         return (store.products.items[product.sku] = product);
       });
     },
-    update: withDispatch(async ({ product }) => {
+    update: async ({ product }) => {
       const oldValue = store.products.items[product.sku];
       store.products.items[product.sku] = product;
       // optimistic update: we do not wait for the result
+      service.emit({
+        type: 'product-list-changed',
+      });
       return http(`products/${product.sku}`, {
         method: 'PUT',
         body: JSON.stringify(product),
@@ -61,12 +64,18 @@ export const createProductListService = ({ notificationsService }) => {
           message: 'An error occurred. The product could not be updated.',
         });
         store.products.items[product.sku] = oldValue;
+        service.emit({
+          type: 'product-list-changed',
+        });
         throw err;
       });
-    }),
-    create: withDispatch(async ({ product }) => {
+    },
+    create: async ({ product }) => {
       store.products.items[product.sku] = product;
       // optimistic update: we do not wait for the result
+      service.emit({
+        type: 'product-list-changed',
+      });
       return http(`products`, {
         method: 'POST',
         body: JSON.stringify(product),
@@ -75,9 +84,12 @@ export const createProductListService = ({ notificationsService }) => {
           message: 'An error occurred. The product could not be created.',
         });
         delete store.products.items[product.sku];
+        service.emit({
+          type: 'product-list-changed',
+        });
         throw err;
       });
-    }),
+    },
     getState() {
       return structuredClone({
         products: Object.entries(store.products.items ?? {}).map(

@@ -5,7 +5,7 @@ export const ProductList = ({
   animationService,
   productListService,
 }) => {
-  productListService.fetch();
+  setTimeout(productListService.fetch, 200); // todo remove (when we have a real backend and do not rely on service worker)
 
   $host.addEventListener(
     'product-removed',
