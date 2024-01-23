@@ -35,7 +35,7 @@ const EditProductForm = reactiveProps(['product'])(
       }
     };
     return ({ product }) => html`
-        <h1 tabindex="-1"><span><ui-icon name="pencil-fill"></ui-icon>Edit product #${product.sku.toUpperCase()}</span></h1>
+        <h1 tabindex="-1">Edit product #${product.sku.toUpperCase()}</h1>
         <div class="surface transition-card boxed">
           <form autocomplete="off" novalidate @submit="${handleSubmit}" class="product-form">
               <input type="hidden" .value="${
@@ -62,7 +62,15 @@ const EditProductForm = reactiveProps(['product'])(
             <label>
               <span>picture</span>
               <ui-file-input>
-                <input class="button-like" type="file">
+                ${
+                  product.image?.url
+                    ? html`<img
+                        src="${product.image.url}"
+                        alt="product image"
+                      />`
+                    : null
+                }
+                <input class="button-like surface" type="file">
               </ui-file-input>
             </label>
             <div class="action-bar">

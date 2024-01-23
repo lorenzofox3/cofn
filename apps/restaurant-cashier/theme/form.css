@@ -98,6 +98,9 @@ ui-file-input {
     border: 2px dashed var(--shadow-color);
     aspect-ratio: 3 / 2;
     cursor: pointer;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
 }
 
 input::file-selector-button {

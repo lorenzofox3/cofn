@@ -7,6 +7,9 @@ let fakeProducts = {
       amountInCents: 899,
       currency: '$',
     },
+    image: {
+      url: 'http://localhost:5173/assets/burger.webp',
+    },
   },
   mcflry: {
     sku: 'mcflry',

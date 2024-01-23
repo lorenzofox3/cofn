@@ -24,9 +24,7 @@ export const ProductList = ({
 
   return ({ products }) => {
     return html`
-      <h1 id="page-header" tabindex="-1">
-        <span><ui-icon name="tag-fill"></ui-icon>Product list</span>
-      </h1>
+      <h1 id="page-header" tabindex="-1">Product list</h1>
       <div id="list-section" aria-labelledby="page-header">
         <div @click="${transitionCard}">
           <a class="button-like" is="ui-page-link" href="/products/new">

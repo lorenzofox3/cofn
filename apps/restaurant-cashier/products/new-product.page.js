@@ -5,7 +5,7 @@ import { fromForm, productSkus } from './product-list.model.js';
 const template = createElement('template');
 
 template.innerHTML = `
-<h1 tabindex="-1"><span><ui-icon name="plus-circle"></ui-icon>Add new product</span></h1>
+<h1 tabindex="-1">Add new product</h1>
 <div class="surface transition-card boxed">
   <form autocomplete="off" class="product-form" novalidate>
       <label is="ui-label">

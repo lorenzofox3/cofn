@@ -27,7 +27,11 @@ export const ProductListItemComponent = compositionPipeline(
             <ui-icon name="x-circle"></ui-icon> <span>remove</span>
           </button>
         </header>
-        <div class="product-card__image-container"></div>
+        <div class="product-card__image-container">
+          ${product.image?.url
+            ? html`<img src="${product.image.url}" alt="product image" />`
+            : null}
+        </div>
         <p class="product-card__description">${product.description ?? ''}</p>
         <div>
           <a
