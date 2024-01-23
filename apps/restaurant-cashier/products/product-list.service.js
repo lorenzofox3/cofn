@@ -1,7 +1,11 @@
 import { createEventEmitter } from '../utils/events.service.js';
 import { http } from '../utils/http.js';
+import {
+  createNotificationsService,
+  notificationsService,
+} from '../utils/notifications.service.js';
 
-export const createProductListService = () => {
+export const createProductListService = ({ notificationsService }) => {
   const store = {
     products: {
       items: {},
@@ -30,6 +34,9 @@ export const createProductListService = () => {
       return http(`products/${sku}`, {
         method: 'DELETE',
       }).catch((err) => {
+        notificationsService.error({
+          message: 'An error occurred. The product could not be deleted.',
+        });
         store.products.items[sku] = toRemove;
         throw err;
       });
@@ -50,6 +57,9 @@ export const createProductListService = () => {
         method: 'PUT',
         body: JSON.stringify(product),
       }).catch((err) => {
+        notificationsService.error({
+          message: 'An error occurred. The product could not be updated.',
+        });
         store.products.items[product.sku] = oldValue;
         throw err;
       });
@@ -61,6 +71,9 @@ export const createProductListService = () => {
         method: 'POST',
         body: JSON.stringify(product),
       }).catch((err) => {
+        notificationsService.error({
+          message: 'An error occurred. The product could not be created.',
+        });
         delete store.products.items[product.sku];
         throw err;
       });
@@ -78,4 +91,6 @@ export const createProductListService = () => {
   });
 };
 
-export const productListService = createProductListService();
+export const productListService = createProductListService({
+  notificationsService,
+});

@@ -1,6 +1,5 @@
 import { define } from '@cofn/core';
 import { UIIcon } from './components/ui-icon.js';
-import './products/product-list.page.js';
 import { PageLink } from './router/page-link.component.js';
 import { PageOutlet } from './router/page-outlet.component.js';
 import { navigationEvents } from './router/router.js';
@@ -16,6 +15,8 @@ import { querySelector } from './utils/dom.js';
 import { compose } from './utils/functions.js';
 import { mapValues } from './utils/objects.js';
 import { UILabel } from './components/ui-label.js';
+import { notificationsService } from './utils/notifications.service.js';
+import { UIAlert } from './components/ui-alert.js';
 
 const togglePreferences = ({ motion, theme }) => {
   const classList = querySelector('body').classList;
@@ -46,6 +47,7 @@ export const createApp = ({ router }) => {
     router,
     storageService,
     preferencesService,
+    notificationsService,
   };
   const withRoot = (comp) =>
     function* (deps) {
@@ -68,6 +70,11 @@ export const createApp = ({ router }) => {
     extends: 'a',
   });
   _define('ui-page-outlet', PageOutlet);
+  _define('ui-alert', UIAlert, {
+    shadow: {
+      mode: 'open',
+    },
+  });
 
   const usePageLoader =
     ({ pagePath }) =>

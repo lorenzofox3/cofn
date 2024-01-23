@@ -89,6 +89,33 @@ ui-icon {
     gap: 8px;
 }
 
+ui-alert:not(:defined){
+    display: none;
+}
+
+[role=alert] {
+    --_offest: 1.5rem;
+    position: fixed;
+    top: var(--_offest);
+    right: var(--_offest);
+    max-width: min(100% - 2 * var(--_offest), 400px);
+    color: var(--action-color-contrast);
+    padding: 0.5em 1em;
+    background: var(--danger-color);
+    font-size: 0.95rem;
+    transition: transform var(--animation-duration) ease-out var(--animation-duration);
+    z-index: 9;
+    border-radius: var(--border-radius);
+    box-shadow:
+            0 0 2px 0 var(--shadow-color),
+            0 0 6px 2px var(--shadow-color);
+}
+
+[role=alert]:empty {
+    transform: translateX(500%);
+    opacity: 0;
+}
+
 .wrapper {
     max-width: min(var(--max-width, 80ch), 100% - var(--spacing-big));
     margin: auto;

@@ -12,8 +12,7 @@ const connectedProductListView = compose([
   }),
   withView,
 ]);
-
-export const loadPage = async ({ define }) => {
+export const loadPage = async ({ define, notificationsService }) => {
   define('app-product-list-item', ProductListItemComponent);
   define('app-product-list', connectedProductListView(ProductList));
 
