@@ -1,6 +1,6 @@
 import { withView } from '@cofn/view';
-import { compose } from '../utils/functions.js';
-import { reactiveProps } from '../utils/components.js';
+import { compose } from '../../utils/functions.js';
+import { reactiveProps } from '../../utils/components.js';
 
 const compositionPipeline = compose([reactiveProps(['product']), withView]);
 

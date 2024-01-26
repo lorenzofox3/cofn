@@ -10,6 +10,11 @@ export const fromForm = (form) => {
     ...(formData.get('description') !== ''
       ? { description: formData.get('description') }
       : {}),
+    ...(formData.get('image') !== ''
+      ? {
+          image: { url: formData.get('image') },
+        }
+      : {}),
   };
 };
 

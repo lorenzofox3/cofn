@@ -1,12 +1,14 @@
-import { createElement } from '../utils/dom.js';
-import { productListService } from './product-list.service.js';
-import { fromForm, productSkus } from './product-list.model.js';
+import { createElement } from '../../utils/dom.js';
+import { productListService } from '../product-list.service.js';
+import { fromForm, productSkus } from '../product-list.model.js';
+import { define } from '@cofn/core';
+import { ImageUploader } from '../image-uploader/image-uploader.component.js';
 
 const template = createElement('template');
 
 template.innerHTML = `
 <h1 tabindex="-1">Add new product</h1>
-<div class="surface transition-card boxed">
+<div class="surface transition-card-expand boxed">
   <form autocomplete="off" class="product-form" novalidate>
       <label is="ui-label">
         <span>#SKU</span>
@@ -24,12 +26,11 @@ template.innerHTML = `
         <span>price($)</span>
         <input inputmode="numeric" placeholder="ex: 42.99" pattern="\\d+(\\.\\d+)?" name="price" type="text" required />
       </label>
-      <label>
+        <label>
         <span>picture</span>
-        <ui-file-input>
-          <input class="button-like" type="file">
-        </ui-file-input>
+        <app-image-uploader></app-image-uploader>
       </label>
+      <input type="hidden" name="image">
       <div class="action-bar">
         <a href="/products" is="ui-page-link" class="button-like">
         <span><ui-icon name="x-circle"></ui-icon>cancel</a>
@@ -41,6 +42,13 @@ template.innerHTML = `
   </form>
 </div>`;
 export const loadPage = async ({ router }) => {
+  define('app-image-uploader', ImageUploader, {
+    observedAttributes: ['url', 'status'],
+    shadow: {
+      mode: 'open',
+      delegatesFocus: true,
+    },
+  });
   let skus = productSkus(productListService.getState());
 
   // Eventually load new items
@@ -66,7 +74,9 @@ export const loadPage = async ({ router }) => {
     form.disabled = true;
     const product = fromForm(form);
     productListService.create({ product });
-    router.goTo('products');
+    form.parentElement.classList.toggle('transition-card-expand');
+    form.parentElement.classList.toggle('transition-card-collapse');
+    router.goTo('products', product);
   };
   const page = template.content.cloneNode(true);
   const form = page.querySelector('form');

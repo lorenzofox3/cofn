@@ -3,7 +3,7 @@ a.button-like {
     color: currentColor;
 }
 
-button, .button-like {
+button, .button-like, ::part(button) {
     --_padding: var(--padding, 0.4em);
     --_shadow-color: var(--shadow-color, currentColor);
     font-size: 0.9em;
@@ -28,19 +28,19 @@ button, .button-like {
     border-color: transparent;
 }
 
-:where(button, .button-like):focus,
-:where(button, .button-like):hover {
+:where(button, .button-like, ::part(button)):focus,
+:where(button, .button-like, ::part(button)):hover {
     outline-color: currentColor;
     outline-offset: calc(var(--_padding) * -0.65);
 }
 
 
-:where(button, .button-like):not(:active):hover {
+:where(button, .button-like, ::part(button)):not(:active):hover {
     box-shadow: 0 0 2px 0 var(--_shadow-color),
     0 0 6px 0 var(--_shadow-color);
 }
 
-:where(button, .button-like):active {
+:where(button, .button-like, ::part(button)):active {
     box-shadow: 0 0 2px 1px var(--_shadow-color);
 }
 

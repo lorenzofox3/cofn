@@ -1,3 +1,5 @@
+import { querySelector } from '../../utils/dom.js';
+
 export const ProductList = ({
   html,
   $host,
@@ -19,10 +21,15 @@ export const ProductList = ({
   );
 
   function transitionCard() {
-    this.classList.add('transition-card');
+    // remove any precedent reduced card
+    querySelector('.transition-card-collapse')?.classList.remove(
+      'transition-card-collapse',
+    );
+    this.classList.add('transition-card-expand');
   }
 
-  return ({ products }) => {
+  return ({ products, attributes }) => {
+    const { ['target-sku']: targetSku } = attributes;
     return html`
       <h1 id="page-header" tabindex="-1">Product list</h1>
       <div id="list-section" aria-labelledby="page-header">
@@ -32,15 +39,19 @@ export const ProductList = ({
             Add new</a
           >
         </div>
-        ${products.map(
-          (product) =>
-            html`${product.sku}::<app-product-list-item
-                data-id="${product.sku}"
-                class="boxed surface"
-                .product="${product}"
-                @click="${transitionCard}"
-              ></app-product-list-item>`,
-        )}
+        ${products.map((product) => {
+          const classList = [
+            'boxed',
+            'surface',
+            ...(product.sku === targetSku ? ['transition-card-collapse'] : []),
+          ];
+          return html`${product.sku}::<app-product-list-item
+              data-id="${product.sku}"
+              class="${classList.join(' ')}"
+              .product="${product}"
+              @click="${transitionCard}"
+            ></app-product-list-item>`;
+        })}
       </div>
     `;
   };

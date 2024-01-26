@@ -2,12 +2,13 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     gap: var(--spacing-small);
-}
 
-#list-section > :first-child {
-    display: grid;
-    place-content: center;
-    min-height: 5em;
+    > :first-child {
+        display: grid;
+        place-content: center;
+        min-height: 5em;
+    }
+
 }
 
 #list-section:has(:nth-child(2)) > :first-child {
@@ -30,31 +31,30 @@ app-product-list-item {
     flex-direction: column;
     flex-grow: 1;
     gap: var(--_spacing);
-}
 
-.product-card button {
-    --padding: 4px;
-    font-size: 0.95em;
-}
+    button {
+        --padding: 4px;
+        font-size: 0.95em;
+    }
 
-.product-card > header {
-    display: flex;
-    align-items: center;
-    gap:var(--spacing-small);
-    justify-content: space-between;
-    font-size: 0.9em;
-}
+    > header {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-small);
+        justify-content: space-between;
+        font-size: 0.9em;
+    }
 
-.product-card  h2 {
-    margin: 0;
-}
+    h2 {
+        margin: 0;
+    }
 
-.product-card p {
-    font-size: 0.85em;
-    margin: 0;
-    flex-grow: 1;
+    p {
+        font-size: 0.85em;
+        margin: 0;
+        flex-grow: 1;
+    }
 }
-
 
 .product-card__image-container {
     aspect-ratio: 3 / 2;
@@ -76,7 +76,7 @@ app-product-list-item {
     font-size: 0.7em;
 }
 
-div:has(>.product-card__price){
+div:has(>.product-card__price) {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -99,8 +99,8 @@ div:has(>.product-card__price){
  */
 
 div:has(> .product-form) {
-    --spacing: calc(var(--spacing-small) * 2/3);
-    --_large-spacing:calc(var(--spacing) * 4);
+    --spacing: calc(var(--spacing-small) * 2 / 3);
+    --_large-spacing: calc(var(--spacing) * 4);
     padding-inline: var(--_large-spacing);
 }
 
@@ -108,50 +108,35 @@ div:has(> .product-form) {
     display: grid;
     grid-template-columns: 0.6fr 0.4fr;
     gap: 0 var(--_large-spacing);
+
+    > .action-bar {
+        padding-block-start: var(--_spacing);
+        grid-column: 1 / span 2;
+    }
+
+    label {
+        grid-column: 1;
+    }
+
+    app-image-uploader {
+        flex-grow: 1;
+        border: 2px dashed var(--shadow-color);
+        background-color: var(--surface-bg);
+    }
+
+    span:has(+ input:not([required]))::after {
+        content: '(optional)';
+        font-size: 0.8em;
+    }
 }
 
-ui-file-input > * {
-    grid-row: 1;
-    grid-column: 1;
-}
-
-ui-file-input > img {
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-ui-file-input::after {
-    content:'';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
+app-image-uploader::before {
     background: linear-gradient(to bottom, rgb(61, 61, 61, 0.3), transparent, rgb(61, 61, 61, 0.3));
 }
 
-.product-form input[type=file]{
-    width: 50%;
-}
-
-.product-form > .action-bar {
-    padding-block-start: var(--_spacing);
-    grid-column: 1 / span 2;
-}
-
-.product-form label {
-    grid-column: 1;
-}
-
-.product-form label:has(ui-file-input){
+.product-form label:has(app-image-uploader) {
     grid-column: 2;
-    grid-row: 1 / span 4 ;
-}
-
-.product-form ui-file-input{
-    flex-grow: 1;
+    grid-row: 1 / span 4;
 }
 
 @media (max-width: 720px) {

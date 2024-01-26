@@ -43,6 +43,7 @@ fieldset:focus-within .legend {
 input[type=radio] {
     box-shadow: unset;
     margin-right: var(--_spacing);
+    accent-color: var(--action-color);
 }
 
 .radio-group label {

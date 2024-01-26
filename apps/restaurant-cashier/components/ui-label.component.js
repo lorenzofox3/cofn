@@ -3,7 +3,7 @@ import { createRange, createTextNode } from '../utils/dom.js';
 const errorTemplate = document.createElement('template');
 errorTemplate.innerHTML = `<span class="input-error" aria-live="polite"><ui-icon name="exclamation-octagon"></ui-icon></span>`;
 
-export const UILabel = function* ({ $host, $signal: signal }) {
+export const UiLabelComponent = function* ({ $host, $signal: signal }) {
   const { control } = $host;
   $host.append(errorTemplate.content.cloneNode(true));
   const textRange = createRange();

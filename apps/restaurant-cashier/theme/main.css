@@ -133,8 +133,12 @@ ui-alert:not(:defined) {
     color: var(--danger-color);
 }
 
-.transition-card {
-    view-transition-name: product-card
+.transition-card-expand {
+    view-transition-name: product-card-expand;
+}
+
+.transition-card-collapse {
+    view-transition-name: product-card-collapse;
 }
 
 /**
@@ -237,19 +241,45 @@ HEADER
     }
 }
 
-/*::view-transition-old(root),*/
-/*::view-transition-new(roo){*/
+::view-transition-old(product-card-expand),
+::view-transition-new(product-card-expand),
+::view-transition-old(product-card-collapse),
+::view-transition-new(product-card-collapse)
+{
+    /* Prevent the default animation,
+    so both views remain opacity:1 throughout the transition */
     /*animation: none;*/
-    /*mix-blend-mode: normal;*/
-/*}*/
-
-::view-transition-old(product-card) {
-    animation: 70ms cubic-bezier(0.4, 0, 1, 1) both fade-out;
-    transform: scale3d(0.95, 0.9, 1);
+    /* Make the height the same as the group,
+    meaning the view size might not match its aspect-ratio. */
+    height: 100%;
+    /* Clip any overflow of the view */
+    overflow: clip;
 }
 
-::view-transition-new(product-card) {
-    animation: 400ms cubic-bezier(0, 0, 0.2, 1) 70ms both fade-in;
+/* The view is the card */
+::view-transition-old(product-card-expand),
+::view-transition-new(product-card-collapse) {
+    /* Maintain the aspect ratio of the view,
+    by shrinking it to fit within the bounds of the element */
+    object-fit: contain;
+}
+
+::view-transition-old(product-card-expand),
+::view-transition-old(product-card-collapse){
+    animation: 100ms cubic-bezier(0.4, 0, 1, 1) both fade-out;
+}
+
+/* The new view is the full form */
+::view-transition-new(product-card-expand),
+::view-transition-old(product-card-collapse){
+    /* Maintain the aspect ratio of the view,
+    by growing it to cover the bounds of the element */
+    object-fit: cover;
+}
+
+::view-transition-new(product-card-expand),
+::view-transition-new(product-card-collapse) {
+    animation: 300ms cubic-bezier(0, 0, 0.2, 1) 100ms both fade-in;
 }
 
 ::view-transition-old(page-title) {

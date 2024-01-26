@@ -1,3 +1,19 @@
+const nanoid = (t = 21) =>
+  crypto
+    .getRandomValues(new Uint8Array(t))
+    .reduce(
+      (t, e) =>
+        (t +=
+          (e &= 63) < 36
+            ? e.toString(36)
+            : e < 62
+            ? (e - 26).toString(36).toUpperCase()
+            : e > 62
+            ? '-'
+            : '_'),
+      '',
+    );
+
 let fakeProducts = {
   bigmc: {
     sku: 'bigmc',
@@ -28,6 +44,9 @@ let fakeProducts = {
       amountInCents: 699,
       currency: '$',
     },
+    image: {
+      url: 'http://localhost:5173/assets/burger.webp',
+    },
   },
   adkl: {
     sku: 'adkl',
@@ -36,6 +55,9 @@ let fakeProducts = {
     price: {
       amountInCents: 699,
       currency: '$',
+    },
+    image: {
+      url: 'http://localhost:5173/assets/burger.webp',
     },
   },
 };
@@ -135,5 +157,55 @@ self.addEventListener('fetch', (event) => {
         }
       }
     }
+
+    if (pathname.startsWith('/api/images')) {
+      if (pathname === '/api/images' && request.method === 'POST') {
+        event.respondWith(cacheFileToUpload(request));
+      } else {
+        event.respondWith(cacheFirst(request));
+      }
+    }
   }
 });
+
+async function cacheFirst(request) {
+  const responseFromCache = await caches.match(request);
+  if (responseFromCache) {
+    return responseFromCache;
+  }
+  return fetch(request);
+}
+
+async function cacheFileToUpload(request) {
+  try {
+    const id = nanoid();
+    const [_request, cache] = await Promise.all([
+      request.clone(),
+      caches.open('images'),
+    ]);
+    const blob = await _request.blob();
+    await cache.put(
+      new URL(`api/images/${id}`, 'http://localhost:5173').href,
+      new Response(blob, {
+        status: 200,
+        headers: {
+          'Content-Type': blob.type,
+        },
+      }),
+    );
+    const respBody = JSON.stringify({
+      url: new URL(`/api/images/${id}`, 'http://localhost:5173').href,
+    });
+    return new Response(respBody, {
+      status: 201,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  } catch (e) {
+    console.error(e);
+    return new Response(null, {
+      status: 500,
+    });
+  }
+}

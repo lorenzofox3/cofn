@@ -81,34 +81,8 @@ label:focus-within > span:first-child{
     background-size: 100% 3px;
 }
 
-span:has(+ input[required])::after {
-    content: '*';
-    font-size: 0.8em;
-}
-
-
 input, textarea, .radio-group {
     box-shadow: 0 0 2px 0 var(--shadow-color);
-}
-
-ui-file-input {
-    display: grid;
-    place-items: center;
-    border-radius: 4px;
-    border: 2px dashed var(--shadow-color);
-    aspect-ratio: 3 / 2;
-    cursor: pointer;
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-}
-
-input::file-selector-button {
-    display: none;
-}
-
-input[type=file] {
-    cursor: pointer;
 }
 
 .action-bar {
