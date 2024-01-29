@@ -23,7 +23,6 @@
   "author": "Laurent RENARD",
   "devDependencies": {
     "@cofn/test-lib": "workspace:*",
-    "playwright": "^1.40.1",
     "vite": "^5.0.4"
   }
 }

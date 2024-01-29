@@ -14,6 +14,9 @@ importers:
       '@rollup/plugin-terser':
         specifier: ^0.4.4
         version: 0.4.4(rollup@4.9.6)
+      playwright:
+        specifier: ^1.41.1
+        version: 1.41.1
       prettier:
         specifier: ^3.2.4
         version: 3.2.4
@@ -51,24 +54,18 @@ importers:
       '@cofn/test-lib':
         specifier: workspace:*
         version: link:../test-lib
-      playwright:
-        specifier: ^1.40.1
-        version: 1.40.1
       vite:
         specifier: ^5.0.4
-        version: 5.0.4(terser@5.27.0)
+        version: 5.0.4
 
   packages/core:
     devDependencies:
       '@cofn/test-lib':
         specifier: workspace:*
         version: link:../test-lib
-      playwright:
-        specifier: ^1.40.1
-        version: 1.40.1
       vite:
         specifier: ^5.0.4
-        version: 5.0.4(terser@5.27.0)
+        version: 5.0.4
 
   packages/test-lib:
     dependencies:
@@ -87,12 +84,9 @@ importers:
       '@cofn/test-lib':
         specifier: workspace:*
         version: link:../test-lib
-      playwright:
-        specifier: ^1.40.1
-        version: 1.40.1
       vite:
         specifier: ^5.0.4
-        version: 5.0.4(terser@5.27.0)
+        version: 5.0.4
       zora-reporters:
         specifier: ^1.4.0
         version: 1.4.0
@@ -853,18 +847,18 @@ packages:
     engines: {node: '>=8.6'}
     dev: true
 
-  /playwright-core@1.40.1:
-    resolution: {integrity: sha512-+hkOycxPiV534c4HhpfX6yrlawqVUzITRKwHAmYfmsVreltEl6fAZJ3DPfLMOODw0H3s1Itd6MDCWmP1fl/QvQ==}
+  /playwright-core@1.41.1:
+    resolution: {integrity: sha512-/KPO5DzXSMlxSX77wy+HihKGOunh3hqndhqeo/nMxfigiKzogn8kfL0ZBDu0L1RKgan5XHCPmn6zXd2NUJgjhg==}
     engines: {node: '>=16'}
     hasBin: true
     dev: true
 
-  /playwright@1.40.1:
-    resolution: {integrity: sha512-2eHI7IioIpQ0bS1Ovg/HszsN/XKNwEG1kbzSDDmADpclKc7CyqkHw7Mg2JCz/bbCxg25QUPcjksoMW7JcIFQmw==}
+  /playwright@1.41.1:
+    resolution: {integrity: sha512-gdZAWG97oUnbBdRL3GuBvX3nDDmUOuqzV/D24dytqlKt+eI5KbwusluZRGljx1YoJKZ2NRPaeWiFTeGZO7SosQ==}
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
-      playwright-core: 1.40.1
+      playwright-core: 1.41.1
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
@@ -1019,7 +1013,7 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vite@5.0.4(terser@5.27.0):
+  /vite@5.0.4:
     resolution: {integrity: sha512-RzAr8LSvM8lmhB4tQ5OPcBhpjOZRZjuxv9zO5UcxeoY2bd3kP3Ticd40Qma9/BqZ8JS96Ll/jeBX9u+LJZrhVg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -1050,7 +1044,6 @@ packages:
       esbuild: 0.19.8
       postcss: 8.4.31
       rollup: 4.9.6
-      terser: 5.27.0
     optionalDependencies:
       fsevents: 2.3.3
     dev: true

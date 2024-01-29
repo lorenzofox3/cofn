@@ -27,7 +27,6 @@
   "devDependencies": {
     "@cofn/core": "workspace:*",
     "@cofn/test-lib": "workspace:*",
-    "playwright": "^1.40.1",
     "vite": "^5.0.4",
     "zora-reporters": "^1.4.0"
   }
