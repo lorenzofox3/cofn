@@ -29,7 +29,7 @@ jobs:
 #      - name: Build
 #        run: pnpm run build
       - name: Install browsers
-        run: npx playwright install --with-deps
+        run: pnpm exec playwright install --with-deps
       - name: Test
         run: pnpm t --recursive --if-present
 
