@@ -22,7 +22,6 @@
   },
   "author": "Laurent RENARD",
   "devDependencies": {
-    "@cofn/test-lib": "workspace:*",
-    "vite": "^5.0.4"
+    "@cofn/test-lib": "workspace:*"
   }
 }
