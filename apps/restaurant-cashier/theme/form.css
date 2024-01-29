@@ -1,0 +1,100 @@
+form {
+    --_spacing: var(--spacing, var(--spacing-small, 1em));
+    --_adorner-size: 3px;
+
+    --_border-color: var(--form-border-color, gray);
+    --_font-color: var(--font-color-lighter);
+    --_background-fill: var(--control-focus-color);
+    --_adorner-color: var(--action-color);
+
+
+    padding: 1em;
+}
+
+label {
+    font-size: 0.85em;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--_spacing) / 4);
+    overflow: hidden;
+}
+
+
+.input-error {
+    color: var(--danger-color);
+    line-height: 1;
+    font-size: 0.75rem;
+    padding-block-end: 0.3rem;
+    transform: scaleY(0);
+    transform-origin: 0 0;
+    transition: transform var(--animation-duration);
+}
+
+.input-error.active {
+    transform: scaleY(1);
+}
+
+input:has(+ .input-error.active){
+    --_border-color: var(--danger-color);
+    --_adorner-color: var(--danger-color);
+}
+
+input, textarea {
+    color:var(--_font-color);
+    padding: 0.3em;
+    outline: none;
+    border: 1px solid var(--_border-color);
+    border-radius: var(--border-radius);
+    background-color: inherit;
+    background-image:
+            linear-gradient(90deg, var(--_background-fill), var(--_background-fill)),
+            linear-gradient(90deg, var(--_adorner-color), var(--_adorner-color));
+    background-size: 0 calc(100% - var(--_adorner-size)), 0 var(--_adorner-size);
+    background-repeat: no-repeat, no-repeat;
+    background-position: top left, left bottom;
+    transition: background-size var(--animation-duration);
+    font-family: inherit;
+    font-size: 0.85em;
+}
+
+textarea {
+    resize: none;
+}
+
+:where(input, textarea):focus {
+    background-size: 100% calc(100% - var(--_adorner-size)), 100% var(--_adorner-size);
+    --_border-color: var(--action-color);
+    --_font-color: var(--font-color-focus, var(--font-color-lighter));
+}
+
+label > span:first-child::first-letter {
+    text-transform: uppercase;
+}
+
+label > span:first-child {
+    align-self: flex-start;
+    width: min-content; /* looks like there is a bug in FF */
+    background-image: linear-gradient(90deg, var(--_adorner-color), var(--_adorner-color));
+    background-size: 0 var(--_adorner-size);
+    background-repeat: no-repeat;
+    background-position: left bottom;
+}
+
+label:focus-within > span:first-child{
+    background-size: 100% 3px;
+}
+
+input, textarea, .radio-group {
+    box-shadow: 0 0 2px 0 var(--shadow-color);
+}
+
+.action-bar {
+    display: flex;
+    gap: var(--_spacing);
+    justify-content: flex-end;
+}
+
+fieldset {
+    border: unset;
+    padding: unset;
+}

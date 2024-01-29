@@ -1,0 +1,37 @@
+a.button-like {
+    text-decoration: none;
+    color: currentColor;
+}
+
+button, .button-like, ::part(button) {
+    --_padding: var(--padding, 0.4em);
+    --_shadow-color: var(--shadow-color, currentColor);
+    font-size: 0.9em;
+    background: inherit;
+    padding-inline: var(--_padding);
+    padding-block: calc(var(--_padding) / 2.5);
+    border: 1px solid currentColor;
+    font-weight: 300;
+    cursor: pointer;
+    box-shadow: 0 0 1px 0 var(--_shadow-color),
+    0 0 3px 0 var(--_shadow-color);
+    font-family: inherit;
+    color:inherit;
+    border-radius: var(--border-radius);
+}
+
+:where(button, .button-like).action {
+    background: var(--action-color);
+    color: var(--action-color-contrast);
+    border-color: transparent;
+}
+
+:where(button, .button-like, ::part(button)):not(:active):hover {
+    box-shadow: 0 0 2px 0 var(--_shadow-color),
+    0 0 6px 0 var(--_shadow-color);
+}
+
+:where(button, .button-like, ::part(button)):active {
+    box-shadow: 0 0 2px 1px var(--_shadow-color);
+}
+

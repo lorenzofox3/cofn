@@ -27,7 +27,7 @@ importers:
         specifier: ^5.27.0
         version: 5.27.0
 
-  apps/examples:
+  apps/restaurant-cashier:
     dependencies:
       '@cofn/controllers':
         specifier: workspace:*
@@ -38,6 +38,34 @@ importers:
       '@cofn/view':
         specifier: workspace:*
         version: link:../../packages/view
+      bootstrap-icons:
+        specifier: ^1.11.2
+        version: 1.11.3
+    devDependencies:
+      nanoid:
+        specifier: ^5.0.4
+        version: 5.0.4
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+      vite:
+        specifier: ^4.5.0
+        version: 4.5.0(terser@5.27.0)
+
+  apps/todomvc:
+    dependencies:
+      '@cofn/controllers':
+        specifier: workspace:*
+        version: link:../../packages/controllers
+      '@cofn/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@cofn/view':
+        specifier: workspace:*
+        version: link:../../packages/view
+      bootstrap-icons:
+        specifier: ^1.11.2
+        version: 1.11.3
     devDependencies:
       typescript:
         specifier: ^5.2.2
@@ -56,7 +84,7 @@ importers:
         version: link:../test-lib
       vite:
         specifier: ^5.0.4
-        version: 5.0.4
+        version: 5.0.4(terser@5.27.0)
 
   packages/core:
     devDependencies:
@@ -65,7 +93,7 @@ importers:
         version: link:../test-lib
       vite:
         specifier: ^5.0.4
-        version: 5.0.4
+        version: 5.0.4(terser@5.27.0)
 
   packages/test-lib:
     dependencies:
@@ -86,7 +114,7 @@ importers:
         version: link:../test-lib
       vite:
         specifier: ^5.0.4
-        version: 5.0.4
+        version: 5.0.4(terser@5.27.0)
       zora-reporters:
         specifier: ^1.4.0
         version: 1.4.0
@@ -695,6 +723,10 @@ packages:
   /arg@5.0.2:
     resolution: {integrity: sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==}
 
+  /bootstrap-icons@1.11.3:
+    resolution: {integrity: sha512-+3lpHrCw/it2/7lBL15VR0HEumaBss0+f/Lb6ZvHISn1mlK83jjFpooTLsMWbIjJMDjDjOExMsTxnXSIT4k4ww==}
+    dev: false
+
   /buffer-from@1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
     dev: true
@@ -831,6 +863,12 @@ packages:
   /nanoid@3.3.7:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+    dev: true
+
+  /nanoid@5.0.4:
+    resolution: {integrity: sha512-vAjmBf13gsmhXSgBrtIclinISzFFy22WwCYoyilZlsrRXNIHSwgFQ1bEdjRwMT3aoadeIF6HMuDRlOxzfXV8ig==}
+    engines: {node: ^18 || >=20}
     hasBin: true
     dev: true
 
@@ -1013,7 +1051,7 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vite@5.0.4:
+  /vite@5.0.4(terser@5.27.0):
     resolution: {integrity: sha512-RzAr8LSvM8lmhB4tQ5OPcBhpjOZRZjuxv9zO5UcxeoY2bd3kP3Ticd40Qma9/BqZ8JS96Ll/jeBX9u+LJZrhVg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -1044,6 +1082,7 @@ packages:
       esbuild: 0.19.8
       postcss: 8.4.31
       rollup: 4.9.6
+      terser: 5.27.0
     optionalDependencies:
       fsevents: 2.3.3
     dev: true
