@@ -95,3 +95,18 @@ test('renders a nested template', ({ eq }) => {
     `<h2>some title</h2><p>hello Robert</p><!--before--><p>you are very happy</p><!--after-->`,
   );
 });
+
+test('A template is static if it is not a function of any state', ({ eq }) => {
+  const el = fromView(
+    ({ html }) =>
+      // prettier-ignore
+      html`<h2>some title</h2><p>hello there, how are you?</p>`,
+  );
+
+  debug.appendChild(el);
+  eq(el.innerHTML, `<h2>some title</h2><p>hello there, how are you?</p>`);
+
+  el.render();
+
+  eq(el.innerHTML, `<h2>some title</h2><p>hello there, how are you?</p>`);
+});

@@ -14,12 +14,14 @@ export const withView = (viewFactory) =>
       html: createHTML({ $signal }),
     });
 
-    const record = view(yield);
+    const viewFn = typeof view === 'function' ? view : () => view;
+
+    const record = viewFn(yield);
     $root.replaceChildren(record.content);
     delete record.content; // free memory
 
     while (true) {
-      view(yield);
+      viewFn(yield);
     }
   };
 
