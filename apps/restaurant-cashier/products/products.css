@@ -129,9 +129,10 @@ div:has(> .product-form) {
         border-width: 4px;
     }
 
-    span:has(+ input:not([required]))::after {
+    span:has(+ :where(textarea, input, app-image-uploader):not([required]))::after {
         content: '(optional)';
         font-size: 0.8em;
+        font-style: italic;
     }
 }
 

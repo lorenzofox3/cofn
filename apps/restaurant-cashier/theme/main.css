@@ -157,7 +157,7 @@ HEADER
     view-transition-name: site-header;
 
     > .wrapper {
-        --spacing: calc(var(--spacing-big) * 2);
+        --spacing:var(--spacing-big);
         display: grid;
         grid-template-columns: min-content 1fr;
         align-items: center;
@@ -166,17 +166,17 @@ HEADER
 }
 
 #main-nav {
-    flex-grow: 1;
-
     ul {
         list-style: none;
         display: flex;
+        flex-wrap: wrap;
         padding: 0;
         margin: 0;
+        gap: 0.5em;
     }
 
-    li {
-        flex-basis: 100px;
+    li:last-child {
+        margin-left: auto;
     }
 
     a {
@@ -212,7 +212,36 @@ HEADER
     a:hover {
         opacity: 1;
     }
+
+    #cart-link {
+        display: flex;
+        gap: 0.4em;
+        padding-inline: 1em;
+        align-items: center;
+        font-size: 2rem;
+        opacity: unset;
+        border-radius: var(--border-radius);
+        background-color: var(--action-color);
+        color: var(--action-color-contrast);
+        transform: translate(0, 0.75em);
+        border: 2px solid currentColor;
+        box-shadow:
+                0 0 4px 0 rgb(0 0 0 / 50%),
+                0 0 6px 1px rgb(0 0 0 / 41%),
+                0 0 0 12px var(--app-bg);
+
+        ui-icon {
+            height: unset;
+        }
+
+        &:hover {
+            opacity: 0.9;
+        }
+    }
 }
+
+
+
 
 @keyframes fade-in {
     from {
