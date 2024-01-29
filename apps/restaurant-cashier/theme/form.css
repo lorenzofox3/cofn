@@ -1,13 +1,14 @@
 form {
     --_spacing: var(--spacing, var(--spacing-small, 1em));
-    --_border-color: var(--form-border-color, gray);
     --_adorner-size: 3px;
+
+    --_border-color: var(--form-border-color, gray);
+    --_font-color: var(--font-color-lighter);
+    --_background-fill: var(--control-focus-color);
+    --_adorner-color: var(--action-color);
+
+
     padding: 1em;
-
-
-    --_font-color: black; /* todo */
-    /*--_adorner-color todo */
-
 }
 
 label {
@@ -35,6 +36,7 @@ label {
 
 input:has(+ .input-error.active){
     --_border-color: var(--danger-color);
+    --_adorner-color: var(--danger-color);
 }
 
 input, textarea {
@@ -45,14 +47,14 @@ input, textarea {
     border-radius: var(--border-radius);
     background-color: inherit;
     background-image:
-            linear-gradient(90deg, var(--control-focus-color), var(--control-focus-color)),
-            linear-gradient(90deg, var(--action-color), var(--action-color));
+            linear-gradient(90deg, var(--_background-fill), var(--_background-fill)),
+            linear-gradient(90deg, var(--_adorner-color), var(--_adorner-color));
     background-size: 0 calc(100% - var(--_adorner-size)), 0 var(--_adorner-size);
     background-repeat: no-repeat, no-repeat;
     background-position: top left, left bottom;
     transition: background-size var(--animation-duration);
     font-family: inherit;
-    font-size: 0.9em;
+    font-size: 0.85em;
 }
 
 textarea {
@@ -62,6 +64,7 @@ textarea {
 :where(input, textarea):focus {
     background-size: 100% calc(100% - var(--_adorner-size)), 100% var(--_adorner-size);
     --_border-color: var(--action-color);
+    --_font-color: var(--font-color-focus, var(--font-color-lighter));
 }
 
 label > span:first-child::first-letter {
@@ -71,7 +74,7 @@ label > span:first-child::first-letter {
 label > span:first-child {
     align-self: flex-start;
     width: min-content; /* looks like there is a bug in FF */
-    background-image: linear-gradient(90deg, var(--action-color), var(--action-color));
+    background-image: linear-gradient(90deg, var(--_adorner-color), var(--_adorner-color));
     background-size: 0 var(--_adorner-size);
     background-repeat: no-repeat;
     background-position: left bottom;

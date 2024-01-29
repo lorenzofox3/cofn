@@ -7,6 +7,7 @@
 :root {
     font-family: system-ui, Avenir, sans-serif;
     --font-color: #3b3b3b;
+    --font-color-lighter: #4f4f4f;
     --surface-bg: white;
     --app-bg: #f6f6f6;
     --spacing-big: 1.5em;
@@ -37,6 +38,7 @@ body.dark {
     --app-bg: #152028;
     --spacing-big: 1.5em;
     --spacing-small: 1em;
+    --font-color-lighter: #d7d7d7;
     --action-color: #5be382;
     --action-color-contrast: #1e1e1e;
     --control-focus-color: #ceffed;
@@ -44,6 +46,7 @@ body.dark {
     --shadow-color: #b5ffc2;
     --animation-duration: 0.3s;
     --form-border-color: #adeab8;
+    --font-color-focus: #2f2f2f;
 }
 
 body.motion-reduced {
