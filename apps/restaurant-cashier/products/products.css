@@ -124,6 +124,11 @@ div:has(> .product-form) {
         background-color: var(--surface-bg);
     }
 
+    app-image-uploader.dragging {
+        border-color: var(--action-color);
+        border-width: 4px;
+    }
+
     span:has(+ input:not([required]))::after {
         content: '(optional)';
         font-size: 0.8em;

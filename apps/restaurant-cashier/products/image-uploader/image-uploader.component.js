@@ -76,8 +76,20 @@ export const ImageUploader = function* ({ $host, $root, $signal: signal }) {
   const input = $root.querySelector('input');
   const button = $root.querySelector('button');
 
+  window.addEventListener('dragenter', handleDragEnter, { signal });
+  window.addEventListener('drop', windowDrop, { signal });
+  window.addEventListener('dragover', handleDragOver, { signal });
   $host.addEventListener('click', () => input.click());
-  input.addEventListener('change', handleFileChange, { signal });
+  $host.addEventListener('drop', handleDrop);
+  input.addEventListener(
+    'change',
+    () => {
+      const { files } = input;
+      const file = files.item(0);
+      handleFileChange(file);
+    },
+    { signal },
+  );
 
   while (true) {
     const { attributes } = yield;
@@ -88,10 +100,7 @@ export const ImageUploader = function* ({ $host, $root, $signal: signal }) {
     img.setAttribute('src', url);
   }
 
-  async function handleFileChange(ev) {
-    const { files } = input;
-    const file = files.item(0);
-
+  async function handleFileChange(file) {
     $host.setAttribute('status', 'loading');
     try {
       const { url } = await imagesService.uploadImage({ file });
@@ -109,6 +118,31 @@ export const ImageUploader = function* ({ $host, $root, $signal: signal }) {
       $host.setAttribute('status', 'error');
     }
   }
+  function handleDrop(ev) {
+    ev.preventDefault();
+    const { items } = ev.dataTransfer;
+    if (items && items[0]?.kind === 'file') {
+      const file = items[0].getAsFile();
+      handleFileChange(file);
+    }
+  }
+
+  function windowDrop(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+    $host.classList.toggle('dragging', false);
+  }
+
+  function handleDragEnter(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+    $host.classList.toggle('dragging', true);
+  }
+
+  function handleDragOver(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+  }
 };
 
 const getLabel = ({ url, status }) => {
@@ -120,5 +154,5 @@ const getLabel = ({ url, status }) => {
     return 'an error occurred, try again';
   }
 
-  return url ? 'change image' : 'add an image';
+  return (url ? 'change image' : 'add an image') + '(or drop a file)';
 };

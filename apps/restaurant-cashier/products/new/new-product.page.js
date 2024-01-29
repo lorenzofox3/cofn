@@ -81,5 +81,11 @@ export const loadPage = async ({ router }) => {
   const page = template.content.cloneNode(true);
   const form = page.querySelector('form');
   form.addEventListener('submit', handleSubmit);
+  form
+    .querySelector('app-image-uploader')
+    .addEventListener(
+      'image-uploaded',
+      ({ detail }) => (form.querySelector('[name=image]').value = detail.url),
+    );
   return page;
 };

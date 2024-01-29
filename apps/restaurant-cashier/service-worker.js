@@ -23,9 +23,6 @@ let fakeProducts = {
       amountInCents: 899,
       currency: '$',
     },
-    image: {
-      url: 'http://localhost:5173/assets/burger.webp',
-    },
   },
   mcflry: {
     sku: 'mcflry',
@@ -44,9 +41,6 @@ let fakeProducts = {
       amountInCents: 699,
       currency: '$',
     },
-    image: {
-      url: 'http://localhost:5173/assets/burger.webp',
-    },
   },
   adkl: {
     sku: 'adkl',
@@ -56,9 +50,6 @@ let fakeProducts = {
       amountInCents: 699,
       currency: '$',
     },
-    image: {
-      url: 'http://localhost:5173/assets/burger.webp',
-    },
   },
 };
 
@@ -67,6 +58,7 @@ self.addEventListener('activate', (event) => {
   self.skipWaiting();
   event.waitUntil(clients.claim());
 });
+
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const requestURL = new URL(request.url);
@@ -82,32 +74,7 @@ self.addEventListener('fetch', (event) => {
           }),
         );
       } else if (request.method === 'POST') {
-        event.respondWith(
-          new Promise((resolve) => {
-            event.request
-              .clone()
-              .json()
-              .then((product) => {
-                if (fakeProducts[product.sku]) {
-                  resolve(
-                    new Response(null, {
-                      status: 409,
-                    }),
-                  );
-                } else {
-                  fakeProducts = {
-                    [product.sku]: product,
-                    ...fakeProducts,
-                  };
-                  resolve(
-                    new Response(null, {
-                      status: 201,
-                    }),
-                  );
-                }
-              });
-          }),
-        );
+        event.respondWith(addProduct(event.request));
       }
     } else {
       const matches = pathname.match(/\/api\/products\/(\w+)/);
@@ -131,29 +98,7 @@ self.addEventListener('fetch', (event) => {
             }),
           );
         } else if (request.method === 'PUT') {
-          event.respondWith(
-            new Promise((resolve) => {
-              event.request
-                .clone()
-                .json()
-                .then((product) => {
-                  if (fakeProducts[product.sku]) {
-                    fakeProducts[product.sku] = product;
-                    resolve(
-                      new Response(null, {
-                        status: 204,
-                      }),
-                    );
-                  } else {
-                    resolve(
-                      new Response(null, {
-                        status: 404,
-                      }),
-                    );
-                  }
-                });
-            }),
-          );
+          event.respondWith(updateProduct(event.request));
         }
       }
     }
@@ -167,6 +112,38 @@ self.addEventListener('fetch', (event) => {
     }
   }
 });
+
+async function updateProduct(request) {
+  const _request = await request.clone();
+  const product = await _request.json();
+  if (!fakeProducts[product.sku]) {
+    return new Response(null, {
+      status: 404,
+    });
+  }
+  fakeProducts[product.sku] = product;
+  return new Response(null, {
+    status: 204,
+  });
+}
+
+async function addProduct(request) {
+  const _request = await request.clone();
+  const product = await _request.json();
+  if (fakeProducts[product.sku]) {
+    return new Response(null, {
+      status: 409,
+    });
+  }
+
+  fakeProducts = {
+    [product.sku]: product,
+    ...fakeProducts,
+  };
+  return new Response(null, {
+    status: 201,
+  });
+}
 
 async function cacheFirst(request) {
   const responseFromCache = await caches.match(request);
