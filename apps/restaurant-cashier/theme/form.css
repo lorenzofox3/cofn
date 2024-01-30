@@ -17,6 +17,23 @@ label {
     flex-direction: column;
     gap: calc(var(--_spacing) / 4);
     overflow: hidden;
+
+    > span:first-child::first-letter {
+        text-transform: uppercase;
+    }
+
+    > span:first-child {
+        align-self: flex-start;
+        width: min-content; /* looks like there is a bug in FF */
+        background-image: linear-gradient(90deg, var(--_adorner-color), var(--_adorner-color));
+        background-size: 0 var(--_adorner-size);
+        background-repeat: no-repeat;
+        background-position: left bottom;
+    }
+
+    &:focus-within > span:first-child {
+        background-size: 100% 3px;
+    }
 }
 
 :disabled {
@@ -32,60 +49,42 @@ label {
     transform: scaleY(0);
     transform-origin: 0 0;
     transition: transform var(--animation-duration);
-}
 
-.input-error.active {
-    transform: scaleY(1);
-}
-
-input:has(+ .input-error.active){
-    --_border-color: var(--danger-color);
-    --_adorner-color: var(--danger-color);
+    &.active {
+        transform: scaleY(1);
+    }
 }
 
 input, textarea {
-    color:var(--_font-color);
+    color: var(--_font-color);
     padding: 0.3em;
     outline: none;
     border: 1px solid var(--_border-color);
     border-radius: var(--border-radius);
     background-color: inherit;
-    background-image:
-            linear-gradient(90deg, var(--_background-fill), var(--_background-fill)),
-            linear-gradient(90deg, var(--_adorner-color), var(--_adorner-color));
+    background-image: linear-gradient(90deg, var(--_background-fill), var(--_background-fill)),
+    linear-gradient(90deg, var(--_adorner-color), var(--_adorner-color));
     background-size: 0 calc(100% - var(--_adorner-size)), 0 var(--_adorner-size);
     background-repeat: no-repeat, no-repeat;
     background-position: top left, left bottom;
     transition: background-size var(--animation-duration);
     font-family: inherit;
     font-size: 0.85em;
+
+    &:has(+ .input-error.active) {
+        --_border-color: var(--danger-color);
+        --_adorner-color: var(--danger-color);
+    }
+
+    &:focus {
+        background-size: 100% calc(100% - var(--_adorner-size)), 100% var(--_adorner-size);
+        --_border-color: var(--action-color);
+        --_font-color: var(--font-color-focus, var(--font-color-lighter));
+    }
 }
 
 textarea {
     resize: none;
-}
-
-:where(input, textarea):focus {
-    background-size: 100% calc(100% - var(--_adorner-size)), 100% var(--_adorner-size);
-    --_border-color: var(--action-color);
-    --_font-color: var(--font-color-focus, var(--font-color-lighter));
-}
-
-label > span:first-child::first-letter {
-    text-transform: uppercase;
-}
-
-label > span:first-child {
-    align-self: flex-start;
-    width: min-content; /* looks like there is a bug in FF */
-    background-image: linear-gradient(90deg, var(--_adorner-color), var(--_adorner-color));
-    background-size: 0 var(--_adorner-size);
-    background-repeat: no-repeat;
-    background-position: left bottom;
-}
-
-label:focus-within > span:first-child{
-    background-size: 100% 3px;
 }
 
 input, textarea, .radio-group {
