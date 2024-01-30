@@ -3,7 +3,6 @@ import { productListService } from '../product-list.service.js';
 import { fromForm } from '../product-list.model.js';
 import { reactiveProps } from '../../utils/components.js';
 import { withView } from '@cofn/view';
-import { define } from '@cofn/core';
 import { ImageUploader } from '../image-uploader/image-uploader.component.js';
 import { compose } from '../../utils/functions.js';
 export const loadPage = async ({ define, state }) => {

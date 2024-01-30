@@ -1,17 +1,14 @@
 #preferences {
     --_spacing: calc(var(--spacing-small) / 2);
-}
-
-#preferences {
     padding: var(--_spacing);
 }
 
 app-preferences {
     font-size: 0.9em;
-}
 
-app-preferences .legend {
-    padding-left: var(--_spacing);
+    .legend {
+        padding-left: var(--_spacing);
+    }
 }
 
 
@@ -26,10 +23,10 @@ fieldset {
     flex-wrap: wrap;
     justify-content: space-between;
     gap: var(--_spacing) calc(var(--_spacing) / 2);
-}
 
-fieldset:focus-within .legend {
-    text-decoration: underline solid var(--action-color);
+    &:focus-within .legend {
+        text-decoration: underline solid var(--action-color);
+    }
 }
 
 .radio-group {
@@ -38,31 +35,33 @@ fieldset:focus-within .legend {
     width: min(100%, 20em);
     border-radius: var(--border-radius);
     border: 1px solid var(--form-border-color);
+
+    label {
+        flex-direction: row;
+        padding: calc(var(--_spacing) / 2) var(--_spacing);
+        transition: background-color var(--animation-duration), color var(--animation-duration);
+
+        &:has(input[checked]) {
+            background-color: var(--action-color);
+            color: var(--action-color-contrast);
+        }
+
+        &:not(:last-child) {
+            border-inline-end: 1px solid var(--form-border-color);
+        }
+    }
+
+
 }
 
 input[type=radio] {
     box-shadow: unset;
     margin-right: var(--_spacing);
     accent-color: var(--action-color);
-}
 
-.radio-group label {
-    flex-direction: row;
-    padding: calc(var(--_spacing) / 2) var(--_spacing);
-    transition: background-color var(--animation-duration), color var(--animation-duration);
-}
-
-.radio-group label:has(input[checked]){
-    background-color: var(--action-color);
-    color: var(--action-color-contrast);
-}
-
-.radio-group label:not(:last-child){
-    border-inline-end: 1px solid var(--form-border-color);
-}
-
-input[type=radio]:focus ~ span {
-    outline: 1px dotted;
+    &:focus ~ span {
+        outline: 1px dotted;
+    }
 }
 
 
@@ -82,7 +81,7 @@ input[type=radio]:focus ~ span {
         width: 100%;
     }
 
-    .radio-group label:not(:last-child){
+    .radio-group label:not(:last-child) {
         border-inline-end: unset;
         border-block-end: 1px solid var(--form-border-color);
     }
