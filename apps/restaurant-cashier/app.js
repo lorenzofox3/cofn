@@ -108,8 +108,8 @@ export const createApp = ({ router }) => {
     .addRoute({ pattern: 'products/:product-sku' }, [
       usePageLoader({ pagePath: '/products/edit/edit-product.page.js' }),
     ])
-    .addRoute({ pattern: 'sales' }, [
-      usePageLoader({ pagePath: '/not-available.page.js' }),
+    .addRoute({ pattern: 'cart' }, [
+      usePageLoader({ pagePath: '/cart/cart.page.js' }),
     ])
     .notFound(() => {
       router.redirect('/products');
