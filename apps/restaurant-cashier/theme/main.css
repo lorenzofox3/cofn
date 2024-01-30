@@ -30,37 +30,37 @@ body {
     background: var(--app-bg);
     padding-bottom: var(--spacing-big);
     position: relative;
-}
 
-body.dark {
-    --font-color: #f2f2f2;
-    --surface-bg: #202945;
-    --app-bg: #152028;
-    --spacing-big: 1.5em;
-    --spacing-small: 1em;
-    --font-color-lighter: #d7d7d7;
-    --action-color: #5be382;
-    --action-color-contrast: #1e1e1e;
-    --control-focus-color: #ceffed;
-    --danger-color: #fd793c;
-    --shadow-color: #75987c;
-    --animation-duration: 0.3s;
-    --form-border-color: #adeab8;
-    --font-color-focus: #2f2f2f;
-}
+    &.dark {
+        --font-color: #f2f2f2;
+        --surface-bg: #202945;
+        --app-bg: #152028;
+        --spacing-big: 1.5em;
+        --spacing-small: 1em;
+        --font-color-lighter: #d7d7d7;
+        --action-color: #5be382;
+        --action-color-contrast: #1e1e1e;
+        --control-focus-color: #ceffed;
+        --danger-color: #fd793c;
+        --shadow-color: #75987c;
+        --animation-duration: 0.3s;
+        --form-border-color: #adeab8;
+        --font-color-focus: #2f2f2f;
+    }
 
-body.motion-reduced {
-    --animation-duration: 1ms;
+    &.motion-reduced {
+        --animation-duration: 1ms;
+    }
+
+    * {
+        box-sizing: inherit;
+    }
 }
 
 .text-ellipsis {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-}
-
-body * {
-    box-sizing: inherit;
 }
 
 h1, h2, h3 {
@@ -111,11 +111,11 @@ ui-alert:not(:defined) {
     border-radius: var(--border-radius);
     box-shadow: 0 0 2px 0 var(--shadow-color),
     0 0 6px 2px var(--shadow-color);
-}
 
-[role=alert]:empty {
-    transform: translateX(500%);
-    opacity: 0;
+    &:empty {
+        transform: translateX(500%);
+        opacity: 0;
+    }
 }
 
 .wrapper {
@@ -157,7 +157,7 @@ HEADER
     view-transition-name: site-header;
 
     > .wrapper {
-        --spacing:var(--spacing-big);
+        --spacing: var(--spacing-big);
         display: grid;
         grid-template-columns: min-content 1fr;
         align-items: center;
@@ -203,14 +203,14 @@ HEADER
             --size: 1.5rem;
             display: block;
         }
-    }
 
-    a[aria-current=page] {
-        border-bottom-color: var(--action-color);
-    }
+        &[aria-current=page] {
+            border-bottom-color: var(--action-color);
+        }
 
-    a:hover {
-        opacity: 1;
+        &:hover {
+            opacity: 1;
+        }
     }
 
     #cart-link {
@@ -225,10 +225,9 @@ HEADER
         color: var(--action-color-contrast);
         transform: translate(0, 0.75em);
         border: 2px solid currentColor;
-        box-shadow:
-                0 0 4px 0 rgb(0 0 0 / 50%),
-                0 0 6px 1px rgb(0 0 0 / 41%),
-                0 0 0 12px var(--app-bg);
+        box-shadow: 0 0 4px 0 rgb(0 0 0 / 50%),
+        0 0 6px 1px rgb(0 0 0 / 41%),
+        0 0 0 12px var(--app-bg);
 
         ui-icon {
             height: unset;
@@ -239,8 +238,6 @@ HEADER
         }
     }
 }
-
-
 
 
 @keyframes fade-in {
@@ -276,8 +273,7 @@ HEADER
 ::view-transition-old(product-card-expand),
 ::view-transition-new(product-card-expand),
 ::view-transition-old(product-card-collapse),
-::view-transition-new(product-card-collapse)
-{
+::view-transition-new(product-card-collapse) {
     /* Prevent the default animation,
     so both views remain opacity:1 throughout the transition */
     /*animation: none;*/
@@ -297,13 +293,13 @@ HEADER
 }
 
 ::view-transition-old(product-card-expand),
-::view-transition-old(product-card-collapse){
+::view-transition-old(product-card-collapse) {
     animation: 100ms cubic-bezier(0.4, 0, 1, 1) both fade-out;
 }
 
 /* The new view is the full form */
 ::view-transition-new(product-card-expand),
-::view-transition-old(product-card-collapse){
+::view-transition-old(product-card-collapse) {
     /* Maintain the aspect ratio of the view,
     by growing it to cover the bounds of the element */
     object-fit: cover;
