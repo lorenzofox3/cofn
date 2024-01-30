@@ -16,22 +16,22 @@ button, .button-like, ::part(button) {
     box-shadow: 0 0 1px 0 var(--_shadow-color),
     0 0 3px 0 var(--_shadow-color);
     font-family: inherit;
-    color:inherit;
+    color: inherit;
     border-radius: var(--border-radius);
-}
 
-:where(button, .button-like).action {
-    background: var(--action-color);
-    color: var(--action-color-contrast);
-    border-color: transparent;
-}
+    &.action {
+        background: var(--action-color);
+        color: var(--action-color-contrast);
+        border-color: transparent;
+    }
 
-:where(button, .button-like, ::part(button)):not(:active):hover {
-    box-shadow: 0 0 2px 0 var(--_shadow-color),
-    0 0 6px 0 var(--_shadow-color);
-}
+    &:not(:active):hover {
+        box-shadow: 0 0 2px 0 var(--_shadow-color),
+        0 0 6px 0 var(--_shadow-color);
 
-:where(button, .button-like, ::part(button)):active {
-    box-shadow: 0 0 2px 1px var(--_shadow-color);
-}
+    }
 
+    &:active {
+        box-shadow: 0 0 2px 1px var(--_shadow-color);
+    }
+}
