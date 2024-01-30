@@ -1,9 +1,6 @@
 import { createEventEmitter } from '../utils/events.service.js';
 import { http } from '../utils/http.js';
-import {
-  createNotificationsService,
-  notificationsService,
-} from '../utils/notifications.service.js';
+import { notificationsService } from '../utils/notifications.service.js';
 
 export const createProductListService = ({ notificationsService }) => {
   const store = {

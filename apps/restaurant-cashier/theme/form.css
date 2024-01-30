@@ -6,9 +6,7 @@ form {
     --_font-color: var(--font-color-lighter);
     --_background-fill: var(--control-focus-color);
     --_adorner-color: var(--action-color);
-
-
-    padding: 1em;
+    padding-block: 1em;
 }
 
 label {

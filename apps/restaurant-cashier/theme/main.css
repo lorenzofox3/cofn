@@ -1,4 +1,5 @@
 @import url("reset.css");
+@import url("layout.css");
 @import url('button.css');
 @import url('form.css');
 @import url('../products/products.css');
@@ -10,8 +11,8 @@
     --font-color-lighter: #4f4f4f;
     --surface-bg: white;
     --app-bg: #f6f6f6;
-    --spacing-big: 1.5em;
-    --spacing-small: 1em;
+    --spacing-big: 0.75em;
+    --spacing-small: 0.5em;
     --action-color: #426cb3;
     --action-color-contrast: white;
     --control-focus-color: #e9f6ff;
@@ -20,6 +21,7 @@
     --animation-duration: 0.3s;
     --border-radius: 3px;
     --form-border-color: #afafaf;
+    --max-width:85ch
 }
 
 body {
@@ -35,8 +37,6 @@ body {
         --font-color: #f2f2f2;
         --surface-bg: #202945;
         --app-bg: #152028;
-        --spacing-big: 1.5em;
-        --spacing-small: 1em;
         --font-color-lighter: #d7d7d7;
         --action-color: #5be382;
         --action-color-contrast: #1e1e1e;
@@ -118,11 +118,6 @@ ui-alert:not(:defined) {
     }
 }
 
-.wrapper {
-    max-width: min(var(--max-width, 80ch), 100% - var(--spacing-big));
-    margin: auto;
-}
-
 .boxed {
     box-shadow: 0 0 2px 0 var(--shadow-color);
     border-radius: var(--border-radius);
@@ -144,6 +139,11 @@ ui-alert:not(:defined) {
     view-transition-name: product-card-collapse;
 }
 
+/* todo */
+ui-page-outlet {
+    display: contents;
+}
+
 /**
 HEADER
  */
@@ -158,7 +158,9 @@ HEADER
 
     > .wrapper {
         --spacing: var(--spacing-big);
+        margin: auto;
         display: grid;
+        max-width: min(var(--max-width, 80ch), 100% - 2 * var(--spacing));
         grid-template-columns: min-content 1fr;
         align-items: center;
         gap: var(--spacing);
@@ -235,6 +237,10 @@ HEADER
 
         &:hover {
             opacity: 0.9;
+        }
+
+        &[aria-current=page]:not(:focus){
+            opacity: 0;
         }
     }
 }

@@ -1,5 +1,5 @@
 #preferences {
-    --_spacing: calc(var(--spacing-small) / 2);
+    --_spacing: var(--spacing-small);
     padding: var(--_spacing);
 }
 

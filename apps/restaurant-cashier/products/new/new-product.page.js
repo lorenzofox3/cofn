@@ -8,10 +8,10 @@ const template = createElement('template');
 
 template.innerHTML = `
 <h1 tabindex="-1">Add new product</h1>
-<div class="surface transition-card-expand boxed">
-  <form autocomplete="off" class="product-form" novalidate>
+<div class="surface content-grid transition-card-expand boxed">
+  <form autocomplete="off" class="grid-narrow product-form" novalidate>
       <label is="ui-label">
-        <span>#SKU</span>
+        <span>SKU</span>
         <input autocapitalize="characters" placeholder="ex: bigmc" name="sku" type="text" required />
       </label>
       <label is="ui-label">

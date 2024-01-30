@@ -15,7 +15,6 @@
         border-style: dashed;
         border-radius: 4px;
     }
-
 }
 
 app-product-list-item {
@@ -99,9 +98,8 @@ div:has(>.product-card__price) {
  */
 
 div:has(> .product-form) {
-    --spacing: calc(var(--spacing-small) * 2 / 3);
+    --spacing: var(--spacing-small);
     --_large-spacing: calc(var(--spacing) * 4);
-    padding-inline: var(--_large-spacing);
 }
 
 .product-form {
@@ -148,10 +146,6 @@ div:has(> .product-form) {
 
 
 @media (max-width: 720px) {
-
-    div:has(.product-form) {
-        --_large-spacing: 0;
-    }
 
     .product-form {
         display: flex;

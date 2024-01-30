@@ -5,9 +5,11 @@ import { CartProductList } from './cart-product-list.component.js';
 
 const template = createElement('template');
 template.innerHTML = `
-<h1>Cart</h1>
-<app-cart class="surface boxed"></app-cart>
-<app-cart-product-list class="surface boxed"></app-cart-product-list>
+<h1 tabindex="-1">Cart</h1>
+<div class="grid-full">
+<app-cart class="surface grid-full boxed"></app-cart>
+<app-cart-product-list class="surface grid-full boxed"></app-cart-product-list>
+</div>
 `;
 
 export const loadPage = ({ define }) => {
