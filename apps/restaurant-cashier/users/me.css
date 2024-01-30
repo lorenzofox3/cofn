@@ -17,6 +17,7 @@ todo eventually draw what is related to radio group into forms.css
  */
 
 fieldset {
+    container: fieldset / inline-size;
     margin-top: var(--_spacing);
     display: flex;
     align-items: center;
@@ -64,25 +65,16 @@ input[type=radio] {
     }
 }
 
-
-@media (max-width: 580px) {
-
-    fieldset {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .legend {
-        align-self: flex-start;
-    }
-
+@container fieldset (max-width: 520px) {
     .radio-group {
-        grid-template-columns: unset;
+        display: flex;
+        flex-direction: column;
         width: 100%;
-    }
 
-    .radio-group label:not(:last-child) {
-        border-inline-end: unset;
-        border-block-end: 1px solid var(--form-border-color);
+        label:not(:last-child) {
+            border-inline-end: unset;
+            border-block-end: 1px solid var(--form-border-color);
+        }
+
     }
 }
