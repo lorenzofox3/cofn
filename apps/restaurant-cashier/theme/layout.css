@@ -24,6 +24,6 @@ ui-page-outlet > * {
     grid-column: narrow;
 }
 
-app-page-outlet {
+ui-page-outlet {
     display: contents;
 }

@@ -4,6 +4,7 @@
 @import url('form.css');
 @import url('../products/products.css');
 @import url('../users/me.css');
+@import url('../cart/cart.css');
 
 :root {
     font-family: system-ui, Avenir, sans-serif;
@@ -139,11 +140,15 @@ ui-alert:not(:defined) {
     view-transition-name: product-card-collapse;
 }
 
-/* todo */
-ui-page-outlet {
-    display: contents;
+.visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
 }
-
 /**
 HEADER
  */

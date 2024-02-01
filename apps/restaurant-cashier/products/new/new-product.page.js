@@ -33,10 +33,10 @@ template.innerHTML = `
       <input type="hidden" name="image">
       <div class="action-bar">
         <a href="/products" is="ui-page-link" class="button-like">
-        <span><ui-icon name="x-circle"></ui-icon>cancel</a>
+          <ui-icon name="x-circle"></ui-icon>cancel
+        </a>
         <button formnovalidate class="action">
-          <ui-icon name="plus-circle"></ui-icon>
-          create
+          <ui-icon name="plus-circle"></ui-icon>create
         </button>
       </div>
   </form>
