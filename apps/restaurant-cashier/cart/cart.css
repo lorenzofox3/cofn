@@ -29,14 +29,14 @@ app-cart {
         display: flex;
         flex-direction: column;
         cursor: pointer;
-        transition: border-color var(--animation-duration);
+        outline: none;
 
         &[aria-selected=true] .adorner {
             --_mark-scale: 1;
         }
 
         &:where(:hover, :focus-visible) .adorner {
-            --_accent-color: var(--shadow-color);
+                --_accent-color: var(--shadow-color);
             --_mark-offset: 4px;
         }
     }

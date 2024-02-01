@@ -1,9 +1,11 @@
-import { mapBind } from './objects.js';
-import { identity } from './functions.js';
-
-const bind = mapBind(identity);
-const { createElement, querySelector, createRange, createTextNode } =
-  bind(document);
+import { bind } from './objects.js';
+const {
+  createElement,
+  querySelector,
+  createRange,
+  createTextNode,
+  createTreeWalker,
+} = bind(document);
 const { matchMedia } = bind(window);
 
 export {
@@ -12,4 +14,5 @@ export {
   querySelector,
   createRange,
   createTextNode,
+  createTreeWalker,
 };

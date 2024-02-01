@@ -9,6 +9,7 @@ export const CartProductList = ({ html, productListService, $host }) => {
         is="ui-listbox"
         aria-labelledby="product-list-header"
         aria-multiselectable="true"
+        @selection-changed="${console.log}"
       >
         ${products.map(
           (product) =>

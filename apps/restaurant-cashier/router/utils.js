@@ -1,4 +1,4 @@
-const noop = () => {};
+export const noop = () => {};
 
 export function composeStack(fns = []) {
   const [first, ...rest] = fns;
