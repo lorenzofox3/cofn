@@ -7,10 +7,10 @@ const nanoid = (t = 21) =>
           (e &= 63) < 36
             ? e.toString(36)
             : e < 62
-            ? (e - 26).toString(36).toUpperCase()
-            : e > 62
-            ? '-'
-            : '_'),
+              ? (e - 26).toString(36).toUpperCase()
+              : e > 62
+                ? '-'
+                : '_'),
       '',
     );
 
@@ -53,6 +53,16 @@ let fakeProducts = {
   },
 };
 
+const currentCart = {
+  id: 'some_cart_id',
+  items: {},
+  total: {
+    amountInCents: 0,
+    currency: '$',
+  },
+  createdAt: new Date(Date.now() - 2 * 60 * 1_000),
+};
+
 self.addEventListener('activate', (event) => {
   // todo while developping
   self.skipWaiting();
@@ -64,41 +74,43 @@ self.addEventListener('fetch', (event) => {
   const requestURL = new URL(request.url);
   const pathname = requestURL.pathname;
   if (pathname.startsWith('/api')) {
-    if (pathname === '/api/products') {
-      if (request.method === 'GET') {
-        event.respondWith(
-          new Response(JSON.stringify(fakeProducts), {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }),
-        );
-      } else if (request.method === 'POST') {
-        event.respondWith(addProduct(event.request));
-      }
-    } else {
-      const matches = pathname.match(/\/api\/products\/(\w+)/);
-      if (matches?.length) {
-        const [, sku] = matches;
-        const product = fakeProducts[sku];
-        if (request.method === 'DELETE') {
-          if (product) {
-            delete fakeProducts[sku];
-            event.respondWith(new Response(null, { status: 204 }));
-          } else {
-            event.respondWith(new Response(null, { status: 404 }));
-          }
-        } else if (request.method === 'GET') {
+    if (pathname.startsWith('/api/products')) {
+      if (pathname === '/api/products') {
+        if (request.method === 'GET') {
           event.respondWith(
-            new Response(product ? JSON.stringify(product) : null, {
+            new Response(JSON.stringify(fakeProducts), {
               headers: {
                 'Content-Type': 'application/json',
               },
-              status: product ? 200 : 404,
             }),
           );
-        } else if (request.method === 'PUT') {
-          event.respondWith(updateProduct(event.request));
+        } else if (request.method === 'POST') {
+          event.respondWith(addProduct(event.request));
+        }
+      } else {
+        const matches = pathname.match(/\/api\/products\/(\w+)/);
+        if (matches?.length) {
+          const [, sku] = matches;
+          const product = fakeProducts[sku];
+          if (request.method === 'DELETE') {
+            if (product) {
+              delete fakeProducts[sku];
+              event.respondWith(new Response(null, { status: 204 }));
+            } else {
+              event.respondWith(new Response(null, { status: 404 }));
+            }
+          } else if (request.method === 'GET') {
+            event.respondWith(
+              new Response(product ? JSON.stringify(product) : null, {
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                status: product ? 200 : 404,
+              }),
+            );
+          } else if (request.method === 'PUT') {
+            event.respondWith(updateProduct(event.request));
+          }
         }
       }
     }
@@ -108,6 +120,18 @@ self.addEventListener('fetch', (event) => {
         event.respondWith(cacheFileToUpload(request));
       } else {
         event.respondWith(cacheFirst(request));
+      }
+    }
+
+    if (pathname.startsWith('/api/carts')) {
+      if (pathname === '/api/carts/current' && request.method === 'GET') {
+        event.respondWith(
+          new Response(JSON.stringify(currentCart), {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }),
+        );
       }
     }
   }

@@ -1,7 +1,16 @@
-export const CartProductList = ({ html, productListService, $host }) => {
-  setTimeout(productListService.fetch, 200);
-  return ({ products }) =>
-    html` <h2 id="product-list-header" class="visually-hidden">
+export const CartProductList = ({ html, productListService, cartService }) => {
+  const handleSelectionChange = ({ detail }) => {
+    const { option } = detail;
+    const cartItem = {
+      sku: option.value,
+      quantity: option.selected ? 1 : 0,
+    };
+    cartService.setItemQuantity(cartItem);
+  };
+  return ({ products: _products }) => {
+    const products = Object.values(_products);
+
+    return html` <h2 id="product-list-header" class="visually-hidden">
         Available products
       </h2>
       <ul
@@ -9,7 +18,7 @@ export const CartProductList = ({ html, productListService, $host }) => {
         is="ui-listbox"
         aria-labelledby="product-list-header"
         aria-multiselectable="true"
-        @selection-changed="${console.log}"
+        @selection-changed="${handleSelectionChange}"
       >
         ${products.map(
           (product) =>
@@ -26,4 +35,5 @@ export const CartProductList = ({ html, productListService, $host }) => {
               </li>`,
         )}
       </ul>`;
+  };
 };

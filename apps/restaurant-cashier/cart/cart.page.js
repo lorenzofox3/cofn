@@ -9,6 +9,7 @@ import {
   UIListbox,
   UIListboxOption,
 } from '../components/ui-listbox.component.js';
+import { withCartController } from './cart.controller.js';
 
 const template = createElement('template');
 template.innerHTML = `
@@ -26,13 +27,11 @@ export const loadPage = ({ define }) => {
   define('ui-listbox', UIListbox, {
     extends: 'ul',
   });
-  define('app-cart', withView(Cart));
+  define('app-cart', withCartController(withView(Cart)));
   define('app-cart-product-item', CartProductItem);
   define(
     'app-cart-product-list',
-    createProductListController({ productListService })(
-      withView(CartProductList),
-    ),
+    withCartController(withView(CartProductList)),
   );
   return template.content.cloneNode(true);
 };
