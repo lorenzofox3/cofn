@@ -98,7 +98,16 @@ export const UIListbox = function* ({ $host, $root }) {
 };
 
 export const UIListboxOption = function* ({ $host }) {
-  let _value = $host.getAttribute('value');
+  let _value = $host.getAttribute('value') || $host.value;
+  $host.setAttribute('role', 'option');
+  $host.setAttribute('tabindex', '-1');
+  $host.setAttribute(
+    'aria-selected',
+    $host.selected !== undefined //upgrade property if needed
+      ? $host.selected
+      : $host.getAttribute('aria-selected') ?? 'false',
+  );
+
   Object.defineProperties($host, {
     selected: {
       enumerable: true,
@@ -119,12 +128,6 @@ export const UIListboxOption = function* ({ $host }) {
       },
     },
   });
-  $host.setAttribute('role', 'option');
-  $host.setAttribute('tabindex', '-1');
-  $host.setAttribute(
-    'aria-selected',
-    $host.getAttribute('aria-selected') ?? 'false',
-  );
 };
 
 const traverseOptions = (node) =>

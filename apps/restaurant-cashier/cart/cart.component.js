@@ -1,11 +1,12 @@
 export const Cart = ({ html, cartService }) => {
-  cartService.fetchCurrent();
+  setTimeout(cartService.fetchCurrent, 200); // todo
 
-  return ({ currentCart }) => {
+  return ({ currentCart, products }) => {
     const cartProducts = Object.entries(currentCart.items).map(
       ([sku, cartItem]) => ({
         sku,
         ...cartItem,
+        price: products[sku].price,
       }),
     );
 
@@ -33,7 +34,7 @@ export const Cart = ({ html, cartService }) => {
                     <tr>
                       <td>${sku}</td>
                       <td>${quantity}</td>
-                      <td>${price.amountInCents + price.currency}</td>
+                      <td>${price.amountInCents / 100 + price.currency}</td>
                     </tr>`;
                 },
               )}

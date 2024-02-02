@@ -91,14 +91,8 @@ self.addEventListener('fetch', (event) => {
         const matches = pathname.match(/\/api\/products\/(\w+)/);
         if (matches?.length) {
           const [, sku] = matches;
-          const product = fakeProducts[sku];
           if (request.method === 'DELETE') {
-            if (product) {
-              delete fakeProducts[sku];
-              event.respondWith(new Response(null, { status: 204 }));
-            } else {
-              event.respondWith(new Response(null, { status: 404 }));
-            }
+            event.respondWith(deleteProduct({ sku }));
           } else if (request.method === 'GET') {
             event.respondWith(
               new Response(product ? JSON.stringify(product) : null, {
@@ -132,6 +126,9 @@ self.addEventListener('fetch', (event) => {
             },
           }),
         );
+      }
+      if (/\/api\/carts\/(\w+)\/(\w+)/.test(pathname)) {
+        event.respondWith(setCartItemQuantity(request));
       }
     }
   }
@@ -210,3 +207,63 @@ async function cacheFileToUpload(request) {
     });
   }
 }
+
+async function deleteProduct({ sku }) {
+  const product = fakeProducts[sku];
+  if (!product) {
+    return new Response(null, { status: 404 });
+  }
+  if (currentCart.items[product.sku]) {
+    return new Response(null, { status: 409 }); // can't remove a product which is currently in a cart
+  }
+
+  delete fakeProducts[sku];
+  return new Response(null, { status: 204 });
+}
+
+// this makes a snapshot of the product at the moment, if product's price changes while the cart is open, the cart won't be affected unless quantity is modified
+async function setCartItemQuantity(request) {
+  const _request = await request.clone();
+  const cartItem = await _request.json();
+  const requestURL = new URL(request.url);
+  const pathname = requestURL.pathname;
+  const matches = pathname.match(/\/api\/carts\/(\w+)\/(\w+)/);
+  const [, cartId, sku] = matches;
+  if (cartId !== currentCart.id) {
+    return new Response(null, {
+      status: 409,
+    }); // cart is already closed
+  }
+
+  if (!fakeProducts[sku]) {
+    return new Response(null, {
+      status: 404,
+    });
+  }
+
+  currentCart.items[sku] = cartItem;
+  currentCart.items = normalizeCartItems({ items: currentCart.items });
+  currentCart.total = {
+    amountInCents: getCartTotal(),
+    currency: '$',
+  };
+
+  return new Response(null, {
+    status: 200,
+  });
+}
+
+const getCartTotal = () =>
+  Object.entries(currentCart.items).reduce(
+    (total, [sku, { quantity }]) =>
+      total + quantity * fakeProducts[sku].price.amountInCents,
+    0,
+  );
+
+const normalizeCartItems = ({ items }) => {
+  return Object.fromEntries(
+    Object.entries(items)
+      .filter(([, item]) => (item?.quantity ?? 0) > 0)
+      .map(([sku, item]) => [sku, item]),
+  );
+};

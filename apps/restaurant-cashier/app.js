@@ -115,13 +115,12 @@ export const createApp = ({ router }) => {
       router.redirect('/products');
     });
 
-  // trigger initial preference state
-  preferencesService.emit({
-    type: preferencesEvents.PREFERENCES_CHANGED,
-  });
-
   return {
     start() {
+      // trigger initial preference state
+      preferencesService.emit({
+        type: preferencesEvents.PREFERENCES_CHANGED,
+      });
       router.redirect(location.pathname + location.search + location.hash);
     },
   };
