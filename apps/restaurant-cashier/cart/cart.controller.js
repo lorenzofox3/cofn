@@ -15,8 +15,6 @@ export const createCartController =
         signal: $signal,
       });
 
-      cartService.fetchCurrent();
-
       yield* comp({
         $host,
         $signal,

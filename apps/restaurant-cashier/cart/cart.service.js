@@ -5,6 +5,7 @@ import {
   productListEvents,
   productListService,
 } from '../products/product-list.service.js';
+import { keyBy } from '../utils/objects.js';
 
 export const cartEvents = {
   CART_CHANGED: 'cart-changed',
@@ -29,13 +30,7 @@ export const createCartService = ({
   const service = createEventEmitter();
 
   productListService.on(productListEvents.PRODUCT_LIST_CHANGED, () => {
-    store.products = productListService.getState().products.reduce(
-      (registry, product) => ({
-        ...registry,
-        [product.sku]: product,
-      }),
-      {},
-    );
+    store.products = keyBySKU(productListService.getState().products);
   });
 
   return Object.assign(service, {
@@ -49,13 +44,14 @@ export const createCartService = ({
     async setItemQuantity({ sku, quantity = 1 }) {
       const currentItem = store.currentCart.items[sku];
 
-      if (quantity === 0) {
-        delete store.currentCart.items[sku];
-      } else {
-        store.currentCart.items[sku] = {
-          quantity,
-        };
-      }
+      store.currentCart.items = normalizeCartItems({
+        items: {
+          ...store.currentCart.items,
+          [sku]: {
+            quantity,
+          },
+        },
+      });
 
       service.emit(cartEvents.CART_CHANGED);
 
@@ -71,16 +67,15 @@ export const createCartService = ({
         notificationsService.error({
           message: 'An error occurred. Cart Item could not be changed',
         });
-        if (currentItem === undefined) {
-          delete store.currentCart.items[sku];
-        } else {
-          store.currentCart.items[sku] = currentItem;
-        }
-
+        store.currentCart.items = normalizeCartItems({
+          items: {
+            ...store.currentCart.items,
+            [sku]: currentItem,
+          },
+        });
         service.emit({
           type: cartEvents.CART_CHANGED,
         });
-        throw err;
       }
     },
     getState() {
@@ -88,6 +83,16 @@ export const createCartService = ({
     },
   });
 };
+
+const normalizeCartItems = ({ items }) => {
+  return Object.fromEntries(
+    Object.entries(items)
+      .filter(([, item]) => (item?.quantity ?? 0) > 0)
+      .map(([sku, item]) => [sku, item]),
+  );
+};
+
+const keyBySKU = keyBy(({ sku }) => sku);
 
 export const cartService = createCartService({
   notificationsService,

@@ -1,13 +1,12 @@
+import { compose } from '../utils/functions.js';
+
 export const CartProductList = ({ html, productListService, cartService }) => {
-  const handleSelectionChange = ({ detail }) => {
-    const { option } = detail;
-    const cartItem = {
-      sku: option.value,
-      quantity: option.selected ? 1 : 0,
-    };
-    cartService.setItemQuantity(cartItem);
-  };
-  return ({ products: _products }) => {
+  const handleSelectionChange = compose([
+    cartService.setItemQuantity,
+    cartItemFromOption,
+    ({ detail }) => detail,
+  ]);
+  return ({ products: _products, currentCart }) => {
     const products = Object.values(_products);
 
     return html` <h2 id="product-list-header" class="visually-hidden">
@@ -37,3 +36,8 @@ export const CartProductList = ({ html, productListService, cartService }) => {
       </ul>`;
   };
 };
+
+const cartItemFromOption = ({ value, selected }) => ({
+  sku: value,
+  quantity: selected ? 1 : 0,
+});

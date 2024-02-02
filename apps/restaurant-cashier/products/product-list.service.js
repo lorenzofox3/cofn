@@ -19,66 +19,67 @@ export const createProductListService = ({ notificationsService }) => {
     });
 
   return Object.assign(service, {
-    fetch: async () => {
+    async fetch() {
       store.products.items = await http('products');
       dispatch();
     },
-    remove: async ({ sku }) => {
+    async remove({ sku }) {
       const toRemove = store.products.items[sku];
       delete store.products.items[sku];
       // optimistic update: we do not wait for the result
       dispatch();
-      return http(`products/${sku}`, {
-        method: 'DELETE',
-      }).catch((err) => {
+      try {
+        return await http(`products/${sku}`, {
+          method: 'DELETE',
+        });
+      } catch (err) {
         notificationsService.error({
           message: 'An error occurred. The product could not be deleted.',
         });
         store.products.items[sku] = toRemove;
         dispatch();
-        throw err;
-      });
+      }
     },
-    fetchOne: async ({ sku }) => {
-      // todo we could get it from cache first ??
-      return http(`products/${sku}`, {
+    async fetchOne({ sku }) {
+      const product = await http(`products/${sku}`, {
         method: 'GET',
-      }).then((product) => {
-        return (store.products.items[product.sku] = product);
       });
+      return (store.products.items[product.sku] = product);
     },
-    update: async ({ product }) => {
+    async update({ product }) {
       const oldValue = store.products.items[product.sku];
       store.products.items[product.sku] = product;
       // optimistic update: we do not wait for the result
       dispatch();
-      return http(`products/${product.sku}`, {
-        method: 'PUT',
-        body: JSON.stringify(product),
-      }).catch((err) => {
+      try {
+        return await http(`products/${product.sku}`, {
+          method: 'PUT',
+          body: JSON.stringify(product),
+        });
+      } catch (err) {
         notificationsService.error({
           message: 'An error occurred. The product could not be updated.',
         });
         store.products.items[product.sku] = oldValue;
         dispatch();
-        throw err;
-      });
+      }
     },
-    create: async ({ product }) => {
+    async create({ product }) {
       store.products.items[product.sku] = product;
       // optimistic update: we do not wait for the result
       dispatch();
-      return http(`products`, {
-        method: 'POST',
-        body: JSON.stringify(product),
-      }).catch((err) => {
+      try {
+        return await http(`products`, {
+          method: 'POST',
+          body: JSON.stringify(product),
+        });
+      } catch (err) {
         notificationsService.error({
           message: 'An error occurred. The product could not be created.',
         });
         delete store.products.items[product.sku];
         dispatch();
-        throw err;
-      });
+      }
     },
     getState() {
       return structuredClone({

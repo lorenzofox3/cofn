@@ -14,4 +14,8 @@ export const mapValues = curry2((mapFn, target) =>
   ),
 );
 
+export const keyBy = curry2((keyFn, array) =>
+  Object.fromEntries(array.map((item) => [keyFn(item), item])),
+);
+
 export const bind = mapBind(identity);
