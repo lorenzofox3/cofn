@@ -13,14 +13,10 @@ export const connectToRouter = (component) =>
       { signal: $signal },
     );
 
-    $host.addEventListener(
-      'click',
-      (ev) => {
-        ev.preventDefault();
-        router.goTo(linkHref);
-      },
-      { signal: $signal },
-    );
+    $host.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      router.goTo(linkHref);
+    });
 
     yield* component({ router, $host, $signal, ...rest });
   };

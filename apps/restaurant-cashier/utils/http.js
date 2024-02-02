@@ -1,23 +1,4 @@
 import { APIRootURL } from '../config.js';
-
-export const createHTTPFacade = () => {
-  return {
-    fetch: async (request) => {
-      // const token = await auth.getToken();
-      const { headers = {}, url, body, ...rest } = request;
-      return http(url, {
-        ...rest,
-        ...(body ? { body: JSON.stringify(body) } : {}),
-        headers: {
-          // Authorization: ['Bearer', token].join(' '),
-          ...(body ? { ['Content-Type']: 'application/json' } : {}),
-          ...headers,
-        },
-      });
-    },
-  };
-};
-
 export const http = async (path, options = {}) => {
   const { query, ...rest } = options;
   const url = new URL(path, APIRootURL);

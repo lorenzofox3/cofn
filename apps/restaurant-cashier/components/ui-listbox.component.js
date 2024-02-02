@@ -1,6 +1,5 @@
-import { compose } from '../utils/functions.js';
+import { compose, noop } from '../utils/functions.js';
 import { createTreeWalker } from '../utils/dom.js';
-import { noop } from '../router/utils.js';
 import { bind } from '../utils/objects.js';
 
 export const UIListbox = function* ({ $host, $root }) {

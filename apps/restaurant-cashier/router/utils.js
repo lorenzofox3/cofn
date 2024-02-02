@@ -1,4 +1,4 @@
-export const noop = () => {};
+import { noop } from '../utils/functions.js';
 
 export function composeStack(fns = []) {
   const [first, ...rest] = fns;
