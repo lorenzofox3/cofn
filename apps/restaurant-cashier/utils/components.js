@@ -1,6 +1,4 @@
 // todo draw that somewhere else (a prop utils ? or part of the framework)
-import { mapValues } from './objects.js';
-
 export const reactiveProps = (props) => (comp) =>
   function* ({ $host, ...rest }) {
     let pendingUpdate = false;

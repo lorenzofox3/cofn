@@ -97,7 +97,7 @@ export const createApp = ({ router }) => {
       usePageLoader({ pagePath: '/users/me.page.js' }),
     ])
     .addRoute({ pattern: 'dashboard' }, [
-      usePageLoader({ pagePath: '/not-available.page.js' }),
+      usePageLoader({ pagePath: '/dashboard/dashboard.page.js' }),
     ])
     .addRoute({ pattern: 'products' }, [
       usePageLoader({ pagePath: '/products/list/product-list.page.js' }),
