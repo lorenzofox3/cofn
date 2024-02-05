@@ -91,6 +91,7 @@ self.addEventListener('fetch', (event) => {
         const matches = pathname.match(/\/api\/products\/(\w+)/);
         if (matches?.length) {
           const [, sku] = matches;
+          const product = fakeProducts[sku];
           if (request.method === 'DELETE') {
             event.respondWith(deleteProduct({ sku }));
           } else if (request.method === 'GET') {

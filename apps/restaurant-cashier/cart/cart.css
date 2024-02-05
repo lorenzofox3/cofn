@@ -15,6 +15,59 @@ app-cart {
     --_spacing: var(--spacing-small);
     padding: var(--spacing-small);
     min-width: min(100%, 20em);
+    min-height: 12em;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--_spacing);
+
+    h2 {
+        margin: 0;
+    }
+
+    .quantity {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5em;
+
+        button > span:last-child {
+            display: none;
+        }
+    }
+
+    small {
+        display: block;
+    }
+
+
+    ul {
+        list-style: none;
+        font-size: 0.9em;
+        flex-grow: 1;
+        padding: 0;
+        display: grid;
+        gap: 0.2em 1em;
+        grid-template-columns: 1fr max-content max-content;
+        align-content: start;
+    }
+
+    li {
+        display: grid;
+        grid-column: 1 / -1;
+        grid-template-columns: subgrid;
+        align-items: center;
+        border-bottom: 1px solid var(--form-border-color);
+
+        > :last-child {
+            margin-left: auto;
+        }
+
+    }
+
+    p {
+        text-align: right;
+        font-size: 0.9em;
+    }
 }
 
 
@@ -36,7 +89,7 @@ app-cart {
         }
 
         &:where(:hover, :focus-visible) .adorner {
-                --_accent-color: var(--shadow-color);
+            --_accent-color: var(--shadow-color);
             --_mark-offset: 4px;
         }
     }
