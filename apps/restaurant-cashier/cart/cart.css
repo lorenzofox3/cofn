@@ -43,7 +43,7 @@ app-cart {
         padding: 0;
         display: grid;
         gap: 0.2em 1em;
-        grid-template-columns: minmax(10em,1fr) 5em minmax(4em, min-content);
+        grid-template-columns: minmax(10em, 1fr) 5em minmax(4em, min-content);
         align-content: start;
     }
 

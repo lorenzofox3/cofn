@@ -22,7 +22,7 @@
     --animation-duration: 0.3s;
     --border-radius: 3px;
     --form-border-color: #afafaf;
-    --max-width:85ch
+    --max-width: 85ch
 }
 
 body {
@@ -149,6 +149,7 @@ ui-alert:not(:defined) {
     white-space: nowrap;
     width: 1px;
 }
+
 /**
 HEADER
  */
@@ -244,7 +245,7 @@ HEADER
             opacity: 0.9;
         }
 
-        &[aria-current=page]:not(:focus){
+        &[aria-current=page]:not(:focus) {
             opacity: 0;
         }
     }
