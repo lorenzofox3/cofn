@@ -13,7 +13,7 @@ export type ComponentRoutine<
   RenderingState = unknown,
 > = (dependencies: ComponentDependencies<Dependencies>) => Generator<
   unknown,
-  any,
+  void,
   RenderingState & {
     attributes: Record<string, string>;
   }
