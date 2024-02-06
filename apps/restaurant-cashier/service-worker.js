@@ -17,7 +17,7 @@ const nanoid = (t = 21) =>
 let fakeProducts = {
   bigmc: {
     sku: 'bigmc',
-    title: `Big Mac long string don't know what to do`,
+    title: `Big Mac`,
     description: `A slice of beef between two buns but with a long description which wraps anyways`,
     price: {
       amountInCents: 899,

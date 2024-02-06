@@ -45,11 +45,13 @@ export const Cart = ({ html, cartService, $host }) => {
               </div>
               <div class="quantity">
                 <button data-action="increment">
-                  <ui-icon name="plus"></ui-icon> <span>add</span>
+                  <ui-icon name="plus"></ui-icon
+                  ><span class="visually-hidden">add</span>
                 </button>
                 <span>${quantity}</span>
                 <button data-action="decrement">
-                  <ui-icon name="dash"></ui-icon> <span>remove</span>
+                  <ui-icon name="dash"></ui-icon
+                  ><span class="visually-hidden">remove</span>
                 </button>
               </div>
               <span>${price.amountInCents / 100 + price.currency}</span>
