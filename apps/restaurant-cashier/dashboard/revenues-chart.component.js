@@ -1,6 +1,3 @@
-import { createProjection } from '../components/charts/util.js';
-
-const twoDecimalOnly = (val) => Math.floor(val * 100) / 100;
 const model = ({ items = [], summary = {} } = {}) => {
   return {
     summary: {
@@ -13,11 +10,6 @@ const model = ({ items = [], summary = {} } = {}) => {
     })),
   };
 };
-const project = createProjection({
-  domainMin: 0,
-  domainMax: 953,
-});
-
 const formatLabel = (label) => label.split('/').slice(0, 2).join('/');
 
 export const RevenuesChart =

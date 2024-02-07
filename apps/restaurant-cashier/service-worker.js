@@ -63,6 +63,9 @@ const currentCart = {
   createdAt: new Date(Date.now() - 2 * 60 * 1_000),
 };
 
+const sumBy = (prop) => (items) =>
+  items.reduce((total, item) => total + item[prop], 0);
+
 self.addEventListener('activate', (event) => {
   // todo while developping
   self.skipWaiting();
@@ -265,42 +268,45 @@ async function setCartItemQuantity(request) {
 
 async function getRevenueReportData() {
   await wait(Math.random() * 1_000);
+  const sumByValue = sumBy('value');
+  const randomValue = () => Math.trunc(Math.random() * 1000_00);
+  const items = [
+    {
+      value: randomValue(),
+      label: '31/01/2024',
+    },
+    {
+      value: randomValue(),
+      label: '01/02/2024',
+    },
+    {
+      value: randomValue(),
+      label: '02/02/2024',
+    },
+    {
+      value: randomValue(),
+      label: '03/02/2024',
+    },
+    {
+      value: randomValue(),
+      label: '04/02/2024',
+    },
+    {
+      value: randomValue(),
+      label: '05/02/2024',
+    },
+    {
+      value: randomValue(),
+      label: '06/02/2024',
+    },
+  ];
   return new Response(
     JSON.stringify({
       summary: {
-        amountInCents: 3725_99,
+        amountInCents: sumByValue(items),
         currency: '$',
       },
-      items: [
-        {
-          value: 43572,
-          label: '31/01/2024',
-        },
-        {
-          value: 475_99,
-          label: '01/02/2024',
-        },
-        {
-          value: 257_56,
-          label: '02/02/2024',
-        },
-        {
-          value: 956_12,
-          label: '03/02/2024',
-        },
-        {
-          value: 656_79,
-          label: '04/02/2024',
-        },
-        {
-          value: 421_42,
-          label: '05/02/2024',
-        },
-        {
-          value: 522_39,
-          label: '06/02/2024',
-        },
-      ],
+      items,
     }),
     {
       headers: {
@@ -313,41 +319,53 @@ async function getRevenueReportData() {
 
 async function getCartCountReportData() {
   await wait(Math.random() * 1_000);
+  const sumBySucceeded = sumBy('succeeded');
+  const sumByFailed = sumBy('failed');
+  const random = (limit) => Math.round(Math.random() * limit);
+  const items = [
+    {
+      succeeded: random(40),
+      failed: random(5),
+      label: '31/01/2024',
+    },
+    {
+      succeeded: random(40),
+      failed: random(5),
+      label: '01/02/2024',
+    },
+    {
+      succeeded: random(40),
+      failed: random(5),
+      label: '02/02/2024',
+    },
+    {
+      succeeded: random(40),
+      failed: random(5),
+      label: '03/02/2024',
+    },
+    {
+      succeeded: random(40),
+      failed: random(5),
+      label: '04/02/2024',
+    },
+    {
+      succeeded: random(40),
+      failed: random(5),
+      label: '05/02/2024',
+    },
+    {
+      succeeded: random(40),
+      failed: random(5),
+      label: '06/02/2024',
+    },
+  ];
   return new Response(
     JSON.stringify({
       summary: {
-        succeeded: 111,
+        succeeded: sumBySucceeded(items),
+        failed: sumByFailed(items),
       },
-      items: [
-        {
-          succeeded: 16,
-          label: '31/01/2024',
-        },
-        {
-          succeeded: 15,
-          label: '01/02/2024',
-        },
-        {
-          succeeded: 9,
-          label: '02/02/2024',
-        },
-        {
-          succeeded: 24,
-          label: '03/02/2024',
-        },
-        {
-          succeeded: 18,
-          label: '04/02/2024',
-        },
-        {
-          succeeded: 14,
-          label: '05/02/2024',
-        },
-        {
-          succeeded: 15,
-          label: '06/02/2024',
-        },
-      ],
+      items,
     }),
     {
       headers: {

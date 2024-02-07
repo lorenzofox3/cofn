@@ -11,9 +11,10 @@ export const CartCountChart =
         domain-min="0"
         aria-labelledby="cart-count-heading"
         class="skeleton"
-        >${items.map(({ label, succeeded }) => {
-          return html`${'bar-' + label}::<ui-bar value="${succeeded}"
-              >${succeeded}</ui-bar
+        >${items.map(({ label, succeeded, failed }) => {
+          return html`${'bar-' + label}::<ui-bar-stack
+              ><ui-bar value="${succeeded}">${succeeded}</ui-bar
+              ><ui-bar value="${failed}">${failed}</ui-bar></ui-bar-stack
             >`;
         })}${items.length
           ? html`<ui-category-axis

@@ -5,18 +5,15 @@ const template = createElement('template');
 template.innerHTML = `<style>
 :host {
   display: grid;
-  grid-template-areas: 
-   "bar-area"
-   "category-axis";
-  grid-template-rows: 1fr auto;
 }
 
 #bar-area {
     display: grid;
+    grid-template-rows: 1fr auto;
     grid-auto-flow: column;
+    grid-auto-columns: 1fr;
     justify-items: center;
     align-items: flex-end;
-    grid-area: bar-area;
 }
 
 ::slotted(ui-bar) {
@@ -26,19 +23,27 @@ template.innerHTML = `<style>
     overflow: hidden;
 }
 
+::slotted(ui-bar-stack) {
+  block-size: 100%;
+  inline-size: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 ::slotted(ui-category-axis){
   display: grid;
   grid-column: 1 / span var(--_bar-count);
   grid-template-columns: subgrid;
   grid-auto-flow: column;
+  grid-row: 2;
 }
 
 
 </style>
 <div id="bar-area">
   <slot name="bar-area"></slot>
-</div>
-<div id="category-axis">
   <slot name="category-axis"></slot>
 </div>
 `;
@@ -74,6 +79,8 @@ export function* UIBarChart({ $root, $host }) {
     const project = createProjection($host);
     barArea
       .assignedElements()
+      .flatMap((bar) => [bar, ...Array.from(bar.children)])
+      .filter(({ localName }) => localName === 'ui-bar')
       .forEach((bar) =>
         bar.setAttribute('size', twoDecimalOnly(project(bar.value))),
       );

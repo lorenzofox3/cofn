@@ -28,24 +28,37 @@ app-revenues-chart {
 }
 
 app-cart-count-chart {
-    --_serie-hue: 140;
-    --_serie-saturation: 100%;
-    --_serie-light: 80%;
+
+    ui-bar {
+        &:first-child {
+            --_serie-hue: 140;
+            --_serie-saturation: 100%;
+            --_serie-light: 80%;
+        }
+
+        &:nth-child(2) {
+            --_serie-hue: 10;
+            --_serie-saturation: 90%;
+            --_serie-light: 50%;
+            --serie-color: white;
+        }
+
+    }
 }
 
 ui-bar-chart {
-    --_serie-start: hsl(var(--_serie-hue), var(--_serie-saturation), var(--_serie-light));
-    --_serie-end: hsl(var(--_serie-hue), calc(var(--_serie-saturation) / 2), calc(var(--_serie-saturation) / 2));
     min-height: 350px;
     grid-area: chart;
 }
 
 
 ui-bar {
+    --_serie-start: hsl(var(--_serie-hue), var(--_serie-saturation), var(--_serie-light));
+    --_serie-end: hsl(var(--_serie-hue), calc(var(--_serie-saturation) / 2), calc(var(--_serie-saturation) / 2));
     background-image: linear-gradient(to bottom, var(--_serie-start), var(--_serie-end));
     text-align: center;
     font-size: 0.7em;
-    color: #003300;
+    color: var(--serie-color, #003300);
     border-radius: var(--border-radius) var(--border-radius) 0 0;
     box-shadow: 0 0 2px 0 hsl(var(--_serie-hue), calc(var(--_serie-saturation) / 4), calc(var(--_serie-light) / 5));
 }
@@ -55,4 +68,3 @@ ui-category-axis {
     text-align: center;
     border-top: 1px solid var(--_serie-end);
 }
-

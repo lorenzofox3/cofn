@@ -6,6 +6,7 @@ import { UIBarChart } from '../components/charts/ui-bar-chart.component.js';
 import { UICategoryAxis } from '../components/charts/ui-category-axis.component.js';
 import { withChartData } from './dashboard.controller.js';
 import { CartCountChart } from './cart-count.component.js';
+import { UIBarStack } from '../components/charts/ui-bar-stack.component.js';
 
 const template = createElement('template');
 template.innerHTML = `<h1 tabindex="-1">Weekly dashboard</h1>
@@ -27,8 +28,12 @@ template.innerHTML = `<h1 tabindex="-1">Weekly dashboard</h1>
 
 export const loadPage = ({ define }) => {
   define('ui-bar', UIBar, { observedAttributes: ['size'] });
+  define('ui-bar-stack', UIBarStack, {
+    shadow: { mode: 'open' },
+  });
   define('ui-category-axis', UICategoryAxis);
   define('ui-bar-chart', UIBarChart, {
+    observedAttributes: ['domain-min', 'domain-max'],
     shadow: {
       mode: 'open',
     },
