@@ -19,3 +19,5 @@ export const createProjection = ({ domainMin, domainMax }) =>
     greaterOrEqual(0),
     createScale({ domainMin, domainMax }),
   ]);
+
+export const twoDecimalOnly = (val) => Math.floor(val * 100) / 100;

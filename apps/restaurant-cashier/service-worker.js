@@ -137,6 +137,10 @@ self.addEventListener('fetch', (event) => {
       if (pathname === '/api/reports/revenues') {
         event.respondWith(getRevenueReportData());
       }
+
+      if (pathname === '/api/reports/cart-count') {
+        event.respondWith(getCartCountReportData());
+      }
     }
   }
 });
@@ -260,7 +264,7 @@ async function setCartItemQuantity(request) {
 }
 
 async function getRevenueReportData() {
-  await wait(1_000);
+  await wait(Math.random() * 1_000);
   return new Response(
     JSON.stringify({
       summary: {
@@ -294,6 +298,53 @@ async function getRevenueReportData() {
         },
         {
           value: 522_39,
+          label: '06/02/2024',
+        },
+      ],
+    }),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      status: 200,
+    },
+  );
+}
+
+async function getCartCountReportData() {
+  await wait(Math.random() * 1_000);
+  return new Response(
+    JSON.stringify({
+      summary: {
+        succeeded: 111,
+      },
+      items: [
+        {
+          succeeded: 16,
+          label: '31/01/2024',
+        },
+        {
+          succeeded: 15,
+          label: '01/02/2024',
+        },
+        {
+          succeeded: 9,
+          label: '02/02/2024',
+        },
+        {
+          succeeded: 24,
+          label: '03/02/2024',
+        },
+        {
+          succeeded: 18,
+          label: '04/02/2024',
+        },
+        {
+          succeeded: 14,
+          label: '05/02/2024',
+        },
+        {
+          succeeded: 15,
           label: '06/02/2024',
         },
       ],

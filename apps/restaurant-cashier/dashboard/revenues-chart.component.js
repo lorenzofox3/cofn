@@ -1,9 +1,7 @@
-import { http } from '../utils/http.js';
 import { createProjection } from '../components/charts/util.js';
-import { compose } from '../utils/functions.js';
 
 const twoDecimalOnly = (val) => Math.floor(val * 100) / 100;
-const model = ({ items, summary }) => {
+const model = ({ items = [], summary = {} } = {}) => {
   return {
     summary: {
       amount: summary.amountInCents / 100,
@@ -15,34 +13,27 @@ const model = ({ items, summary }) => {
     })),
   };
 };
-export const withRevenueData = (comp) => {
-  return function* ({ $host, $signal, ...rest }) {
-    http('reports/revenues', { signal: $signal }).then(
-      compose([$host.render, model]),
-    );
-    yield* comp({ $host, $signal, ...rest });
-  };
-};
-
 const project = createProjection({
   domainMin: 0,
-  domainMax: 1_000,
+  domainMax: 953,
 });
 
 const formatLabel = (label) => label.split('/').slice(0, 2).join('/');
 
 export const RevenuesChart =
   ({ html }) =>
-  ({ items = [], summary = {} } = {}) => {
-    return html`<h2>Revenues</h2>
+  (data) => {
+    const { items = [], summary = {} } = model(data);
+    return html`<h2 id="revenues-heading">Revenues</h2>
       <strong
         >${summary.amount ? summary.amount + summary.currency : ''}</strong
       >
-      <ui-bar-chart class="skeleton"
+      <ui-bar-chart
+        domain-min="0"
+        aria-labelledby="revenues-heading"
+        class="skeleton"
         >${items.map(({ label, amount }, i) => {
-          return html`${'bar-' + label}::<ui-bar
-              size="${twoDecimalOnly(project(amount))}"
-              class="boxed"
+          return html`${'bar-' + label}::<ui-bar value="${amount}"
               >${amount + '$'}</ui-bar
             >`;
         })}${items.length
