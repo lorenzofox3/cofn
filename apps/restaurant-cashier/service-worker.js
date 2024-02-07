@@ -132,6 +132,12 @@ self.addEventListener('fetch', (event) => {
         event.respondWith(setCartItemQuantity(request));
       }
     }
+
+    if (pathname.startsWith('/api/reports')) {
+      if (pathname === '/api/reports/revenues') {
+        event.respondWith(getRevenueReportData());
+      }
+    }
   }
 });
 
@@ -222,7 +228,6 @@ async function deleteProduct({ sku }) {
   return new Response(null, { status: 204 });
 }
 
-// this makes a snapshot of the product at the moment, if product's price changes while the cart is open, the cart won't be affected unless quantity is modified
 async function setCartItemQuantity(request) {
   const _request = await request.clone();
   const cartItem = await _request.json();
@@ -254,6 +259,54 @@ async function setCartItemQuantity(request) {
   });
 }
 
+async function getRevenueReportData() {
+  await wait(1_000);
+  return new Response(
+    JSON.stringify({
+      summary: {
+        amountInCents: 3725_99,
+        currency: '$',
+      },
+      items: [
+        {
+          value: 43572,
+          label: '31/01/2024',
+        },
+        {
+          value: 475_99,
+          label: '01/02/2024',
+        },
+        {
+          value: 257_56,
+          label: '02/02/2024',
+        },
+        {
+          value: 956_12,
+          label: '03/02/2024',
+        },
+        {
+          value: 656_79,
+          label: '04/02/2024',
+        },
+        {
+          value: 421_42,
+          label: '05/02/2024',
+        },
+        {
+          value: 522_39,
+          label: '06/02/2024',
+        },
+      ],
+    }),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      status: 200,
+    },
+  );
+}
+
 const getCartTotal = () =>
   Object.entries(currentCart.items).reduce(
     (total, [sku, { quantity }]) =>
@@ -268,3 +321,6 @@ const normalizeCartItems = ({ items }) => {
       .map(([sku, item]) => [sku, item]),
   );
 };
+
+const wait = (time = 200) =>
+  new Promise((resolve) => setTimeout(resolve, time));

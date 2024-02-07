@@ -1,0 +1,49 @@
+#dashboard {
+    --_spacing: 0.5em;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: var(--_spacing);
+}
+
+.data-viz {
+    gap: var(--_spacing);
+    padding: var(--_spacing);
+    display: grid;
+    grid-template-areas:
+            "heading total"
+            "chart chart";
+    grid-template-columns: 1fr minmax(4em, max-content);
+
+    h2 {
+        margin: 0;
+        font-size: 1em;
+    }
+}
+
+app-revenues-chart {
+    --_serie-hue: 215;
+    --_serie-saturation: 100%;
+    --_serie-light: 80%;
+}
+
+ui-bar-chart {
+    --_serie-start: hsl(var(--_serie-hue), var(--_serie-saturation), var(--_serie-light));
+    --_serie-end: hsl(var(--_serie-hue), calc(var(--_serie-saturation) / 2), calc(var(--_serie-saturation) / 2));
+    min-height: 350px;
+    grid-area: chart;
+
+}
+
+
+ui-bar {
+    background-image: linear-gradient(to bottom, var(--_serie-start), var(--_serie-end));
+    text-align: center;
+    font-size: 0.6em;
+    color: #003300;
+}
+
+ui-category-axis {
+    font-size: 0.6em;
+    text-align: center;
+}
+
