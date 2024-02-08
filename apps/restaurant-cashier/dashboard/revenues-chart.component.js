@@ -17,16 +17,14 @@ export const RevenuesChart =
   (data) => {
     const { items = [], summary = {} } = model(data);
     return html`<h2 id="revenues-heading">Revenues</h2>
-      <strong
-        >${summary.amount ? summary.amount + summary.currency : ''}</strong
-      >
+      <span>${summary.amount ? summary.amount + summary.currency : ''}</span>
       <ui-bar-chart
         domain-min="0"
         aria-labelledby="revenues-heading"
         class="skeleton"
         >${items.map(({ label, amount }, i) => {
           return html`${'bar-' + label}::<ui-bar value="${amount}"
-              >${amount + '$'}</ui-bar
+              ><span>${amount + '$'}</span></ui-bar
             >`;
         })}${items.length
           ? html`<ui-category-axis

@@ -51,6 +51,15 @@ let fakeProducts = {
       currency: '$',
     },
   },
+  tst: {
+    sku: 'tst',
+    title: 'other item',
+    description: 'some other item',
+    price: {
+      amountInCents: 499,
+      currency: '$',
+    },
+  },
 };
 
 const currentCart = {
@@ -143,6 +152,10 @@ self.addEventListener('fetch', (event) => {
 
       if (pathname === '/api/reports/cart-count') {
         event.respondWith(getCartCountReportData());
+      }
+
+      if (pathname === '/api/reports/top-items') {
+        event.respondWith(getTopItems());
       }
     }
   }
@@ -306,6 +319,29 @@ async function getRevenueReportData() {
         amountInCents: sumByValue(items),
         currency: '$',
       },
+      items,
+    }),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      status: 200,
+    },
+  );
+}
+
+async function getTopItems() {
+  await wait(Math.random() * 1_000);
+  const random = (limit) => Math.round(Math.random() * limit);
+  const items = Object.values(fakeProducts)
+    .slice(0, 5)
+    .map(({ sku }) => ({
+      sku,
+      count: random(200),
+    }))
+    .sort((a, b) => b.count - a.count);
+  return new Response(
+    JSON.stringify({
       items,
     }),
     {

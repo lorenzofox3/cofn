@@ -1,7 +1,7 @@
 .content-grid {
-    --_narrow-max-width: var(--narrow-max-width, 65ch);
+    --_narrow-max-width: var(--narrow-max-width, 60ch);
     --_padding-inline: var(--spacing-big, 1rem);
-    --_wide-max-width: var(--max-width, 80ch);
+    --_wide-max-width: var(--max-width, 75ch);
     --_wide-size: calc((var(--_wide-max-width) - var(--_narrow-max-width)) / 2);
 
     display: grid;

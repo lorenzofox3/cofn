@@ -1,23 +1,28 @@
 #dashboard {
-    --_spacing: 0.5em;
+    --_spacing: 0.6em;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(500px, 100%), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(540px, 100%), 1fr));
     gap: var(--_spacing);
 }
 
 .data-viz {
-    gap: var(--_spacing);
+    gap: calc(var(--_spacing) * 3) var(--_spacing);
     padding: var(--_spacing);
     display: grid;
     grid-template-areas:
             "heading total"
             "chart chart";
     grid-template-columns: 1fr minmax(4em, max-content);
+    align-items: center;
     background-image: linear-gradient(to bottom, var(--surface-bg), transparent 60%, var(--surface-bg));
 
     h2 {
         margin: 0;
         font-size: 1em;
+    }
+
+    > :nth-child(2) {
+        font-size: 0.95em;
     }
 }
 
@@ -27,8 +32,13 @@ app-revenues-chart {
     --_serie-light: 80%;
 }
 
-app-cart-count-chart {
+app-top-items-chart {
+    --_serie-hue: 360;
+    --_serie-saturation: 90%;
+    --_serie-light: 70%;
+}
 
+app-cart-count-chart {
     ui-bar {
         &:first-child {
             --_serie-hue: 140;
@@ -51,6 +61,26 @@ ui-bar-chart {
     grid-area: chart;
 }
 
+ui-bar-chart[orientation=horizontal] {
+
+    ui-category-axis > * {
+        display: grid;
+        place-items: center;
+        writing-mode: horizontal-tb;
+        padding-inline-end: 0.5em;
+    }
+
+    ui-bar {
+        border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        background-image: linear-gradient(to left, var(--_serie-start), var(--_serie-end));
+
+        > * {
+            padding-inline-end: 0.5em;
+            writing-mode: horizontal-tb;
+        }
+    }
+}
+
 
 ui-bar {
     --_serie-start: hsl(var(--_serie-hue), var(--_serie-saturation), var(--_serie-light));
@@ -66,5 +96,5 @@ ui-bar {
 ui-category-axis {
     font-size: 0.6em;
     text-align: center;
-    border-top: 1px solid var(--_serie-end);
+    border-block-start: 1px solid #abaebb;
 }

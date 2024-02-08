@@ -7,6 +7,10 @@ template.innerHTML = `<style>
   display: grid;
 }
 
+:host([orientation=horizontal]) {
+  writing-mode: vertical-rl;
+}
+
 #bar-area {
     display: grid;
     grid-template-rows: 1fr auto;
@@ -33,11 +37,11 @@ template.innerHTML = `<style>
 }
 
 ::slotted(ui-category-axis){
-  display: grid;
   grid-column: 1 / span var(--_bar-count);
+  grid-row: 2;
+  display: grid;
   grid-template-columns: subgrid;
   grid-auto-flow: column;
-  grid-row: 2;
 }
 
 
