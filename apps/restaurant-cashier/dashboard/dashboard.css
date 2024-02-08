@@ -22,7 +22,7 @@
     }
 
     > :nth-child(2) {
-        font-size: 0.95em;
+        font-size: 0.9em;
     }
 }
 
@@ -63,13 +63,6 @@ ui-bar-chart {
 
 ui-bar-chart[orientation=horizontal] {
 
-    ui-category-axis > * {
-        display: grid;
-        place-items: center;
-        writing-mode: horizontal-tb;
-        padding-inline-end: 0.5em;
-    }
-
     ui-bar {
         border-radius: 0 var(--border-radius) var(--border-radius) 0;
         background-image: linear-gradient(to left, var(--_serie-start), var(--_serie-end));
@@ -78,6 +71,10 @@ ui-bar-chart[orientation=horizontal] {
             padding-inline-end: 0.5em;
             writing-mode: horizontal-tb;
         }
+    }
+
+    [slot=category]{
+        padding-inline-end: 0.5em;
     }
 }
 
@@ -91,9 +88,10 @@ ui-bar {
     color: var(--serie-color, #003300);
     border-radius: var(--border-radius) var(--border-radius) 0 0;
     box-shadow: 0 0 2px 0 hsl(var(--_serie-hue), calc(var(--_serie-saturation) / 4), calc(var(--_serie-light) / 5));
+    overflow: hidden;
 }
 
-ui-category-axis {
+::part(category-axis) {
     font-size: 0.6em;
     text-align: center;
     border-block-start: 1px solid #abaebb;

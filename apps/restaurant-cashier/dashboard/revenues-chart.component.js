@@ -27,12 +27,12 @@ export const RevenuesChart =
               ><span>${amount + '$'}</span></ui-bar
             >`;
         })}${items.length
-          ? html`<ui-category-axis
-              >${items.map(
-                ({ label }) =>
-                  html`${'label-' + label}::<span>${formatLabel(label)}</span>`,
-              )}</ui-category-axis
-            >`
+          ? html`${items.map(
+              ({ label }) =>
+                html`${'label-' + label}::<span slot="category"
+                    >${formatLabel(label)}</span
+                  >`,
+            )}`
           : null}</ui-bar-chart
       >`;
   };

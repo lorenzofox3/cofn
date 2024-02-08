@@ -20,23 +20,7 @@ template.innerHTML = `<style>
     align-items: flex-end;
 }
 
-::slotted(ui-bar) {
-    block-size: var(--bar-size, 0%);
-    inline-size: min(75%, 70px);
-    transition: block-size var(--animation-duration);
-    overflow: hidden;
-}
-
-::slotted(ui-bar-stack) {
-  block-size: 100%;
-  inline-size: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-::slotted(ui-category-axis){
+#category-axis {
   grid-column: 1 / span var(--_bar-count);
   grid-row: 2;
   display: grid;
@@ -44,17 +28,32 @@ template.innerHTML = `<style>
   grid-auto-flow: column;
 }
 
+::slotted(ui-bar) {
+    block-size: var(--bar-size, 0%);
+    inline-size: min(75%, 70px);
+    transition: block-size var(--animation-duration);
+    background: #426cb3;
+}
+
+::slotted([slot=category]) { 
+      display: grid;
+      place-items: center;
+      writing-mode: horizontal-tb;
+}
 
 </style>
-<div id="bar-area">
+<div id="bar-area" part="bar-area">
   <slot name="bar-area"></slot>
-  <slot name="category-axis"></slot>
+  <div id="category-axis" part="category-axis">
+    <slot name="category"></slot>
+  </div>
 </div>
 `;
 
 export function* UIBarChart({ $root, $host }) {
   $root.appendChild(template.content.cloneNode(true));
   const barArea = $root.querySelector('[name=bar-area]');
+  const getValues = () => barArea.assignedElements().map(({ value }) => value);
 
   Object.defineProperties($host, {
     domainMin: {
@@ -62,7 +61,7 @@ export function* UIBarChart({ $root, $host }) {
       get() {
         return $host.hasAttribute('domain-min')
           ? Number($host.getAttribute('domain-min'))
-          : Math.min(...barArea.assignedElements().map(({ value }) => value));
+          : Math.min(...getValues());
       },
     },
     domainMax: {
@@ -70,7 +69,7 @@ export function* UIBarChart({ $root, $host }) {
       get() {
         return $host.hasAttribute('domain-max')
           ? Number($host.getAttribute('domain-max'))
-          : Math.max(...barArea.assignedElements().map(({ value }) => value));
+          : Math.max(...getValues());
       },
     },
   });

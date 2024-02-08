@@ -12,11 +12,10 @@ export const TopItemsChart =
               ><span>${count}</span></ui-bar
             >`;
         })}${items.length
-          ? html`<ui-category-axis
-              >${items.map(
-                ({ sku }) => html`${'label-' + sku}::<span>${sku}</span>`,
-              )}</ui-category-axis
-            >`
+          ? html`${items.map(
+              ({ sku }) =>
+                html`${'label-' + sku}::<span slot="category">${sku}</span>`,
+            )}`
           : null}</ui-bar-chart
       >`;
   };
