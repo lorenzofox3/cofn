@@ -38,6 +38,11 @@ app-top-items-revenue-chart {
 
 app-cart-count-chart {
 
+    ui-bar-group:not([stack]) {
+        border-inline: 1px dashed lightgray;
+        padding-inline: 10px;
+    }
+
     .legend {
 
         > * {

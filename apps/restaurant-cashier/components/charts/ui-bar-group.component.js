@@ -6,12 +6,20 @@ template.innerHTML = `
   :host {
       block-size: 100%;
       inline-size: 100%;
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+      align-items: end;
+      justify-items: center;
+  }
+  
+  :host([stack]) {
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       align-items: center;
-  }
-
+}
+  
   ::slotted(ui-bar) {
       block-size: var(--bar-size, 0%);
       inline-size: min(75%, 80px);
@@ -22,7 +30,7 @@ template.innerHTML = `
 <slot name="bar-area"></slot>
 `;
 
-export function* UIBarStack({ $host, $root }) {
+export function* UIBarGroup({ $host, $root }) {
   $host.setAttribute('slot', 'bar-area');
   $root.appendChild(template.content.cloneNode(true));
   const slot = $root.querySelector('[name=bar-area]');
@@ -30,9 +38,10 @@ export function* UIBarStack({ $host, $root }) {
     value: {
       enumerable: true,
       get() {
-        return slot
-          .assignedElements()
-          .reduce((total, { value }) => total + value, 0);
+        const assignedBars = slot.assignedElements();
+        return $host.hasAttribute('stack')
+          ? assignedBars.reduce((total, { value }) => total + value, 0)
+          : Math.max(...assignedBars.map(({ value }) => value));
       },
     },
   });

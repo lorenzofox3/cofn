@@ -15,11 +15,11 @@ export const CartCountChart =
         aria-labelledby="cart-count-heading"
         class="skeleton"
         >${items.map(({ label, succeeded, failed }) => {
-          return html`${'bar-' + label}::<ui-bar-stack
+          return html`${'bar-' + label}::<ui-bar-group
               ><ui-bar value="${succeeded}"><span>${succeeded}</span></ui-bar
               ><ui-bar value="${failed}"
                 ><span>${failed}</span></ui-bar
-              ></ui-bar-stack
+              ></ui-bar-group
             >`;
         })}${items.length
           ? html`${items.map(

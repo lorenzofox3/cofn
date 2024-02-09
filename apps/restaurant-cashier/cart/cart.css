@@ -7,12 +7,15 @@
 
 app-cart {
     --_spacing: var(--spacing-small);
+
     position: sticky;
     top: 1em;
+    z-index: 99;
+
     padding: var(--_spacing);
     min-width: min(25em, 100%);
-    flex-grow: 1;
     min-height: 12em;
+    flex-grow: 1;
 
     display: flex;
     flex-direction: column;
@@ -64,32 +67,33 @@ app-cart {
 
 app-cart-product-list {
     flex-grow: 3;
-}
 
-#available-products-listbox {
-    --_min-item-size:200px;
-    list-style: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(var(--_min-item-size), 1fr));
-    gap: var(--spacing-big);
+    #available-products-listbox {
+        --_min-item-size:200px;
+        list-style: none;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(var(--_min-item-size), 1fr));
+        gap: var(--spacing-big);
 
-    [role=option] {
-        display: flex;
-        flex-direction: column;
-        cursor: pointer;
-        outline: none;
+        [role=option] {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            outline: none;
 
-        &[aria-selected=true] .adorner {
-            --_mark-scale: 1;
-        }
+            &[aria-selected=true] .adorner {
+                --_mark-scale: 1;
+            }
 
-        &:where(:hover, :focus-visible) .adorner {
-            --_accent-color: var(--shadow-color);
-            --_mark-offset: 4px;
+            &:where(:hover, :focus-visible) .adorner {
+                --_accent-color: var(--shadow-color);
+                --_mark-offset: 4px;
+            }
         }
     }
 }
+
 
 .adorner {
     --_color: currentColor;
@@ -97,6 +101,7 @@ app-cart-product-list {
     --_mark-scale: 0;
     --_mark-size: 2.2em;
     --_mark-offset: 0;
+
     position: relative;
     isolation: isolate;
     display: grid;
@@ -129,13 +134,11 @@ app-cart-product-list {
 
 app-cart-product-item {
     font-size: 0.8em;
-    flex-grow: 1;
     display: grid;
     grid-template-rows: auto minmax(3em, 1fr) auto;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-
 
     > * {
         padding: var(--spacing-small);

@@ -76,13 +76,28 @@ export function* UIBarChart({ $root, $host }) {
   barArea.addEventListener('slotchange', $host.render);
 
   while (true) {
-    yield;
-    $host.style.setProperty('--_bar-count', barArea.assignedElements().length);
-    const project = createProjection($host);
-    barArea
-      .assignedElements()
+    const { attributes } = yield;
+    const barsOrGroups = barArea.assignedElements();
+
+    $host.style.setProperty('--_bar-count', barsOrGroups.length);
+
+    const groups = barsOrGroups.filter(is('ui-bar-group'));
+
+    const bars = barsOrGroups
       .flatMap((bar) => [bar, ...Array.from(bar.children)])
-      .filter(({ localName }) => localName === 'ui-bar')
-      .forEach((bar) => bar.setAttribute('size', round(project(bar.value))));
+      .filter(is('ui-bar'));
+
+    groups.forEach((bar) =>
+      bar.toggleAttribute('stack', attributes.stack !== undefined),
+    );
+
+    const project = createProjection($host);
+
+    bars.forEach((bar) => bar.setAttribute('size', round(project(bar.value))));
   }
 }
+
+const is =
+  (expectedLocalName) =>
+  ({ localName }) =>
+    localName === expectedLocalName;
