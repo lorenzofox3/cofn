@@ -1,11 +1,11 @@
 import { createElement } from '../../utils/dom.js';
-import { createProjection, twoDecimalOnly } from './util.js';
+import { createProjection, round } from './util.js';
 
 const template = createElement('template');
 template.innerHTML = `<style>
 :host {
   display: grid;
-  --min-inline-size: 80px;
+  --min-inline-size: 70px;
 }
 
 :host([orientation=horizontal]) {
@@ -27,7 +27,6 @@ template.innerHTML = `<style>
   grid-row: 2;
   display: grid;
   grid-template-columns: subgrid;
-  grid-auto-flow: column;
 }
 
 ::slotted(ui-bar) {
@@ -84,8 +83,6 @@ export function* UIBarChart({ $root, $host }) {
       .assignedElements()
       .flatMap((bar) => [bar, ...Array.from(bar.children)])
       .filter(({ localName }) => localName === 'ui-bar')
-      .forEach((bar) =>
-        bar.setAttribute('size', twoDecimalOnly(project(bar.value))),
-      );
+      .forEach((bar) => bar.setAttribute('size', round(project(bar.value))));
   }
 }

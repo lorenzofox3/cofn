@@ -9,7 +9,7 @@ const greaterOrEqual = (min) => (value) => Math.max(min, value);
 
 const lowerOrEqual = (max) => (value) => Math.min(max, value);
 
-const asPercentage = (val) => Math.floor(val * 10000) / 100; // two significative decimals
+const asPercentage = (val) => Math.floor(val * 10000) / 100;
 
 export const createProjection = ({ domainMin, domainMax }) =>
   compose([
@@ -20,4 +20,4 @@ export const createProjection = ({ domainMin, domainMax }) =>
     createScale({ domainMin, domainMax }),
   ]);
 
-export const twoDecimalOnly = (val) => Math.floor(val * 100) / 100;
+export const round = (val) => Math.floor(val * 10_000) / 10_000;

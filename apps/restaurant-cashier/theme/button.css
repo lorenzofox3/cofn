@@ -3,7 +3,9 @@ a.button-like {
     color: currentColor;
 }
 
-button, .button-like, ::part(button) {
+button,
+.button-like,
+::part(button) {
     --_padding: var(--padding, 0.4em);
     --_shadow-color: var(--shadow-color, currentColor);
     font-size: 0.9em;
@@ -18,6 +20,7 @@ button, .button-like, ::part(button) {
     font-family: inherit;
     color: inherit;
     border-radius: var(--border-radius);
+    outline-offset: 4px;
 
     &.action {
         background: var(--action-color);
