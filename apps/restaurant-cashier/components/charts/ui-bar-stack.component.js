@@ -14,7 +14,7 @@ template.innerHTML = `
 
   ::slotted(ui-bar) {
       block-size: var(--bar-size, 0%);
-      inline-size: min(75%, 70px);
+      inline-size: min(75%, 80px);
       transition: block-size var(--animation-duration);
       background: #426cb3;
   }

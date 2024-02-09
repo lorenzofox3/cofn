@@ -1,15 +1,15 @@
-export const TopItemsChart =
+export const TopItemsRevenueChart =
   ({ html }) =>
   ({ items = [], summary = {} } = {}) => {
-    return html`<h2 id="top-items-heading">Top items - counts</h2>
+    return html`<h2 id="top-item-revenue-heading">Top items - revenue</h2>
       <ui-bar-chart
         orientation="horizontal"
         domain-min="0"
-        aria-labelledby="top-items-heading"
+        aria-labelledby="top-item-revenue-heading"
         class="skeleton"
         >${items.map(({ label, value }) => {
           return html`${'bar-' + label}::<ui-bar value="${value}"
-              ><span>${value}</span></ui-bar
+              ><span>${value / 100}$</span></ui-bar
             >`;
         })}${items.length
           ? html`${items.map(

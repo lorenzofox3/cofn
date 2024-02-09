@@ -157,6 +157,10 @@ self.addEventListener('fetch', (event) => {
       if (pathname === '/api/reports/top-items') {
         event.respondWith(getTopItems());
       }
+
+      if (pathname === '/api/reports/top-items-revenue') {
+        event.respondWith(getTopItemsByRevenue());
+      }
     }
   }
 });
@@ -336,10 +340,33 @@ async function getTopItems() {
   const items = Object.values(fakeProducts)
     .slice(0, 5)
     .map(({ sku }) => ({
-      sku,
-      count: random(200),
+      label: sku,
+      value: random(200),
     }))
-    .sort((a, b) => b.count - a.count);
+    .sort((a, b) => b.value - a.value);
+  return new Response(
+    JSON.stringify({
+      items,
+    }),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      status: 200,
+    },
+  );
+}
+
+async function getTopItemsByRevenue() {
+  await wait(Math.random() * 1_000);
+  const random = (limit) => Math.round(Math.random() * limit);
+  const items = Object.values(fakeProducts)
+    .slice(0, 5)
+    .map(({ sku }) => ({
+      label: sku,
+      value: random(2_000_00),
+    }))
+    .sort((a, b) => b.value - a.value);
   return new Response(
     JSON.stringify({
       items,

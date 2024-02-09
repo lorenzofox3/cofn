@@ -10,12 +10,12 @@
 :root {
     font-family: system-ui, Avenir, sans-serif;
     --font-color: #3b3b3b;
-    --font-color-lighter: #4f4f4f;
+    --font-color-lighter: #5e5e5e;
     --surface-bg: white;
     --app-bg: #f1f1f8;
     --spacing-big: 0.75em;
     --spacing-small: 0.5em;
-    --action-color: #426cb3;
+    --action-color: hsl(218, 46%, 48%);
     --action-color-contrast: white;
     --control-focus-color: #e9f6ff;
     --danger-color: orangered;
@@ -23,11 +23,12 @@
     --animation-duration: 0.3s;
     --border-radius: 3px;
     --form-border-color: #afafaf;
-    --max-width: 85ch
+    --max-width: 85ch;
+    --tooltip-bg: #0b285d;
+    --tooltip-bg-font: #ebebec;
 }
 
 body {
-    box-sizing: border-box;
     color: var(--font-color);
     min-height: 100svh;
     font-size: clamp(1.3rem, 0.5vw + 1rem, 1.4rem);
@@ -52,10 +53,6 @@ body {
 
     &.motion-reduced {
         --animation-duration: 0;
-    }
-
-    * {
-        box-sizing: inherit;
     }
 }
 
@@ -198,7 +195,7 @@ HEADER
         flex-wrap: wrap;
         padding: 0;
         margin: 0;
-        gap: 0.5em;
+        gap: 0.6em;
     }
 
     li:last-child {
@@ -222,7 +219,7 @@ HEADER
         transition: border-bottom-color var(--animation-duration);
 
         > span:last-child {
-            font-size: 0.7em;
+            font-size: 0.75em;
         }
 
         > ui-icon:first-child {

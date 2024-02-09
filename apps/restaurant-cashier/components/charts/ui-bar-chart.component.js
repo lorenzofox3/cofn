@@ -5,10 +5,12 @@ const template = createElement('template');
 template.innerHTML = `<style>
 :host {
   display: grid;
+  --min-inline-size: 80px;
 }
 
 :host([orientation=horizontal]) {
   writing-mode: vertical-rl;
+  --min-inline-size: 4em;
 }
 
 #bar-area {
@@ -30,7 +32,7 @@ template.innerHTML = `<style>
 
 ::slotted(ui-bar) {
     block-size: var(--bar-size, 0%);
-    inline-size: min(75%, 70px);
+    inline-size: min(75%, var(--min-inline-size));
     transition: block-size var(--animation-duration);
     background: #426cb3;
 }
@@ -44,9 +46,7 @@ template.innerHTML = `<style>
 </style>
 <div id="bar-area" part="bar-area">
   <slot name="bar-area"></slot>
-  <div id="category-axis" part="category-axis">
-    <slot name="category"></slot>
-  </div>
+  <div id="category-axis" part="category-axis"><slot name="category"></slot></div>
 </div>
 `;
 

@@ -112,7 +112,7 @@ export const createApp = ({ router }) => {
       usePageLoader({ pagePath: '/cart/cart.page.js' }),
     ])
     .notFound(() => {
-      router.redirect('/products');
+      router.redirect('/dashboard');
     });
 
   return {
