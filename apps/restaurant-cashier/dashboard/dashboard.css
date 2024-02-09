@@ -60,6 +60,8 @@ app-cart-count-chart {
         --_serie-saturation: 56%;
         --_serie-light: 58%;
         --_horizontal-shift: -35cqw;
+
+        /*transform: translateY(1px); !* to deal with chrome sub pixel issue *!*/
     }
 
     :where(ui-bar, .legend > *):nth-child(2) {
@@ -118,7 +120,13 @@ ui-bar-chart {
         justify-content: center;
         align-items: baseline;
         --_horizontal-shift: 0;
+
+        &:not([value='0']){
+            box-shadow: 0 0 0 1px var(--_serie-end);
+        }
     }
+
+
 }
 
 @container bar (width < 5ch) or (height < 2em) {
@@ -152,6 +160,5 @@ ui-bar-chart {
         display: inline-block;
         transform: translate(125%, 0);
         clip-path: polygon(0 50%, var(--_arrow-size) 0,100% 0, 100% 100%, var(--_arrow-size) 100%);
-
     }
 }
