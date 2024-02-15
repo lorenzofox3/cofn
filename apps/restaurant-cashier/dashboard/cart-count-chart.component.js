@@ -10,17 +10,19 @@ export const CartCountChart =
               <div>fails: ${summary.failed}</div>`
           : null}
       </div>
-      <ui-bar-chart
+      <bpapa-bar-chart
         domain-min="0"
         aria-labelledby="cart-count-heading"
         class="skeleton"
+        stack
         >${items.map(({ label, succeeded, failed }) => {
-          return html`${'bar-' + label}::<ui-bar-group
-              ><ui-bar value="${succeeded}"><span>${succeeded}</span></ui-bar
-              ><ui-bar value="${failed}"
-                ><span>${failed}</span></ui-bar
-              ></ui-bar-group
-            >`;
+          return html`${'bar-' + label}::
+            <bpapa-bar-group>
+              <bpapa-bar value="${succeeded}"
+                ><span>${succeeded}</span></bpapa-bar
+              >
+              <bpapa-bar value="${failed}"><span>${failed}</span></bpapa-bar>
+            </bpapa-bar-group>`;
         })}${items.length
           ? html`${items.map(
               ({ label }) =>
@@ -28,6 +30,6 @@ export const CartCountChart =
                     >${formatLabel(label)}</span
                   >`,
             )}`
-          : null}</ui-bar-chart
+          : null}</bpapa-bar-chart
       >`;
   };

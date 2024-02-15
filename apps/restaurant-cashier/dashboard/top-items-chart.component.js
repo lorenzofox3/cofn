@@ -2,14 +2,14 @@ export const TopItemsChart =
   ({ html }) =>
   ({ items = [], summary = {} } = {}) => {
     return html`<h2 id="top-items-heading">Top items - counts</h2>
-      <ui-bar-chart
-        orientation="horizontal"
+      <bpapa-bar-chart
+        horizontal
         domain-min="0"
         aria-labelledby="top-items-heading"
         class="skeleton"
         >${items.map(({ label, value }) => {
-          return html`${'bar-' + label}::<ui-bar value="${value}"
-              ><span>${value}</span></ui-bar
+          return html`${'bar-' + label}::<bpapa-bar value="${value}"
+              ><span>${value}</span></bpapa-bar
             >`;
         })}${items.length
           ? html`${items.map(
@@ -18,6 +18,6 @@ export const TopItemsChart =
                     >${label}</span
                   >`,
             )}`
-          : null}</ui-bar-chart
+          : null}</bpapa-bar-chart
       >`;
   };

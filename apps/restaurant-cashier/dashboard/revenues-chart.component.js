@@ -18,21 +18,23 @@ export const RevenuesChart =
     const { items = [], summary = {} } = model(data);
     return html`<h2 id="revenues-heading">Revenue</h2>
       <span>${summary.amount ? summary.amount + summary.currency : ''}</span>
-      <ui-bar-chart
+      <bpapa-bar-chart
         domain-min="0"
         aria-labelledby="revenues-heading"
         class="skeleton"
         >${items.map(({ label, amount }, i) => {
-          return html`${'bar-' + label}::<ui-bar value="${amount}"
-              ><span>${amount + '$'}</span></ui-bar
+          return html`${'bar-' + label}::<bpapa-bar value="${amount}"
+              ><span>${amount + '$'}</span></bpapa-bar
             >`;
-        })}${items.length
-          ? html`${items.map(
-              ({ label }) =>
-                html`${'label-' + label}::<span slot="category"
-                    >${formatLabel(label)}</span
-                  >`,
-            )}`
-          : null}</ui-bar-chart
+        })}${
+          items.length
+            ? html`${items.map(
+                ({ label }) =>
+                  html`${'label-' + label}::<span slot="category"
+                      >${formatLabel(label)}</span
+                    >`,
+              )}`
+            : null
+        }</-bar-chart
       >`;
   };

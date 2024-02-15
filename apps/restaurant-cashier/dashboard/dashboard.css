@@ -16,7 +16,6 @@
     gap: calc(var(--_spacing) * 2) var(--_spacing);
     background-image: linear-gradient(to bottom, var(--surface-bg), transparent 60%, var(--surface-bg));
 
-
     h2 {
         margin: 0;
         font-size: 1em;
@@ -37,12 +36,6 @@ app-top-items-revenue-chart {
 }
 
 app-cart-count-chart {
-
-    ui-bar-group:not([stack]) {
-        border-inline: 1px dashed lightgray;
-        padding-inline: 10px;
-    }
-
     .legend {
 
         > * {
@@ -60,16 +53,14 @@ app-cart-count-chart {
         }
     }
 
-    :where(ui-bar, .legend > *):first-child {
+    :where(bpapa-bar, .legend > *):first-child {
         --_serie-hue: 218;
         --_serie-saturation: 56%;
         --_serie-light: 58%;
         --_horizontal-shift: -35cqw;
-
-        /*transform: translateY(1px); !* to deal with chrome sub pixel issue *!*/
     }
 
-    :where(ui-bar, .legend > *):nth-child(2) {
+    :where(bpapa-bar, .legend > *):nth-child(2) {
         --_serie-hue: 5;
         --_serie-saturation: 80%;
         --_serie-light: 50%;
@@ -79,13 +70,13 @@ app-cart-count-chart {
 
 }
 
-ui-bar-chart {
+bpapa-bar-chart {
     min-height: 350px;
     grid-area: chart;
 
-    &[orientation=horizontal] {
+    &[horizontal] {
 
-        ui-bar {
+        bpapa-bar {
             container: horizontal-bar / size;
             border-radius: 0 var(--border-radius) var(--border-radius) 0;
             background-image: linear-gradient(to left, var(--_serie-start), var(--_serie-end));
@@ -106,17 +97,18 @@ ui-bar-chart {
     }
 
     &::part(category-axis) {
-        font-size: 0.6em;
+        font-size: 0.7em;
         text-align: center;
         border-block-start: 1px solid var(--_axis-color, #abaebb);
     }
 
-    ui-bar {
+    bpapa-bar {
         --_serie-start: hsl(var(--_serie-hue), var(--_serie-saturation), var(--_serie-light));
         --_serie-end: hsl(var(--_serie-hue), calc(var(--_serie-saturation) / 1.1), calc(var(--_serie-saturation) / 1.3));
+
         background-image: linear-gradient(to bottom, var(--_serie-start), var(--_serie-end));
         text-align: center;
-        font-size: 0.65em;
+        font-size: 0.7em;
         font-weight: bold;
         color: var(--serie-color, #efefef);
         border-radius: var(--border-radius) var(--border-radius) 0 0;
