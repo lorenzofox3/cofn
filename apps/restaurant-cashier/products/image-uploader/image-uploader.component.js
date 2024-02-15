@@ -81,15 +81,11 @@ export const ImageUploader = function* ({ $host, $root, $signal: signal }) {
   window.addEventListener('dragover', handleDragOver, { signal });
   $host.addEventListener('click', () => input.click());
   $host.addEventListener('drop', handleDrop);
-  input.addEventListener(
-    'change',
-    () => {
-      const { files } = input;
-      const file = files.item(0);
-      handleFileChange(file);
-    },
-    { signal },
-  );
+  input.addEventListener('change', () => {
+    const { files } = input;
+    const file = files.item(0);
+    handleFileChange(file);
+  });
 
   while (true) {
     const { attributes } = yield;

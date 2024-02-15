@@ -97,7 +97,7 @@ export const createApp = ({ router }) => {
       usePageLoader({ pagePath: '/users/me.page.js' }),
     ])
     .addRoute({ pattern: 'dashboard' }, [
-      usePageLoader({ pagePath: '/not-available.page.js' }),
+      usePageLoader({ pagePath: '/dashboard/dashboard.page.js' }),
     ])
     .addRoute({ pattern: 'products' }, [
       usePageLoader({ pagePath: '/products/list/product-list.page.js' }),
@@ -108,20 +108,19 @@ export const createApp = ({ router }) => {
     .addRoute({ pattern: 'products/:product-sku' }, [
       usePageLoader({ pagePath: '/products/edit/edit-product.page.js' }),
     ])
-    .addRoute({ pattern: 'sales' }, [
-      usePageLoader({ pagePath: '/not-available.page.js' }),
+    .addRoute({ pattern: 'cart' }, [
+      usePageLoader({ pagePath: '/cart/cart.page.js' }),
     ])
     .notFound(() => {
-      router.redirect('/products');
+      router.redirect('/dashboard');
     });
-
-  // trigger initial preference state
-  preferencesService.emit({
-    type: preferencesEvents.PREFERENCES_CHANGED,
-  });
 
   return {
     start() {
+      // trigger initial preference state
+      preferencesService.emit({
+        type: preferencesEvents.PREFERENCES_CHANGED,
+      });
       router.redirect(location.pathname + location.search + location.hash);
     },
   };

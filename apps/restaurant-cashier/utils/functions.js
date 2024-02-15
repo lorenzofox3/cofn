@@ -3,6 +3,8 @@ export const compose = (fns) => (args) =>
 
 export const identity = (x) => x;
 
+export const noop = () => {};
+
 export const wait = (time) =>
   new Promise((resolve) => setTimeout(resolve, time));
 

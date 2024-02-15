@@ -53,7 +53,7 @@ export const UIAlert = connectToNotifications(function* ({
   const dismiss = () => $host.replaceChildren();
 
   $root.appendChild(template.content.cloneNode(true));
-  $host.addEventListener('click', dismiss, { signal });
+  $host.addEventListener('click', dismiss);
   $host.setAttribute('role', 'alert');
 
   while (true) {

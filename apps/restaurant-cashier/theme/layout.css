@@ -1,0 +1,29 @@
+.content-grid {
+    --_narrow-max-width: var(--narrow-max-width, 60ch);
+    --_padding-inline: var(--spacing-big, 1rem);
+    --_wide-max-width: var(--max-width, 75ch);
+    --_wide-size: calc((var(--_wide-max-width) - var(--_narrow-max-width)) / 2);
+
+    display: grid;
+    grid-template-columns:
+           minmax(var(--_padding-inline), 1fr) [full-start] 1fr [wide-start] minmax(0, var(--_wide-size)) [narrow-start] min(100% - 2 * var(--_padding-inline), var(--_narrow-max-width)) [narrow-end] minmax(0, var(--_wide-size)) [wide-end] 1fr [full-end] minmax(var(--_padding-inline), 1fr);
+}
+
+.grid-full {
+    grid-column: full;
+    display: grid;
+    grid-template-columns: subgrid;
+}
+
+.grid-wide,
+ui-page-outlet > * {
+    grid-column: wide;
+}
+
+.grid-narrow {
+    grid-column: narrow;
+}
+
+ui-page-outlet {
+    display: contents;
+}

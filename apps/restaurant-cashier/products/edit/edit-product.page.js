@@ -3,7 +3,6 @@ import { productListService } from '../product-list.service.js';
 import { fromForm } from '../product-list.model.js';
 import { reactiveProps } from '../../utils/components.js';
 import { withView } from '@cofn/view';
-import { define } from '@cofn/core';
 import { ImageUploader } from '../image-uploader/image-uploader.component.js';
 import { compose } from '../../utils/functions.js';
 export const loadPage = async ({ define, state }) => {
@@ -32,8 +31,8 @@ const wrapComponent = compose([reactiveProps(['product']), withView]);
 const EditProductForm = wrapComponent(({ html, router, $host }) => {
   return ({ product }) => html`
         <h1 tabindex="-1">Edit product #${product.sku.toUpperCase()}</h1>
-        <div class="surface transition-card-expand boxed">
-          <form autocomplete="off" novalidate @submit="${handleSubmit}" class="product-form">
+        <div class="surface content-grid transition-card-expand boxed">
+          <form autocomplete="off" novalidate @submit="${handleSubmit}" class="product-form grid-narrow">
               <input type="hidden" .value="${
                 product.sku
               }" name="sku" type="text" required />

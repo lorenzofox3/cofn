@@ -33,6 +33,9 @@ importers:
         specifier: ^1.11.3
         version: 1.11.3
     devDependencies:
+      barbapapa:
+        specifier: ^0.1.0
+        version: 0.1.0
       nanoid:
         specifier: ^5.0.4
         version: 5.0.4
@@ -603,6 +606,10 @@ packages:
 
   /arg@5.0.2:
     resolution: {integrity: sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==}
+
+  /barbapapa@0.1.0:
+    resolution: {integrity: sha512-HFe8Yq78uJDrpF57nmBT6BNvDupM53i7m49NlUr/mcyDPGnvM1sWp4dZ5tknLUJm/5yI6ZOdDq+xTFVtviLB6A==}
+    dev: true
 
   /bootstrap-icons@1.11.3:
     resolution: {integrity: sha512-+3lpHrCw/it2/7lBL15VR0HEumaBss0+f/Lb6ZvHISn1mlK83jjFpooTLsMWbIjJMDjDjOExMsTxnXSIT4k4ww==}

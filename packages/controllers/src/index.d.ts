@@ -1,20 +1,22 @@
-import { ComponentRoutine } from '@cofn/core';
+import { ComponentRoutine, ComponentDependencies } from '@cofn/core';
 
-type ControllerFn<State, ControllerAPI> = ({
-  state,
-}: {
-  state: State;
-}) => ControllerAPI;
+type ControllerFn<State, Controller, Dependencies = unknown> = (
+  controllerDeps: {
+    state: State;
+  } & ComponentDependencies<Dependencies>,
+) => Controller;
 
-export declare function withController<State, ControllerAPI>(
-  controllerFn: ControllerFn<State, ControllerAPI>,
+export declare function withController<
+  State,
+  Controller,
+  Dependencies = unknown,
+>(
+  controllerFn: ControllerFn<State, Controller, Dependencies>,
 ): (
   view: ComponentRoutine<
     {
-      controller: ControllerAPI & {
-        getState: () => State;
-      };
-    },
-    State
+      controller: Controller & { getState: () => State };
+    } & Dependencies,
+    { state: State }
   >,
-) => ComponentRoutine<State>;
+) => ComponentRoutine<Dependencies, { state: State }>;

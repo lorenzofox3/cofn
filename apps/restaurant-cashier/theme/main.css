@@ -1,18 +1,21 @@
 @import url("reset.css");
+@import url("layout.css");
 @import url('button.css');
 @import url('form.css');
 @import url('../products/products.css');
 @import url('../users/me.css');
+@import url('../cart/cart.css');
+@import url('../dashboard/dashboard.css');
 
 :root {
     font-family: system-ui, Avenir, sans-serif;
     --font-color: #3b3b3b;
-    --font-color-lighter: #4f4f4f;
+    --font-color-lighter: #5e5e5e;
     --surface-bg: white;
-    --app-bg: #f6f6f6;
-    --spacing-big: 1.5em;
-    --spacing-small: 1em;
-    --action-color: #426cb3;
+    --app-bg: #f1f1f8;
+    --spacing-big: 0.75em;
+    --spacing-small: 0.5em;
+    --action-color: hsl(218, 46%, 48%);
     --action-color-contrast: white;
     --control-focus-color: #e9f6ff;
     --danger-color: orangered;
@@ -20,47 +23,43 @@
     --animation-duration: 0.3s;
     --border-radius: 3px;
     --form-border-color: #afafaf;
+    --max-width: 85ch;
+    --tooltip-bg: #0b285d;
+    --tooltip-bg-font: #ebebec;
 }
 
 body {
-    box-sizing: border-box;
     color: var(--font-color);
     min-height: 100svh;
     font-size: clamp(1.3rem, 0.5vw + 1rem, 1.4rem);
     background: var(--app-bg);
     padding-bottom: var(--spacing-big);
     position: relative;
-}
 
-body.dark {
-    --font-color: #f2f2f2;
-    --surface-bg: #202945;
-    --app-bg: #152028;
-    --spacing-big: 1.5em;
-    --spacing-small: 1em;
-    --font-color-lighter: #d7d7d7;
-    --action-color: #5be382;
-    --action-color-contrast: #1e1e1e;
-    --control-focus-color: #ceffed;
-    --danger-color: #fd793c;
-    --shadow-color: #75987c;
-    --animation-duration: 0.3s;
-    --form-border-color: #adeab8;
-    --font-color-focus: #2f2f2f;
-}
+    &.dark {
+        --font-color: #f2f2f2;
+        --surface-bg: #202945;
+        --app-bg: #152028;
+        --font-color-lighter: #d7d7d7;
+        --action-color: #5be382;
+        --action-color-contrast: #1e1e1e;
+        --control-focus-color: #ceffed;
+        --danger-color: #fd793c;
+        --shadow-color: #75987c;
+        --animation-duration: 0.3s;
+        --form-border-color: #adeab8;
+        --font-color-focus: #2f2f2f;
+    }
 
-body.motion-reduced {
-    --animation-duration: 1ms;
+    &.motion-reduced {
+        --animation-duration: 0;
+    }
 }
 
 .text-ellipsis {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-}
-
-body * {
-    box-sizing: inherit;
 }
 
 h1, h2, h3 {
@@ -111,16 +110,11 @@ ui-alert:not(:defined) {
     border-radius: var(--border-radius);
     box-shadow: 0 0 2px 0 var(--shadow-color),
     0 0 6px 2px var(--shadow-color);
-}
 
-[role=alert]:empty {
-    transform: translateX(500%);
-    opacity: 0;
-}
-
-.wrapper {
-    max-width: min(var(--max-width, 80ch), 100% - var(--spacing-big));
-    margin: auto;
+    &:empty {
+        transform: translateX(500%);
+        opacity: 0;
+    }
 }
 
 .boxed {
@@ -144,6 +138,33 @@ ui-alert:not(:defined) {
     view-transition-name: product-card-collapse;
 }
 
+.visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+@keyframes translate-background {
+    from {
+        background-position-x: -50%;
+    }
+
+    to {
+        background-position-x: 50%;
+    }
+}
+
+.skeleton:empty {
+    background-image: linear-gradient(to right, transparent, var(--app-bg), transparent);
+    background-size: 200%;
+    background-repeat: no-repeat;
+    animation: calc(var(--animation-duration) * 2) ease-in-out infinite alternate translate-background;
+}
+
 /**
 HEADER
  */
@@ -157,8 +178,10 @@ HEADER
     view-transition-name: site-header;
 
     > .wrapper {
-        --spacing: calc(var(--spacing-big) * 2);
+        --spacing: var(--spacing-big);
+        margin: auto;
         display: grid;
+        max-width: min(var(--max-width, 80ch), 100% - 2 * var(--spacing));
         grid-template-columns: min-content 1fr;
         align-items: center;
         gap: var(--spacing);
@@ -166,17 +189,17 @@ HEADER
 }
 
 #main-nav {
-    flex-grow: 1;
-
     ul {
         list-style: none;
         display: flex;
+        flex-wrap: wrap;
         padding: 0;
         margin: 0;
+        gap: 0.6em;
     }
 
-    li {
-        flex-basis: 100px;
+    li:last-child {
+        margin-left: auto;
     }
 
     a {
@@ -196,23 +219,53 @@ HEADER
         transition: border-bottom-color var(--animation-duration);
 
         > span:last-child {
-            font-size: 0.7em;
+            font-size: 0.75em;
         }
 
         > ui-icon:first-child {
             --size: 1.5rem;
             display: block;
         }
+
+        &[aria-current=page] {
+            border-bottom-color: var(--action-color);
+        }
+
+        &:hover {
+            opacity: 1;
+        }
     }
 
-    a[aria-current=page] {
-        border-bottom-color: var(--action-color);
-    }
+    #cart-link {
+        display: flex;
+        gap: 0.4em;
+        padding-inline: 1em;
+        align-items: center;
+        font-size: 2rem;
+        opacity: unset;
+        border-radius: var(--border-radius);
+        background-color: var(--action-color);
+        color: var(--action-color-contrast);
+        transform: translate(0, 0.75em);
+        border: 2px solid currentColor;
+        box-shadow: 0 0 4px 0 rgb(0 0 0 / 50%),
+        0 0 6px 1px rgb(0 0 0 / 41%),
+        0 0 0 12px var(--app-bg);
 
-    a:hover {
-        opacity: 1;
+        ui-icon {
+            height: unset;
+        }
+
+        &:hover {
+            opacity: 0.9;
+        }
+
+        &[aria-current=page]:not(:focus) {
+            opacity: 0;
+        }
     }
 }
+
 
 @keyframes fade-in {
     from {
@@ -247,8 +300,7 @@ HEADER
 ::view-transition-old(product-card-expand),
 ::view-transition-new(product-card-expand),
 ::view-transition-old(product-card-collapse),
-::view-transition-new(product-card-collapse)
-{
+::view-transition-new(product-card-collapse) {
     /* Prevent the default animation,
     so both views remain opacity:1 throughout the transition */
     /*animation: none;*/
@@ -268,13 +320,13 @@ HEADER
 }
 
 ::view-transition-old(product-card-expand),
-::view-transition-old(product-card-collapse){
+::view-transition-old(product-card-collapse) {
     animation: 100ms cubic-bezier(0.4, 0, 1, 1) both fade-out;
 }
 
 /* The new view is the full form */
 ::view-transition-new(product-card-expand),
-::view-transition-old(product-card-collapse){
+::view-transition-old(product-card-collapse) {
     /* Maintain the aspect ratio of the view,
     by growing it to cover the bounds of the element */
     object-fit: cover;

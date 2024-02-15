@@ -1,4 +1,4 @@
-import { curry2 } from './functions.js';
+import { curry2, identity } from './functions.js';
 export const mapBind = curry2(
   (mapFn, target) =>
     new Proxy(target, {
@@ -13,3 +13,9 @@ export const mapValues = curry2((mapFn, target) =>
     Object.entries(target).map(([key, value]) => [key, mapFn(value)]),
   ),
 );
+
+export const keyBy = curry2((keyFn, array) =>
+  Object.fromEntries(array.map((item) => [keyFn(item), item])),
+);
+
+export const bind = mapBind(identity);

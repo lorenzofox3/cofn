@@ -3,22 +3,17 @@ import { querySelector } from '../../utils/dom.js';
 export const ProductList = ({
   html,
   $host,
-  $signal,
   animationService,
   productListService,
 }) => {
   setTimeout(productListService.fetch, 200); // todo remove (when we have a real backend and do not rely on service worker)
 
-  $host.addEventListener(
-    'product-removed',
-    async ({ detail }) => {
-      const { sku } = detail;
-      const itemToRemove = $host.querySelector(`[data-id=${sku}]`);
-      await animationService.removeElement(itemToRemove);
-      productListService.remove({ sku });
-    },
-    { signal: $signal },
-  );
+  $host.addEventListener('product-removed', async ({ detail }) => {
+    const { sku } = detail;
+    const itemToRemove = $host.querySelector(`[data-id=${sku}]`);
+    await animationService.removeElement(itemToRemove);
+    productListService.remove({ sku });
+  });
 
   function transitionCard() {
     // remove any precedent reduced card
