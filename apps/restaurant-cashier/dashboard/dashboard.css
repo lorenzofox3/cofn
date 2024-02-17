@@ -71,10 +71,12 @@ app-cart-count-chart {
 }
 
 bpapa-bar-chart {
-    min-height: 350px;
     grid-area: chart;
 
     &[horizontal] {
+
+        min-height: 350px;
+        min-block-size: unset;
 
         bpapa-bar {
             container: horizontal-bar / size;
