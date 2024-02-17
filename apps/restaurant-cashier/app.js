@@ -24,6 +24,8 @@ const togglePreferences = ({ motion, theme }) => {
   classList.toggle('motion-reduced', motion === motionSettings.reduced);
 };
 
+// todo: we need to repeat the loading page or vite gets lost
+
 export const createApp = ({ router }) => {
   const storageService = createStorageService();
   const preferencesService = createPreferencesService({
@@ -75,41 +77,62 @@ export const createApp = ({ router }) => {
       mode: 'open',
     },
   });
-
-  const usePageLoader =
-    ({ pagePath }) =>
-    async (ctx, next) => {
-      const module = await import(pagePath);
-      const page = await module.loadPage({
-        state: ctx.state,
-        ...root,
-        define: _define,
-      });
-      router.emit({
-        type: navigationEvents.PAGE_LOADED,
-        detail: { page },
-      });
-      return next();
-    };
+  async function loadPage(ctx, next) {
+    debugger;
+    const page = await ctx.module.loadPage({
+      state: ctx.state,
+      ...root,
+      define: _define,
+    });
+    router.emit({
+      type: navigationEvents.PAGE_LOADED,
+      detail: { page },
+    });
+    return next();
+  }
 
   router
     .addRoute({ pattern: 'me' }, [
-      usePageLoader({ pagePath: '/users/me.page.js' }),
+      async (ctx, next) => {
+        ctx.module = await import('/users/me.page.js');
+        next();
+      },
+      loadPage,
     ])
     .addRoute({ pattern: 'dashboard' }, [
-      usePageLoader({ pagePath: '/dashboard/dashboard.page.js' }),
+      async (ctx, next) => {
+        ctx.module = await import('/dashboard/dashboard.page.js');
+        next();
+      },
+      loadPage,
     ])
     .addRoute({ pattern: 'products' }, [
-      usePageLoader({ pagePath: '/products/list/product-list.page.js' }),
+      async (ctx, next) => {
+        ctx.module = await import('/products/list/product-list.page.js');
+        next();
+      },
+      loadPage,
     ])
     .addRoute({ pattern: 'products/new' }, [
-      usePageLoader({ pagePath: '/products/new/new-product.page.js' }),
+      async (ctx, next) => {
+        ctx.module = await import('/products/new/new-product.page.js');
+        next();
+      },
+      loadPage,
     ])
     .addRoute({ pattern: 'products/:product-sku' }, [
-      usePageLoader({ pagePath: '/products/edit/edit-product.page.js' }),
+      async (ctx, next) => {
+        ctx.module = await import('/products/edit/edit-product.page.js');
+        next();
+      },
+      loadPage,
     ])
     .addRoute({ pattern: 'cart' }, [
-      usePageLoader({ pagePath: '/cart/cart.page.js' }),
+      async (ctx, next) => {
+        ctx.module = await import('/cart/cart.page.js');
+        next();
+      },
+      loadPage,
     ])
     .notFound(() => {
       router.redirect('/dashboard');

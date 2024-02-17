@@ -2,18 +2,19 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "dev": "vite"
+    "dev": "vite",
+    "build": "vite build"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "barbapapa": "^0.1.0",
     "nanoid": "^5.0.4"
   },
   "dependencies": {
     "@cofn/controllers": "workspace:*",
     "@cofn/core": "workspace:*",
     "@cofn/view": "workspace:*",
+    "barbapapa": "^0.1.0",
     "bootstrap-icons": "^1.11.3"
   }
 }
