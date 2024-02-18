@@ -9,9 +9,10 @@ const zip = (array1, array2) =>
 export const withView = (viewFactory) =>
   function* (deps) {
     const { $root, $signal } = deps;
+    const templateCache = new Map();
     const view = viewFactory({
       ...deps,
-      html: createHTML({ $signal }),
+      html: createHTML({ $signal, templateCache }),
     });
 
     const viewFn = typeof view === 'function' ? view : () => view;
@@ -20,19 +21,18 @@ export const withView = (viewFactory) =>
     $root.replaceChildren(record.content);
     delete record.content; // free memory
 
-    while (true) {
-      viewFn(yield);
+    try {
+      while (true) {
+        viewFn(yield);
+      }
+    } finally {
+      templateCache.clear();
     }
   };
 
-export const createHTML = ({ $signal }) => {
-  const templateCache = new Map();
-
-  $signal.addEventListener('abort', () => templateCache.clear(), {
-    once: true,
-  });
-
-  return (templateParts, ...interpolatedValues) => {
+export const createHTML =
+  ({ $signal, templateCache }) =>
+  (templateParts, ...interpolatedValues) => {
     const templateRecord = findOrCreateTemplateRecord({
       templateParts,
       interpolatedValues,
@@ -54,4 +54,3 @@ export const createHTML = ({ $signal }) => {
 
     return templateRecord;
   };
-};
