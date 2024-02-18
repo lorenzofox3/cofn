@@ -36,19 +36,18 @@ export const withController = (controllerFn) => (view) =>
     });
 
     // overwrite render fn
-    const _render = $host.render.bind($host);
+    const { render } = $host;
     $host.render = (args = {}) =>
-      _render({
+      render({
         ...args,
         state: ctrl.getState(),
       });
 
-    // make sure the underlying view can call its cleanup hook when the host is disposed
-    deps.$signal.addEventListener('abort', () => componentInstance.return(), {
-      once: true,
-    });
-
-    yield* componentInstance;
+    try {
+      yield* componentInstance;
+    } finally {
+      componentInstance.return();
+    }
   };
 
 const getAttributes = (el) =>

@@ -21,10 +21,14 @@ const withCounter = (specFn) =>
         $host.addEventListener('click', controller.increment);
         $host.loopCount = 0;
 
-        while (true) {
-          const { state } = yield;
-          $host.textContent = 'state:' + state.count;
-          $host.loopCount += 1;
+        try {
+          while (true) {
+            const { state } = yield;
+            $host.textContent = 'state:' + state.count;
+            $host.loopCount += 1;
+          }
+        } finally {
+          $host.teardown = true;
         }
       }),
     );
@@ -98,5 +102,15 @@ test(
     await nextTick();
     eq(el.textContent, 'state:45');
     eq(el.loopCount, 2);
+  }),
+);
+
+test(
+  'tears down of the component is called',
+  withCounter(async ({ ok, notOk, el }) => {
+    notOk(el.teardown);
+    el.remove();
+    await nextTick();
+    ok(el.teardown);
   }),
 );
