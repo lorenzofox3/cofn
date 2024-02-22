@@ -14,9 +14,9 @@ export const AddTodoView: ViewFactory<{ todoService: TodoService }> = ({
   };
 
   return () =>
-    html`<form id="add-todo-form" @submit="${handleSubmit}">
+    html` <form id="add-todo-form" @submit="${handleSubmit}">
       <label for="add-todo-input">What needs to be done ?</label>
-      <div id="add-todo-input-container">
+      <div id="add-todo-controls">
         <input
           id="add-todo-input"
           placeholder="ex: build a todo app"

@@ -7,11 +7,11 @@ export const TodoItemView: ViewFactory = ({ html, $host }) => {
 
   return ({ attributes }) =>
     html`<style>
-        label {
-          flex-grow: 1;
+        :host {
+          --_gap: var(--gap, 0.5em);
           display: flex;
           align-items: center;
-          gap: 1em;
+          gap: var(--_gap);
         }
 
         input:checked + span {
@@ -20,8 +20,15 @@ export const TodoItemView: ViewFactory = ({ html, $host }) => {
         }
 
         #remove-button {
-          color: #a80000;
-          border-color: #a80000 !important;
+          --color: var(--danger-color, red);
+        }
+
+        label {
+          display: grid;
+          flex-grow: 1;
+          grid-template-columns: var(--checkbox-width) 1fr;
+          align-items: center;
+          gap: var(--_gap);
         }
       </style>
       <label

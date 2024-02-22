@@ -18,8 +18,7 @@ export const todoListControlsView: ViewFactory<
       filter,
     } = getModelFromState(state);
     return html`${hasAnyItem
-      ? html`<div class="container">
-          <fieldset @change="${handleChange}">
+      ? html`<fieldset @change="${handleChange}">
             <legend>What tasks do you want to see ?</legend>
             <div>
               <label>
@@ -68,8 +67,7 @@ export const todoListControlsView: ViewFactory<
               >
                 Clear completed
               </button>`
-            : null}
-        </div>`
+            : null} `
       : null}`;
   };
 };
