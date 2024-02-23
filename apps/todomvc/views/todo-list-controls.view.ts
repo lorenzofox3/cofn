@@ -65,6 +65,7 @@ export const todoListControlsView: ViewFactory<
                 id="clear-completed"
                 @click="${todoService.clearCompleted}"
               >
+                <ui-icon name="recycle"></ui-icon>
                 Clear completed
               </button>`
             : null} `

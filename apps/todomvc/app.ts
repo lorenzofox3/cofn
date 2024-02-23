@@ -11,12 +11,19 @@ import {
 } from './todo.service.ts';
 import { todoListControlsView } from './views/todo-list-controls.view.js';
 import { compose } from './utils.js';
+import { UIIcon } from './components/ui-icon.component';
 
 const connectWithView = compose([
   connectTodoService,
   withView<{ todoService: TodoService }, { state: TodoServiceState }>,
 ]);
 
+define('ui-icon', UIIcon, {
+  observedAttributes: ['name'],
+  shadow: {
+    mode: 'open',
+  },
+});
 define('app-todo', withView(TodoItemView), {
   shadow: { mode: 'open', delegatesFocus: true },
   observedAttributes: ['completed'],

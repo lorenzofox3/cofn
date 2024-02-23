@@ -21,6 +21,10 @@ export const TodoItemView: ViewFactory = ({ html, $host }) => {
 
         #remove-button {
           --color: var(--danger-color, red);
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          --font-size: 0.8em;
         }
 
         label {
@@ -29,6 +33,13 @@ export const TodoItemView: ViewFactory = ({ html, $host }) => {
           grid-template-columns: var(--checkbox-width) 1fr;
           align-items: center;
           gap: var(--_gap);
+        }
+
+        ui-icon {
+          aspect-ratio: 1 / 1;
+          display: inline-block;
+          width: 1em;
+          height: 1em;
         }
       </style>
       <label
@@ -43,7 +54,7 @@ export const TodoItemView: ViewFactory = ({ html, $host }) => {
         </span>
       </label>
       <button id="remove-button" part="button" @click="${handleClick}">
-        X<span>Remove</span>
+        <ui-icon name="x-circle"></ui-icon><span>remove</span>
       </button>`;
 
   function dispatch(eventName) {

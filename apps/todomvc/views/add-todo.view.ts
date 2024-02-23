@@ -25,7 +25,7 @@ export const AddTodoView: ViewFactory<{ todoService: TodoService }> = ({
           name="new-content"
           type="text"
         />
-        <button>Add +</button>
+        <button><ui-icon name="plus-circle"></ui-icon>add</button>
       </div>
     </form>`;
 };
