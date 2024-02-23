@@ -78,7 +78,6 @@ export const createApp = ({ router }) => {
     },
   });
   async function loadPage(ctx, next) {
-    debugger;
     const page = await ctx.module.loadPage({
       state: ctx.state,
       ...root,

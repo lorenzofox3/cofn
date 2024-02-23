@@ -2,7 +2,7 @@ export const withController = (controllerFn) => (view) =>
   function* (deps) {
     const state = {};
     const { $host } = deps;
-    let pendingUpdate = false;
+    let instantiated = false;
 
     const ctrl = {
       getState() {
@@ -14,13 +14,9 @@ export const withController = (controllerFn) => (view) =>
         state: new Proxy(state, {
           set(obj, prop, value) {
             obj[prop] = value;
-            // no need to render if the view is not connected or is already rendering
-            if ($host.isConnected && !pendingUpdate) {
-              pendingUpdate = true;
-              window.queueMicrotask(() => {
-                pendingUpdate = false;
-                $host.render();
-              });
+            // no need to render if the view is not connected
+            if ($host.isConnected && instantiated) {
+              $host.render();
             }
             return true;
           },
@@ -29,12 +25,6 @@ export const withController = (controllerFn) => (view) =>
       }),
     };
 
-    // inject controller in the view
-    const componentInstance = view({
-      ...deps,
-      controller: ctrl,
-    });
-
     // overwrite render fn
     const { render } = $host;
     $host.render = (args = {}) =>
@@ -42,6 +32,14 @@ export const withController = (controllerFn) => (view) =>
         ...args,
         state: ctrl.getState(),
       });
+
+    // inject controller in the view
+    const componentInstance = view({
+      ...deps,
+      controller: ctrl,
+    });
+
+    instantiated = true;
 
     try {
       yield* componentInstance;

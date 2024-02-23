@@ -18,6 +18,15 @@ importers:
         specifier: ^5.1.3
         version: 5.1.3
 
+  apps/open-library:
+    dependencies:
+      '@cofn/controllers':
+        specifier: workspace:*
+        version: link:../../packages/controllers
+      '@cofn/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+
   apps/restaurant-cashier:
     dependencies:
       '@cofn/controllers':

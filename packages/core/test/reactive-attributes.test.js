@@ -16,26 +16,30 @@ define('reactive-attributes-component', coroutine, {
   observedAttributes: ['first-attribute', 'second-attribute'],
 });
 
-test('attributes are forwarded as data', ({ eq }) => {
+test('attributes are forwarded as data', async ({ eq }) => {
   const el = document.createElement('static-attributes-component');
   el.setAttribute('first-attribute', 'hello');
   el.setAttribute('second-attribute', 'world');
   debug.appendChild(el);
 
+  await nextTick();
+
   eq(el.textContent, 'hello - world');
   eq(el.renderCount, 1);
 });
 
-test('component is not updated when attribute is not declared observed', ({
+test('component is not updated when attribute is not declared observed', async ({
   eq,
 }) => {
   const el = document.createElement('static-attributes-component');
   el.setAttribute('first-attribute', 'hello');
   el.setAttribute('second-attribute', 'world');
   debug.appendChild(el);
+  await nextTick();
   eq(el.textContent, 'hello - world');
   eq(el.renderCount, 1);
   el.setAttribute('first-attribute', 'bonjour');
+  await nextTick();
   eq(el.textContent, 'hello - world');
   eq(el.renderCount, 1);
 });
@@ -47,6 +51,7 @@ test('component is updated when attribute is declared observed', async ({
   el.setAttribute('first-attribute', 'hello');
   el.setAttribute('second-attribute', 'world');
   debug.appendChild(el);
+  await nextTick();
   eq(el.textContent, 'hello - world');
   eq(el.renderCount, 1);
   el.setAttribute('first-attribute', 'bonjour');

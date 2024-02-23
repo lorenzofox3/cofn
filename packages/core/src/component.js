@@ -7,7 +7,7 @@ export const component = (renderLoop, opts = defaultOptions) => {
   return class extends Klass {
     #loop;
     #abortController;
-    #pendingUpdate = false;
+    #updateStack = [];
 
     static get observedAttributes() {
       return [...observedAttributes];
@@ -28,16 +28,12 @@ export const component = (renderLoop, opts = defaultOptions) => {
     }
 
     connectedCallback() {
-      if (!this.#pendingUpdate) {
-        this.render();
-      }
+      this.render();
     }
 
     disconnectedCallback() {
-      this.#pendingUpdate = true;
-      // we end the rendering loop only if the component is removed from de dom. Sometimes it is just moved from one place to another one
+      // we end the rendering loop only if the component is removed from de DOM. Sometimes it is just moved from one place to another one
       window.queueMicrotask(() => {
-        this.#pendingUpdate = false;
         if (this.isConnected === false) {
           this.#abortController.abort();
           this.#loop.return();
@@ -46,20 +42,27 @@ export const component = (renderLoop, opts = defaultOptions) => {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-      if (oldValue !== newValue && !this.#pendingUpdate && this.isConnected) {
-        this.#pendingUpdate = true;
-        window.queueMicrotask(() => {
-          this.#pendingUpdate = false;
-          this.render();
-        });
+      if (oldValue !== newValue && this.isConnected) {
+        this.render();
       }
     }
 
     render(update = {}) {
-      this.#loop.next({
-        attributes: getAttributes(this),
-        ...update,
-      });
+      const currentPendingUpdateCount = this.#updateStack.length;
+      this.#updateStack.push(update);
+      if (!currentPendingUpdateCount) {
+        window.queueMicrotask(() => {
+          const arg = {
+            attributes: getAttributes(this),
+            ...Object.assign(...this.#updateStack),
+          };
+          if (this.hasAttribute('debug')) {
+            console.debug('rendering', arg);
+          }
+          this.#loop.next(arg);
+          this.#updateStack.length = 0;
+        });
+      }
     }
   };
 };

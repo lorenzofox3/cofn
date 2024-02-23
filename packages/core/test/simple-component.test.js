@@ -24,18 +24,22 @@ const withEl = (specFn) =>
   };
 test(
   'define a simple component from a coroutine',
-  withEl(({ eq, el }) => {
+  withEl(async ({ eq, el }) => {
+    await nextTick();
     eq(el.textContent, 'simple component');
   }),
 );
 
 test(
   'content passed to render is injected to the coroutine',
-  withEl(({ eq, el }) => {
+  withEl(async ({ eq, el }) => {
+    await nextTick();
     eq(el.textContent, 'simple component');
     el.render({ content: 'foo' });
+    await nextTick();
     eq(el.textContent, 'foo');
     el.render({ content: 'another foo' });
+    await nextTick();
     eq(el.textContent, 'another foo');
   }),
 );
@@ -43,12 +47,10 @@ test(
 test(
   'when removed the finally flow is invoked',
   withEl(async ({ eq, el }) => {
-    eq(el.hasBeenRemoved, false);
-
-    el.remove();
-
     await nextTick();
-
+    eq(el.hasBeenRemoved, false);
+    el.remove();
+    await nextTick();
     eq(el.hasBeenRemoved, true);
   }),
 );
@@ -56,11 +58,10 @@ test(
 test(
   'when moved around, the finally flow is not invoked',
   withEl(async ({ eq, el }) => {
+    await nextTick();
     eq(el.hasBeenRemoved, false);
     debug.prepend(el);
-
     await nextTick();
-
     eq(el.hasBeenRemoved, false);
   }),
 );
