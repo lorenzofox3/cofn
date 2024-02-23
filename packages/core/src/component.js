@@ -32,8 +32,7 @@ export const component = (renderLoop, opts = defaultOptions) => {
     }
 
     disconnectedCallback() {
-      this.#updateStack.push({});
-      // we end the rendering loop only if the component is removed from de dom. Sometimes it is just moved from one place to another one
+      // we end the rendering loop only if the component is removed from de DOM. Sometimes it is just moved from one place to another one
       window.queueMicrotask(() => {
         if (this.isConnected === false) {
           this.#abortController.abort();
@@ -43,11 +42,7 @@ export const component = (renderLoop, opts = defaultOptions) => {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-      if (
-        oldValue !== newValue &&
-        !this.#updateStack.length &&
-        this.isConnected
-      ) {
+      if (oldValue !== newValue && this.isConnected) {
         this.render();
       }
     }
@@ -55,13 +50,15 @@ export const component = (renderLoop, opts = defaultOptions) => {
     render(update = {}) {
       const currentPendingUpdateCount = this.#updateStack.length;
       this.#updateStack.push(update);
-      if (currentPendingUpdateCount === 0) {
+      if (!currentPendingUpdateCount) {
         window.queueMicrotask(() => {
           const arg = {
             attributes: getAttributes(this),
             ...Object.assign(...this.#updateStack),
           };
-          // console.debug('rendering', arg);
+          if (this.hasAttribute('debug')) {
+            console.debug('rendering', arg);
+          }
           this.#loop.next(arg);
           this.#updateStack.length = 0;
         });
