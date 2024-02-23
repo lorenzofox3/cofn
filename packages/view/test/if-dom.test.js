@@ -1,9 +1,9 @@
 import { test } from '@cofn/test-lib/client';
-import { fromView } from './utils.js';
+import { fromView, nextTick } from './utils.js';
 
 const debug = document.getElementById('debug');
 
-test('elements can be added or removed with conditional expression', ({
+test('elements can be added or removed with conditional expression', async ({
   eq,
 }) => {
   const el = fromView(
@@ -14,23 +14,26 @@ test('elements can be added or removed with conditional expression', ({
   );
 
   debug.appendChild(el);
+  await nextTick();
   eq(
     el.innerHTML,
     `<ul><li>item1</li><!--before--><!--after--><li>item3</li></ul>`,
   );
   el.render({ showItem: true });
+  await nextTick();
   eq(
     el.innerHTML,
     `<ul><li>item1</li><!--before--><li>item2</li><!--after--><li>item3</li></ul>`,
   );
   el.render({ showItem: false });
+  await nextTick();
   eq(
     el.innerHTML,
     `<ul><li>item1</li><!--before--><!--after--><li>item3</li></ul>`,
   );
 });
 
-test('elements can be swapped depending on a condition', ({ eq }) => {
+test('elements can be swapped depending on a condition', async ({ eq }) => {
   const el = fromView(
     ({ html }) =>
       ({ showItem }) =>
@@ -39,16 +42,19 @@ test('elements can be swapped depending on a condition', ({ eq }) => {
   );
 
   debug.appendChild(el);
+  await nextTick();
   eq(
     el.innerHTML,
     `<ul><li>item1</li><!--before--><li>item2bis</li><!--after--><li>item3</li></ul>`,
   );
   el.render({ showItem: true });
+  await nextTick();
   eq(
     el.innerHTML,
     `<ul><li>item1</li><!--before--><li>item2</li><!--after--><li>item3</li></ul>`,
   );
   el.render({ showItem: false });
+  await nextTick();
   eq(
     el.innerHTML,
     `<ul><li>item1</li><!--before--><li>item2bis</li><!--after--><li>item3</li></ul>`,

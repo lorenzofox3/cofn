@@ -38,7 +38,7 @@ const withCounter = (specFn) =>
     return await specFn({ ...assert, el });
   };
 
-test('controller function get passed the routine dependencies along with the state', ({
+test('controller function get passed the routine dependencies along with the state', async ({
   eq,
   ok,
 }) => {
@@ -65,12 +65,15 @@ test('controller function get passed the routine dependencies along with the sta
 
   debug.appendChild(el);
 
+  await nextTick();
+
   eq(hasBeenChecked, true);
 });
 
 test(
   'component is rendered with the initial state set by the controller',
-  withCounter(({ eq, el }) => {
+  withCounter(async ({ eq, el }) => {
+    await nextTick();
     eq(el.textContent, 'state:42');
     eq(el.loopCount, 1);
   }),
@@ -79,6 +82,7 @@ test(
 test(
   'when state is updated by the controller, the component is rendered',
   withCounter(async ({ eq, el }) => {
+    await nextTick();
     eq(el.textContent, 'state:42');
     el.click();
     await nextTick();
@@ -93,6 +97,7 @@ test(
 test(
   'updates are batched together',
   withCounter(async ({ el, eq }) => {
+    await nextTick();
     eq(el.textContent, 'state:42');
     eq(el.loopCount, 1);
     el.click();

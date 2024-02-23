@@ -2,7 +2,7 @@ import { test } from '@cofn/test-lib/client';
 import { fromView, nextTick } from './utils.js';
 
 const debug = document.getElementById('debug');
-test('attribute starting with a @ is an event listener', ({ eq }) => {
+test('attribute starting with a @ is an event listener', async ({ eq }) => {
   let count = 0;
 
   const listener = () => (count += 1);
@@ -14,14 +14,19 @@ test('attribute starting with a @ is an event listener', ({ eq }) => {
   );
 
   debug.appendChild(el);
+
+  await nextTick();
+
   eq(count, 0);
 
   el.firstElementChild.click();
 
+  await nextTick();
+
   eq(count, 1);
 });
 
-test('when updated, legacy listener is removed while new listener is attached', ({
+test('when updated, legacy listener is removed while new listener is attached', async ({
   eq,
 }) => {
   let count = 0;
@@ -36,11 +41,16 @@ test('when updated, legacy listener is removed while new listener is attached', 
   );
 
   debug.appendChild(el);
+
+  await nextTick();
+
   eq(count, 0);
 
   const button = el.firstElementChild;
 
   button.click();
+
+  await nextTick();
 
   eq(count, 1);
 
@@ -48,7 +58,11 @@ test('when updated, legacy listener is removed while new listener is attached', 
     onclick: listener2,
   });
 
+  await nextTick();
+
   button.click();
+
+  await nextTick();
 
   eq(count, 3);
 });
@@ -64,10 +78,15 @@ test('when element is removed all listeners are removed', async ({ eq }) => {
   });
 
   debug.appendChild(el);
+
+  await nextTick();
+
   eq(count, 0);
 
   const button = el.firstElementChild;
   button.click();
+
+  await nextTick();
 
   eq(count, 1);
 
@@ -76,6 +95,8 @@ test('when element is removed all listeners are removed', async ({ eq }) => {
   await nextTick();
 
   button.click();
+
+  await nextTick();
 
   eq(count, 1);
 });

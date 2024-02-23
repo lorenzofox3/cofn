@@ -3,7 +3,7 @@ import { fromView, nextTick } from './utils.js';
 
 const debug = document.getElementById('debug');
 
-test('list is rendered and item within the list is updated', ({ eq }) => {
+test('list is rendered and item within the list is updated', async ({ eq }) => {
   const el = fromView(
     ({ html }) =>
       ({ items = [] }) =>
@@ -12,6 +12,7 @@ test('list is rendered and item within the list is updated', ({ eq }) => {
   );
 
   debug.appendChild(el);
+  await nextTick();
   eq(el.innerHTML, '<ul><!--before--><!--after--></ul>');
   el.render({
     items: [
@@ -20,6 +21,7 @@ test('list is rendered and item within the list is updated', ({ eq }) => {
       { id: 3, content: 'item3' },
     ],
   });
+  await nextTick();
 
   eq(
     el.innerHTML,
@@ -33,6 +35,7 @@ test('list is rendered and item within the list is updated', ({ eq }) => {
       { id: 3, content: 'item3' },
     ],
   });
+  await nextTick();
 
   eq(
     el.innerHTML,
@@ -40,7 +43,7 @@ test('list is rendered and item within the list is updated', ({ eq }) => {
   );
 });
 
-test('list is rendered and item within list is added', ({ eq }) => {
+test('list is rendered and item within list is added', async ({ eq }) => {
   const el = fromView(
     ({ html }) =>
       ({ items = [] }) =>
@@ -49,6 +52,7 @@ test('list is rendered and item within list is added', ({ eq }) => {
   );
 
   debug.appendChild(el);
+  await nextTick();
   eq(el.innerHTML, '<ul><!--before--><!--after--></ul>');
   el.render({
     items: [
@@ -57,6 +61,8 @@ test('list is rendered and item within list is added', ({ eq }) => {
       { id: 3, content: 'item3' },
     ],
   });
+
+  await nextTick();
 
   eq(
     el.innerHTML,
@@ -71,14 +77,14 @@ test('list is rendered and item within list is added', ({ eq }) => {
       { id: 3, content: 'item3' },
     ],
   });
-
+  await nextTick();
   eq(
     el.innerHTML,
     '<ul><!--before--><li>item1</li><li>item11</li><li>item2</li><li>item3</li><!--after--></ul>',
   );
 });
 
-test('list is rendered and item within list is removed', ({ eq }) => {
+test('list is rendered and item within list is removed', async ({ eq }) => {
   const el = fromView(
     ({ html }) =>
       ({ items = [] }) =>
@@ -87,6 +93,7 @@ test('list is rendered and item within list is removed', ({ eq }) => {
   );
 
   debug.appendChild(el);
+  await nextTick();
   eq(el.innerHTML, '<ul><!--before--><!--after--></ul>');
   el.render({
     items: [
@@ -95,6 +102,8 @@ test('list is rendered and item within list is removed', ({ eq }) => {
       { id: 3, content: 'item3' },
     ],
   });
+
+  await nextTick();
 
   eq(
     el.innerHTML,
@@ -107,14 +116,14 @@ test('list is rendered and item within list is removed', ({ eq }) => {
       { id: 3, content: 'item3' },
     ],
   });
-
+  await nextTick();
   eq(
     el.innerHTML,
     '<ul><!--before--><li>item1</li><li>item3</li><!--after--></ul>',
   );
 });
 
-test('list within a list is handled', ({ eq }) => {
+test('list within a list is handled', async ({ eq }) => {
   const el = fromView(
     ({ html }) =>
       ({ items = [] }) =>
@@ -123,6 +132,9 @@ test('list within a list is handled', ({ eq }) => {
   );
 
   debug.appendChild(el);
+
+  await nextTick();
+
   eq(el.innerHTML, '<ul><!--before--><!--after--></ul>');
   el.render({
     items: [
@@ -144,7 +156,7 @@ test('list within a list is handled', ({ eq }) => {
       },
     ],
   });
-
+  await nextTick();
   eq(
     el.innerHTML,
     '<ul><!--before--><li><ul><!--before--><li>item1</li><li>item2</li><!--after--></ul></li><li><ul><!--before--><li>item11</li><!--after--></ul></li><li><ul><!--before--><li>item3</li><li>item4</li><li>item5</li><!--after--></ul></li><!--after--></ul>',
@@ -173,7 +185,7 @@ test('list within a list is handled', ({ eq }) => {
       },
     ],
   });
-
+  await nextTick();
   eq(
     el.innerHTML,
     '<ul><!--before--><li><ul><!--before--><li>item1</li><!--after--></ul></li><li><ul><!--before--><li>item11</li><li>item2</li><!--after--></ul></li><li><ul><!--before--><li>item3</li><li>item4bis</li><li>item5</li><!--after--></ul></li><!--after--></ul>',

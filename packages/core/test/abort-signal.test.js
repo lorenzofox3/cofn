@@ -26,6 +26,8 @@ const withEl = (specFn) =>
 test(
   'when removed the abort signal is called',
   withEl(async ({ eq, el }) => {
+    await nextTick();
+
     eq(el.hasBeenRemoved, false);
 
     el.remove();
@@ -39,6 +41,8 @@ test(
 test(
   'when moved around, the abort signal is not called',
   withEl(async ({ eq, el }) => {
+    await nextTick();
+
     eq(el.hasBeenRemoved, false);
     debug.prepend(el);
 
