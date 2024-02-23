@@ -67,7 +67,7 @@ export const component = (renderLoop, opts = defaultOptions) => {
   };
 };
 
-export const getAttributes = (el) =>
+const getAttributes = (el) =>
   Object.fromEntries(
     el.getAttributeNames().map((name) => [name, el.getAttribute(name)]),
   );
