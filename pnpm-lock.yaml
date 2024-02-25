@@ -83,6 +83,8 @@ importers:
         specifier: workspace:*
         version: link:../test-lib
 
+  packages/di: {}
+
   packages/test-lib:
     dependencies:
       zora:

@@ -1,0 +1,28 @@
+{
+  "name": "@cofn/di",
+  "version": "1.0.0",
+  "description": "DOM as DI container",
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "default": "./src/index.js"
+      }
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "prettier": {
+    "singleQuote": true
+  },
+  "keywords": [
+    "di",
+    "cofn",
+    "web",
+    "ui"
+  ],
+  "author": "Laurent RENARD",
+  "license": "MIT"
+}
