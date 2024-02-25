@@ -16,7 +16,6 @@ export const provide = (providerFn) => (comp) =>
       $host,
       ...rest,
     });
-    8;
 
     instance.next();
 
