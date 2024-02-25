@@ -20,7 +20,7 @@ export const createSearchService = () => {
       return http('search.json', {
         query: {
           q,
-          limit: 5,
+          limit: 10,
           fields: ['author_name', 'first_publish_year', 'title'],
           lang: 'en',
           language: 'eng',

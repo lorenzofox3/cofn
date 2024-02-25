@@ -12,6 +12,7 @@ const toViewModel = ({
 });
 
 const createBookListController = ({ state }) => {
+  // initial state
   state.isLoading = false;
   state.books = [];
   state.error = undefined;
@@ -21,8 +22,8 @@ const createBookListController = ({ state }) => {
       try {
         state.isLoading = true;
         state.error = undefined;
-        const result = await searchService.search({ query });
-        state.books = result.docs.map(toViewModel);
+        const { docs } = await searchService.search({ query });
+        state.books = docs.map(toViewModel);
       } catch (err) {
         state.error = err;
       } finally {

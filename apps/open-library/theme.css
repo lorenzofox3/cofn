@@ -39,9 +39,78 @@ canvas {
  **/
 
 :root {
-
+    --max-content-width: 60ch;
+    --bg-app: #f8f8f8;
+    --bg-surface: white;
+    --accent-color: #27278a;
 }
 
 body {
     font-family: system-ui, sans-serif;
+    font-size: clamp(1.3rem, 0.5vw + 1rem, 1.4rem);
+    background-color: var(--bg-app);
+    min-height: 100svh;
+    display: grid;
+    line-height: 1.5;
+    grid-template-rows: 1fr auto;
 }
+
+h1 {
+    margin-block: 1rem 2rem;
+}
+
+main {
+    width: min(100% - 2rem, var(--max-content-width));
+    margin-inline: auto;
+}
+
+footer {
+    text-align: center;
+    font-size: 0.8em;
+    padding-block: 0.5em;
+}
+
+
+#result {
+    list-style: none;
+    font-size: 0.9em;
+
+    &:not(:empty) {
+        border-radius: 5px;
+        border: 1px solid gray;
+        background: var(--bg-surface);
+    }
+
+    > li {
+        padding-block: 0.5em;
+    }
+
+    > * + * {
+        border-top: 1px solid lightgray;
+    }
+
+    h2 {
+        font-size: 1.4em;
+    }
+
+}
+
+app-book-search {
+
+    > * {
+        padding: 0.5em 1em;
+    }
+
+    > * + * {
+        display: block;
+        margin-block-start: 2em;
+    }
+
+
+    :has([aria-busy=true]) [type=submit] {
+        background: yellow;
+    }
+}
+
+
+
