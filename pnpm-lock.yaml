@@ -83,7 +83,14 @@ importers:
         specifier: workspace:*
         version: link:../test-lib
 
-  packages/di: {}
+  packages/di:
+    devDependencies:
+      '@cofn/core':
+        specifier: workspace:^
+        version: link:../core
+      '@cofn/test-lib':
+        specifier: workspace:*
+        version: link:../test-lib
 
   packages/test-lib:
     dependencies:

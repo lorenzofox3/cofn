@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <title>Test suite for package view</title>
+  <style>
+    @import url("@cofn/test-lib/client/theme.css");
+  </style>
+</head>
+<body>
+  <div id="report-container">
+    <h1>Test reporting</h1>
+    <div id="report"></div>
+  </div>
+  <div id="debug">
+  </div>
+</body>
+<script type='module'>
+  import { report, createHTMLReporter, createSocketSink } from '@cofn/test-lib/client';
+  import './injector.test.js';
+  import './dom-tree.test.js';
+
+  const [st1, st2] = report().tee();
+  st1.pipeTo(createSocketSink(import.meta.hot));
+  st2.pipeTo(createHTMLReporter({element: document.getElementById('report')}))
+</script>
+</html>

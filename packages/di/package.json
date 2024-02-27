@@ -12,9 +12,13 @@
     }
   },
   "scripts": {
+    "dev": "vite",
+    "test": "node test/run-ci.js"
   },
-  "prettier": {
-    "singleQuote": true
+  "author": "Laurent RENARD",
+  "devDependencies": {
+    "@cofn/core": "workspace:^",
+    "@cofn/test-lib": "workspace:*"
   },
   "keywords": [
     "di",
@@ -22,6 +26,5 @@
     "web",
     "ui"
   ],
-  "author": "Laurent RENARD",
   "license": "MIT"
 }
