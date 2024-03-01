@@ -136,7 +136,7 @@ app-book-search {
             max-width: min(100%, 25em);
         }
 
-        input:focus-visible {
+        &:focus-within input {
             flex-grow: 1;
         }
     }
