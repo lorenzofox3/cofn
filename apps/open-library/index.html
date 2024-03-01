@@ -13,8 +13,10 @@
   <app-book-search data-target="result">
     <form>
       <label for="search">search book:</label>
-      <input autofocus placeholder="ex: the lord of the rings" name="search" id=search type="search">
-      <button type="submit">search</button>
+      <div class="form-controls">
+        <input autofocus name="search" id=search type="search">
+        <button type="submit">search</button>
+      </div>
     </form>
     <ol aria-live="polite" aria-atomic="true" id="result"></ol>
   </app-book-search>
