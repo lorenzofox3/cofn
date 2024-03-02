@@ -13,7 +13,9 @@
   },
   "scripts": {
     "dev": "vite",
-    "test": "node test/run-ci.js"
+    "test": "node test/run-ci.js",
+    "build": "rollup -c rollup.config.js > ./dist/cofn-di.min.js",
+    "size": "rollup -c rollup.config.js | brotli | wc -c"
   },
   "author": "Laurent RENARD",
   "devDependencies": {
