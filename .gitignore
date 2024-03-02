@@ -1,5 +1,5 @@
 .idea
 node_modules
-dist
+apps/**/dist
 .DS_Store
 coverage

@@ -11,6 +11,9 @@
         "types": "./src/index.d.ts",
         "default": "./src/index.js"
       }
+    },
+    "./cdn": {
+      "default": "./cofn-core.min.js"
     }
   },
   "prettier": {
@@ -18,7 +21,9 @@
   },
   "scripts": {
     "dev": "vite",
-    "test": "node test/run-ci.js"
+    "test": "node test/run-ci.js",
+    "build": "rollup -c rollup.config.js > ./dist/cofn-core.min.js",
+    "size": "rollup -c rollup.config.js | brotli | wc -c"
   },
   "author": "Laurent RENARD",
   "devDependencies": {
