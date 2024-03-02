@@ -26,7 +26,7 @@ test('everytime the getter is called a new instance is created', ({
   isNot,
 }) => {
   const services = createInjector({
-    injectables: {
+    services: {
       a: () => ({ prop: 'a' }),
     },
   });
@@ -41,7 +41,7 @@ test('resolves dependency graph, instantiating the transitive dependencies ', ({
   eq,
 }) => {
   const services = createInjector({
-    injectables: {
+    services: {
       a: ({ b, c }) => b + '+' + c,
       b: () => 'b',
       c: ({ d }) => d,
