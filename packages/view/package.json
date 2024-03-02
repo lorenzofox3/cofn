@@ -11,14 +11,20 @@
         "types": "./src/index.d.ts",
         "default": "./src/index.js"
       }
+    },
+    "./cdn": {
+      "default": "./cofn-view.min.js"
     }
   },
   "prettier": {
     "singleQuote": true
   },
+  "files": ["dist", "src"],
   "scripts": {
     "dev": "vite",
-    "test": "node test/run-ci.js"
+    "test": "node test/run-ci.js",
+    "build": "rollup -c rollup.config.js > ./dist/cofn-view.min.js",
+    "size": "rollup -c rollup.config.js | brotli | wc -c"
   },
   "author": "Laurent RENARD",
   "peerDependencies": {

@@ -19,6 +19,7 @@
   "prettier": {
     "singleQuote": true
   },
+  "files": ["dist", "src"],
   "scripts": {
     "dev": "vite",
     "test": "node test/run-ci.js",
