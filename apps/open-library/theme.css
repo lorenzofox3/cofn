@@ -1,3 +1,7 @@
+html {
+    color-scheme: light dark;
+}
+
 *,
 *::before,
 *::after {
@@ -44,15 +48,14 @@ canvas {
     --bg-surface: #f5f5f5;
     --gray: #1e1e1e;
     --accent: #3d67a2;
-    --accent-100: color-mix(in lab, var(--mix) 55%, var(--accent));
-    --accent-300: color-mix(in lab, var(--mix) 80%, var(--accent));
+    --accent-100: color-mix(in srgb, var(--mix) 55%, var(--accent));
+    --accent-300: color-mix(in srgb, var(--mix) 80%, var(--accent));
     --mix: white;
-    --gray-100: color-mix(in lab, var(--mix) 25%, var(--gray));
-    --gray-300: color-mix(in lab, var(--mix) 60%, var(--gray));
+    --gray-100: color-mix(in srgb, var(--mix) 25%, var(--gray));
+    --gray-300: color-mix(in srgb, var(--mix) 60%, var(--gray));
 }
 
 body {
-    color-scheme: light dark;
     font-family: system-ui, sans-serif;
     font-size: clamp(1.3rem, 0.5vw + 1rem, 1.4rem);
     color: var(--gray);
@@ -65,6 +68,7 @@ body {
 
 @media (prefers-color-scheme: dark) {
     :root {
+        color-scheme: dark;
         --bg-app: #142334;
         --bg-surface: #1e334f;
         --gray: #ececec;

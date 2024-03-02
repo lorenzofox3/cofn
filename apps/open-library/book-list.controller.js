@@ -21,6 +21,7 @@ const createBookListController = ({ state }) => {
     async search({ query }) {
       try {
         state.isLoading = true;
+        state.books = [];
         state.error = undefined;
         const { docs } = await searchService.search({ query });
         state.books = docs.map(toViewModel);
