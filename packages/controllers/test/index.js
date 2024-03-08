@@ -4,39 +4,39 @@ import { define } from '@cofn/core';
 import { nextTick } from './utils.js';
 
 const debug = document.getElementById('debug');
-const withCounter = (specFn) =>
-  async function zora_spec_fn(assert) {
-    const withCounterController = withController(({ state }) => {
-      state.count = 42;
-      return {
-        increment() {
-          state.count = state.count + 1;
-        },
-      };
-    });
+const withCounterController = withController(({ state }) => {
+  state.count = 42;
+  return {
+    increment() {
+      state.count = state.count + 1;
+    },
+  };
+});
 
-    define(
-      'test-counting-controller',
-      withCounterController(function* ({ $host, controller }) {
-        $host.addEventListener('click', controller.increment);
-        $host.loopCount = 0;
+define(
+  'test-counting-controller',
+  withCounterController(function* ({ $host, controller }) {
+    $host.addEventListener('click', controller.increment);
+    $host.loopCount = 0;
 
-        try {
-          while (true) {
-            const { state } = yield;
-            $host.textContent = 'state:' + state.count;
-            $host.loopCount += 1;
-          }
-        } finally {
-          $host.teardown = true;
-        }
-      }),
-    );
-
+    try {
+      while (true) {
+        const { state } = yield;
+        $host.textContent = 'state:' + state.count;
+        $host.loopCount += 1;
+      }
+    } finally {
+      $host.teardown = true;
+    }
+  }),
+);
+const withCounter = (specFn) => {
+  return async function zora_spec_fn(assert) {
     const el = document.createElement('test-counting-controller');
     debug.appendChild(el);
     return await specFn({ ...assert, el });
   };
+};
 
 test('controller function get passed the routine dependencies along with the state', async ({
   eq,
