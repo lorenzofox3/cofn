@@ -59,7 +59,11 @@ export const createApp = ({ router }) => {
       });
     };
 
-  const _define = (tag, comp, ...rest) => define(tag, withRoot(comp), ...rest);
+  const _define = (tag, comp, ...rest) => {
+    if (!customElements.get(tag)) {
+      define(tag, withRoot(comp), ...rest);
+    }
+  };
 
   _define('ui-icon', UIIcon, {
     shadow: { mode: 'open' },

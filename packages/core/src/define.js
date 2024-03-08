@@ -1,18 +1,15 @@
 import { component } from './component.js';
 
-export const define = (tag, coroutine, opts = {}) => {
-  if (!customElements.get(tag)) {
-    customElements.define(
-      tag,
-      component(coroutine, {
-        observedAttributes: opts.observedAttributes,
-        Klass: classElementMap[opts?.extends] ?? HTMLElement,
-        ...opts,
-      }),
-      opts,
-    );
-  }
-};
+export const define = (tag, coroutine, opts = {}) =>
+  customElements.define(
+    tag,
+    component(coroutine, {
+      observedAttributes: opts.observedAttributes,
+      Klass: classElementMap[opts?.extends] ?? HTMLElement,
+      ...opts,
+    }),
+    opts,
+  );
 
 const classElementMap = {
   label: HTMLLabelElement,
