@@ -3,3 +3,4 @@ node_modules
 apps/**/dist
 .DS_Store
 coverage
+dist

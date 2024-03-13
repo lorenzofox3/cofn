@@ -1,30 +1,27 @@
 {
   "name": "@cofn/controllers",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "type": "module",
-  "types": "./src/index.d.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
       "import": {
-        "types": "./src/index.d.ts",
-        "default": "./src/index.js"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/cofn-controller.js"
       }
-    },
-    "./cdn": {
-      "default": "./cofn-controllers.min.js"
     }
   },
   "prettier": {
     "singleQuote": true
   },
-  "files": ["dist", "src"],
+  "files": ["dist"],
   "scripts": {
     "dev": "vite",
     "test": "node test/run-ci.js",
-    "build": "rollup -c rollup.config.js > ./dist/cofn-controllers.min.js",
-    "size": "rollup -c rollup.config.js | brotli | wc -c"
+    "build": "mkdir -p dist && rollup src/index.js > dist/cofn-controller.js && cp src/index.d.ts dist",
+    "size": "rollup -p @rollup/plugin-terser src/index.js | gzip | wc -c"
   },
   "author": "Laurent RENARD",
   "peerDependencies": {

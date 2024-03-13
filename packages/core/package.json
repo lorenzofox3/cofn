@@ -1,32 +1,30 @@
 {
   "name": "@cofn/core",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "small library to turn generator function into a web component",
   "type": "module",
-  "types": "./src/index.d.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
       "import": {
-        "types": "./src/index.d.ts",
-        "default": "./src/index.js"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/cofn-core.js"
       }
-    },
-    "./cdn": {
-      "default": "./cofn-core.min.js"
     }
   },
   "prettier": {
     "singleQuote": true
   },
-  "files": ["dist", "src"],
+  "files": ["dist"],
   "scripts": {
     "dev": "vite",
     "test": "node test/run-ci.js",
-    "build": "rollup -c rollup.config.js > ./dist/cofn-core.min.js",
-    "size": "rollup -c rollup.config.js | brotli | wc -c"
+    "build": "mkdir -p dist && rollup src/index.js > dist/cofn-core.js && cp src/index.d.ts dist",
+    "size": "rollup -p @rollup/plugin-terser src/index.js | gzip | wc -c"
   },
   "author": "Laurent RENARD",
+  "keywords": ["webcomponent", "web component", "ui", "generator", "coroutine"],
   "devDependencies": {
     "@cofn/test-lib": "workspace:*"
   }

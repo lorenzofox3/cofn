@@ -26,11 +26,11 @@ jobs:
         with:
           version: 8
           run_install: true
-#      - name: Build
-#        run: pnpm run build
+      - name: Build
+        run: pnpm --filter @cofn/* --stream build
       - name: Install browsers
         run: pnpm exec playwright install --with-deps
       - name: Test
-        run: pnpm t --recursive --if-present
+        run: pnpm t --recursive --stream --if-present
 
 

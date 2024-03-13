@@ -1,21 +1,21 @@
 {
   "name": "@cofn/di",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "DOM as DI container",
   "type": "module",
   "exports": {
     "./package.json": "./package.json",
     ".": {
       "import": {
-        "default": "./src/index.js"
+        "default": "./dist/cofn-di.js"
       }
     }
   },
   "scripts": {
     "dev": "vite",
     "test": "node test/run-ci.js",
-    "build": "rollup -c rollup.config.js > ./dist/cofn-di.min.js",
-    "size": "rollup -c rollup.config.js | brotli | wc -c"
+    "build": "mkdir -p dist && rollup src/index.js > dist/cofn-di.js",
+    "size": "rollup -p @rollup/plugin-terser src/index.js | gzip | wc -c"
   },
   "author": "Laurent RENARD",
   "devDependencies": {
@@ -27,6 +27,9 @@
     "cofn",
     "web",
     "ui"
+  ],
+  "files": [
+    "dist"
   ],
   "license": "MIT"
 }

@@ -3,6 +3,11 @@
     "singleQuote": true
   },
   "keywords": [],
+  "scripts": {
+    "test": "pnpm test --recursive --if-present --stream",
+    "build": "pnpm --filter @cofn/* --stream build",
+    "size": "pnpm --filter @cofn/* --stream size"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
