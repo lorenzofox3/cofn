@@ -1,6 +1,6 @@
 # cofn
 
-A set of small libraries to build your UI framework converting coroutines into web components
+A set of small libraries to build your UI framework [converting coroutines into web components](https://lorenzofox.dev/posts/component-as-infinite-loop/).
 
 * [core](./packages/core): define web components from a coroutine (666 bytes)
 * [view](./packages/view): use declarative template rather than imperative rendering logic (1645 bytes)
