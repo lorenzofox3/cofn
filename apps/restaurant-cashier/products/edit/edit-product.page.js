@@ -29,7 +29,7 @@ export const loadPage = async ({ define, state }) => {
 const wrapComponent = compose([reactiveProps(['product']), withView]);
 
 const EditProductForm = wrapComponent(({ html, router, $host }) => {
-  return ({ product }) => html`
+  return ({ properties: { product } }) => html`
         <h1 tabindex="-1">Edit product #${product.sku.toUpperCase()}</h1>
         <div class="surface content-grid transition-card-expand boxed">
           <form autocomplete="off" novalidate @submit="${handleSubmit}" class="product-form grid-narrow">

@@ -5,7 +5,7 @@ import { withView } from '@cofn/view';
 const compositionPipeline = compose([reactiveProps(['product']), withView]);
 
 export const CartProductItem = compositionPipeline(({ html, $host }) => {
-  return ({ product }) => {
+  return ({ properties: { product } }) => {
     if (product.image?.url) {
       $host.style.setProperty('background-image', `url(${product.image.url})`);
     }

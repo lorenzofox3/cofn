@@ -18,7 +18,7 @@ export const ProductListItem = compositionPipeline(({ html, $host }) => {
     );
   };
 
-  return ({ product = {} }) =>
+  return ({ properties: { product } }) =>
     html`<article class="product-card">
       <header>
         <h2 class="text-ellipsis">${product.title}</h2>

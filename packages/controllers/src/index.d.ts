@@ -20,3 +20,19 @@ export declare function withController<
     { state: State }
   >,
 ) => ComponentRoutine<Dependencies, { state: State }>;
+
+export declare function withProps<Properties extends Record<string, any>>(
+  props: (keyof Properties)[],
+): <Dependencies>(
+  view: ComponentRoutine<
+    Dependencies,
+    {
+      properties: Properties;
+    }
+  >,
+) => ComponentRoutine<
+  Dependencies,
+  {
+    properties: Properties;
+  }
+>;

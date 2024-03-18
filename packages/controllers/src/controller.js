@@ -1,8 +1,7 @@
 export const withController = (controllerFn) => (view) =>
   function* (deps) {
-    const state = {};
+    const state = deps.state || {};
     const { $host } = deps;
-    let instantiated = false;
 
     const ctrl = {
       getState() {
@@ -15,13 +14,12 @@ export const withController = (controllerFn) => (view) =>
           set(obj, prop, value) {
             obj[prop] = value;
             // no need to render if the view is not connected
-            if ($host.isConnected && instantiated) {
+            if ($host.isConnected) {
               $host.render();
             }
             return true;
           },
         }),
-        attributes: getAttributes(deps.$host), // to get initial state if required
       }),
     };
 
@@ -34,21 +32,8 @@ export const withController = (controllerFn) => (view) =>
       });
 
     // inject controller in the view
-    const componentInstance = view({
+    yield* view({
       ...deps,
       controller: ctrl,
     });
-
-    instantiated = true;
-
-    try {
-      yield* componentInstance;
-    } finally {
-      componentInstance.return();
-    }
   };
-
-const getAttributes = (el) =>
-  Object.fromEntries(
-    el.getAttributeNames().map((name) => [name, el.getAttribute(name)]),
-  );
