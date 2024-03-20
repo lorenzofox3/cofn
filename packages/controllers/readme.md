@@ -9,6 +9,10 @@ you can install the library with a package manager (like npm):
 
 Or import it directly from a CDN
 
+```js
+import {withController} from 'https://unpkg.com/@cofn/controllers/dist/cofn-controllers.js';
+```
+
 ## Reactive props
 
 Defines a list of properties to watch. The namespace ``properties`` is injected into the rendering generator 

@@ -1,7 +1,7 @@
 {
   "name": "@cofn/controllers",
   "version": "0.0.1",
-  "description": "",
+  "description": "A set of higher order function to help implement update logic",
   "type": "module",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -9,7 +9,7 @@
     ".": {
       "import": {
         "types": "./dist/index.d.ts",
-        "default": "./dist/cofn-controller.js"
+        "default": "./dist/cofn-controllers.js"
       }
     }
   },
@@ -20,7 +20,7 @@
   "scripts": {
     "dev": "vite",
     "test": "node test/run-ci.js",
-    "build": "mkdir -p dist && rollup src/index.js > dist/cofn-controller.js && cp src/index.d.ts dist",
+    "build": "mkdir -p dist && rollup src/index.js > dist/cofn-controllers.js && cp src/index.d.ts dist",
     "size": "rollup -p @rollup/plugin-terser src/index.js | gzip | wc -c"
   },
   "author": "Laurent RENARD",
