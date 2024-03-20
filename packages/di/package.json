@@ -1,6 +1,6 @@
 {
   "name": "@cofn/di",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "DOM as DI container",
   "type": "module",
   "exports": {
