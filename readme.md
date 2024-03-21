@@ -9,4 +9,12 @@ A set of small libraries to build your UI framework [converting coroutines into 
 
 Sizes are in bytes (minified and gzipped) 
 
-There are a [list of example applications](./apps). From simple to complex single page apps
+# examples
+
+There are a [list of example applications](./apps). From simple to complex single page apps:
+
+[![Advanced SPA app](https://img.youtube.com/vi/clpY08fA0qs /0.jpg)](https://www.youtube.com/watch?v=clpY08fA0qs)
+
+
+
+
