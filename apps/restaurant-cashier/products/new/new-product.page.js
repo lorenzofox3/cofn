@@ -87,5 +87,8 @@ export const loadPage = async ({ router }) => {
       'image-uploaded',
       ({ detail }) => (form.querySelector('[name=image]').value = detail.url),
     );
-  return page;
+  return {
+    title: 'New product',
+    content: page,
+  };
 };

@@ -21,5 +21,8 @@ export const loadPage = async ({ define, preferencesService }) => {
     withPreferencesController(withView(PreferencesComponent)),
   );
 
-  return template.content.cloneNode(true);
+  return {
+    title: 'Settings',
+    content: template.content.cloneNode(true),
+  };
 };

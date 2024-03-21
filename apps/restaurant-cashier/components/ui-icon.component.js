@@ -15,6 +15,7 @@ svg {
 </svg>
 `;
 
+// todo add script to cherry pick the icons used
 const spriteURL = `/node_modules/bootstrap-icons/bootstrap-icons.svg`;
 
 export const UIIcon = function* ({ $host, $root }) {

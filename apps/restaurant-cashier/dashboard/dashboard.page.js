@@ -24,5 +24,8 @@ export const loadPage = ({ define }) => {
   define('app-top-items-chart', chart(TopItemsChart));
   define('app-top-items-revenue-chart', chart(TopItemsRevenueChart));
 
-  return template.content.cloneNode(true);
+  return {
+    title: 'Dashboard',
+    content: template.content.cloneNode(true),
+  };
 };

@@ -1,8 +1,8 @@
 import { withView } from '@cofn/view';
 import { compose } from '../../utils/functions.js';
-import { reactiveProps } from '../../utils/components.js';
+import { withProps } from '@cofn/controllers';
 
-const compositionPipeline = compose([reactiveProps(['product']), withView]);
+const compositionPipeline = compose([withProps(['product']), withView]);
 
 export const ProductListItem = compositionPipeline(({ html, $host }) => {
   const onclickHandler = (ev) => {

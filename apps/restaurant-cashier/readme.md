@@ -10,4 +10,3 @@ It solves most of the problematics you can get while building a single page app:
 * form and custom validation
 * user preferences management (theme, animation)
 * advanced components (select list, file upload with drag and drop)
-

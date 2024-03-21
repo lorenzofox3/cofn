@@ -33,5 +33,8 @@ export const loadPage = ({ define }) => {
     'app-cart-product-list',
     withCartController(withView(CartProductList)),
   );
-  return template.content.cloneNode(true);
+  return {
+    title: 'Current cart',
+    content: template.content.cloneNode(true),
+  };
 };

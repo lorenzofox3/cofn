@@ -23,7 +23,7 @@ export const PageOutlet = pageOutlet(function* ({ $host, preferencesService }) {
     const { page } = yield;
     if (page) {
       const { motion } = preferencesService.getState();
-      const autofocusElement = page.querySelector('[autofocus]');
+      const autofocusElement = page.content.querySelector('[autofocus]');
       if (
         !document.startViewTransition ||
         motion?.computed === motionSettings.reduced
@@ -44,6 +44,7 @@ export const PageOutlet = pageOutlet(function* ({ $host, preferencesService }) {
   }
 
   function updateDOM({ page }) {
-    $host.replaceChildren(page);
+    $host.replaceChildren(page.content);
+    document.title = page.title;
   }
 });

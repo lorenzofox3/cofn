@@ -19,5 +19,8 @@ export const loadPage = async ({ define, state }) => {
   if (state?.sku) {
     element.setAttribute('target-sku', state.sku);
   }
-  return element;
+  return {
+    title: 'Products',
+    content: element,
+  };
 };

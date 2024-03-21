@@ -1,10 +1,10 @@
 import { createElement } from '../../utils/dom.js';
 import { productListService } from '../product-list.service.js';
 import { fromForm } from '../product-list.model.js';
-import { reactiveProps } from '../../utils/components.js';
 import { withView } from '@cofn/view';
 import { ImageUploader } from '../image-uploader/image-uploader.component.js';
 import { compose } from '../../utils/functions.js';
+import { withProps } from '@cofn/controllers';
 export const loadPage = async ({ define, state }) => {
   define('app-edit-product', EditProductForm);
   define('app-image-uploader', ImageUploader, {
@@ -23,10 +23,13 @@ export const loadPage = async ({ define, state }) => {
   });
   const el = createElement('app-edit-product');
   el.product = product;
-  return el;
+  return {
+    title: `Edit ${product.title}`,
+    content: el,
+  };
 };
 
-const wrapComponent = compose([reactiveProps(['product']), withView]);
+const wrapComponent = compose([withProps(['product']), withView]);
 
 const EditProductForm = wrapComponent(({ html, router, $host }) => {
   return ({ properties: { product } }) => html`
