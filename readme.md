@@ -8,3 +8,5 @@ A set of small libraries to build your UI framework [converting coroutines into 
 * [di](./packages/di): define provider elements an inject what they create into children elements (408 bytes)
 
 Sizes are in bytes (minified and gzipped) 
+
+There are a [list of example applications](./apps). From simple to complex single page apps

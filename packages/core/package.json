@@ -1,9 +1,10 @@
 {
   "name": "@cofn/core",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "small library to turn generator function into a web component",
   "type": "module",
   "types": "./dist/index.d.ts",
+  "main": "./dist/cofn-core.js",
   "exports": {
     "./package.json": "./package.json",
     ".": {

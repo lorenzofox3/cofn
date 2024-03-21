@@ -1,8 +1,9 @@
 {
   "name": "@cofn/di",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "DOM as DI container",
   "type": "module",
+  "main": "./dist/cofn-di.js",
   "exports": {
     "./package.json": "./package.json",
     ".": {

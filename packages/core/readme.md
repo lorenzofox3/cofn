@@ -55,6 +55,6 @@ By default, when the generator yields, the attributes of the custom elements are
 ### options
 
 The third argument is optional. It takes the same parameters as the regular [customElementRegistry.define](https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/define) and some more:
-* ``extends``: If you wish to make your custom element extends a built-in element. Careful, webkit refuses to implement that spec and you will need a [polyfill](<script src="https://unpkg.com/@ungap/custom-elements@1.3.0/es.js"></script>)
+* ``extends``: If you wish to make your custom element extends a built-in element. Careful, webkit refuses to implement that spec and you will need a [polyfill](https://unpkg.com/@ungap/custom-elements@1.3.0/es.js)
 * ``shadow``: same as [attachShadow](https://developer.mozilla.org/en-US/docs/Web/API/Element/attachShadow) function.
 * ``observedAttributes``: the list of attributes the browser will observe. Any change on the one of these attributes will resume the generator execution.

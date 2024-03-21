@@ -1,8 +1,9 @@
 {
   "name": "@cofn/controllers",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A set of higher order function to help implement update logic",
   "type": "module",
+  "main": "./dist/cofn-controllers.js",
   "types": "./dist/index.d.ts",
   "exports": {
     "./package.json": "./package.json",
