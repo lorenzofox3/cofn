@@ -13,9 +13,9 @@ Sizes are in bytes (minified and gzipped)
 
 There are a [list of example applications](./apps). From simple to complex single page apps:
 
-*[single page app](https://www.youtube.com/watch?v=clpY08fA0qs)
-*[todomvc](https://www.youtube.com/watch?v=h51et4N9g-Y)
-*[open library search](https://www.youtube.com/watch?v=51qb8Z_QWxw)
+* [single page app](https://www.youtube.com/watch?v=clpY08fA0qs)
+* [todomvc](https://www.youtube.com/watch?v=h51et4N9g-Y)
+* [open library search](https://www.youtube.com/watch?v=51qb8Z_QWxw)
 
 
 
