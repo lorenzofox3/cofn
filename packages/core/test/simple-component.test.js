@@ -60,6 +60,7 @@ test(
   withEl(async ({ eq, el }) => {
     await nextTick();
     eq(el.hasBeenRemoved, false);
+    debug.moveBefore(el, debug.lastElementChild);
     debug.prepend(el);
     await nextTick();
     eq(el.hasBeenRemoved, false);
