@@ -31,8 +31,13 @@ export const component = (renderLoop, opts = defaultOptions) => {
       this.render();
     }
 
+    // connectedMoveCallback() {
+    // noop
+    // }
+
     disconnectedCallback() {
       // we end the rendering loop only if the component is removed from de DOM. Sometimes it is just moved from one place to another one
+      // and connectedMoveCallback is not yet fully supported
       window.queueMicrotask(() => {
         if (this.isConnected === false) {
           this.#abortController.abort();
@@ -52,15 +57,16 @@ export const component = (renderLoop, opts = defaultOptions) => {
       this.#updateStack.push(update);
       if (!currentPendingUpdateCount) {
         window.queueMicrotask(() => {
+          const updatesToProcess = [...this.#updateStack];
+          this.#updateStack.length = 0;
           const arg = {
             attributes: getAttributes(this),
-            ...Object.assign(...this.#updateStack),
+            ...Object.assign(...updatesToProcess),
           };
           if (this.hasAttribute('debug')) {
             console.debug('rendering', arg);
           }
           this.#loop.next(arg);
-          this.#updateStack.length = 0;
         });
       }
     }
